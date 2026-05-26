@@ -1,0 +1,273 @@
+<!--
+  Menu templates dla roduq-restaurant skill.
+  Block type: "menu-featured" or "menu-full"
+  Variants:
+  - grid-with-photos — casual / Instagram-driven places
+  - list-classic     — fine dining (text-led)
+  - tabbed-meals     — gdy menus differ (Lunch / Dinner / Drinks)
+-->
+
+<section class="menu menu--grid-photos" data-block-type="menu-featured" data-variant="grid-with-photos">
+  <div class="menu__container">
+    <header class="menu__header">
+      <h2 class="menu__title">{{menu-title}}</h2> <!-- "Wybrane z menu" -->
+      <p class="menu__intro">{{menu-intro}}</p>
+      <!-- "Menu zmieniamy co kwartał, zgodnie z sezonem. Lokalni dostawcy w pierwszej kolejności." -->
+    </header>
+    <div class="menu__grid">
+      <!-- Repeat per dish (typically 4-6 featured) -->
+      <article class="dish">
+        <div class="dish__photo">
+          <img src="{{dish-1-image}}" alt="{{dish-1-image-alt}}" loading="lazy">
+        </div>
+        <div class="dish__info">
+          <h3 class="dish__name">
+            {{dish-1-name-pl}} <span class="dish__name-en">/ {{dish-1-name-en}}</span>
+          </h3>
+          <p class="dish__description">{{dish-1-description}}</p>
+          <!-- "Pierogi z białą rzepą i twarogiem. Z masłem klarowanym i smażoną cebulką." -->
+          <div class="dish__meta">
+            <span class="dish__price">{{dish-1-price}} zł</span>
+            <div class="dish__tags">
+              {{#dish-1-tags}}
+              <span class="dish__tag" title="{{tag-title}}">{{tag-label}}</span>
+              {{/dish-1-tags}}
+              <!-- V (vegan) · GF (gluten-free) · ♨ (spicy) -->
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="dish">
+        <div class="dish__photo">
+          <img src="{{dish-2-image}}" alt="{{dish-2-image-alt}}" loading="lazy">
+        </div>
+        <div class="dish__info">
+          <h3 class="dish__name">
+            {{dish-2-name-pl}} <span class="dish__name-en">/ {{dish-2-name-en}}</span>
+          </h3>
+          <p class="dish__description">{{dish-2-description}}</p>
+          <div class="dish__meta">
+            <span class="dish__price">{{dish-2-price}} zł</span>
+            <div class="dish__tags"></div>
+          </div>
+        </div>
+      </article>
+      <article class="dish">
+        <div class="dish__photo">
+          <img src="{{dish-3-image}}" alt="{{dish-3-image-alt}}" loading="lazy">
+        </div>
+        <div class="dish__info">
+          <h3 class="dish__name">
+            {{dish-3-name-pl}} <span class="dish__name-en">/ {{dish-3-name-en}}</span>
+          </h3>
+          <p class="dish__description">{{dish-3-description}}</p>
+          <div class="dish__meta">
+            <span class="dish__price">{{dish-3-price}} zł</span>
+          </div>
+        </div>
+      </article>
+    </div>
+    <div class="menu__footer">
+      <a href="{{menu-full-href}}" class="menu__view-all">
+        {{menu-view-all-label}} → <!-- "Zobacz pełne menu" -->
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="menu menu--list-classic" data-block-type="menu-featured" data-variant="list-classic">
+  <div class="menu__container">
+    <header class="menu__header">
+      <h2 class="menu__title">{{menu-title}}</h2>
+      <p class="menu__intro">{{menu-intro}}</p>
+    </header>
+    <ul class="menu__list">
+      <li class="menu-item">
+        <div class="menu-item__row">
+          <h3 class="menu-item__name">{{dish-1-name-pl}} <span class="menu-item__name-en">/ {{dish-1-name-en}}</span></h3>
+          <span class="menu-item__price">{{dish-1-price}}</span>
+        </div>
+        <p class="menu-item__description">{{dish-1-description}}</p>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item__row">
+          <h3 class="menu-item__name">{{dish-2-name-pl}} <span class="menu-item__name-en">/ {{dish-2-name-en}}</span></h3>
+          <span class="menu-item__price">{{dish-2-price}}</span>
+        </div>
+        <p class="menu-item__description">{{dish-2-description}}</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .menu {
+    padding: var(--space-4xl, 6rem) var(--space-md, 1rem);
+    background: var(--color-surface-default);
+  }
+
+  .menu__container {
+    max-width: var(--container-md, 72rem);
+    margin: 0 auto;
+  }
+
+  .menu__header {
+    text-align: center;
+    margin-bottom: var(--space-2xl, 3rem);
+  }
+
+  .menu__title {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl, 2.25rem);
+    font-weight: 700;
+    margin: 0 0 var(--space-md, 1rem);
+  }
+
+  .menu__intro {
+    font-size: var(--text-lg, 1.125rem);
+    color: var(--color-ink-secondary);
+    max-width: 60ch;
+    margin: 0 auto;
+  }
+
+  .menu__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl, 2rem);
+  }
+
+  @media (max-width: 768px) {
+    .menu__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .dish {
+    background: var(--color-surface-raised);
+    border-radius: var(--radius-lg, 0.75rem);
+    overflow: hidden;
+  }
+
+  .dish__photo {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+
+  .dish__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .dish__info {
+    padding: var(--space-lg, 1.5rem);
+  }
+
+  .dish__name {
+    font-family: var(--font-display);
+    font-size: var(--text-lg, 1.125rem);
+    font-weight: 600;
+    margin: 0 0 var(--space-sm, 0.75rem);
+  }
+
+  .dish__name-en {
+    color: var(--color-ink-muted);
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  .dish__description {
+    font-size: var(--text-sm, 0.875rem);
+    line-height: 1.5;
+    color: var(--color-ink-secondary);
+    margin: 0 0 var(--space-md, 1rem);
+  }
+
+  .dish__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .dish__price {
+    font-family: var(--font-display);
+    font-size: var(--text-base, 1rem);
+    font-weight: 600;
+    color: var(--color-ink-primary);
+  }
+
+  .dish__tags {
+    display: flex;
+    gap: var(--space-2xs, 0.25rem);
+  }
+
+  .dish__tag {
+    padding: var(--space-3xs, 0.125rem) var(--space-xs, 0.5rem);
+    background: color-mix(in srgb, var(--color-brand-primary) 10%, transparent);
+    color: var(--color-brand-primary);
+    border-radius: var(--radius-sm, 0.25rem);
+    font-size: var(--text-xs, 0.75rem);
+    font-weight: 600;
+  }
+
+  /* List variant */
+  .menu--list-classic .menu__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .menu-item {
+    padding: var(--space-md, 1rem) 0;
+    border-bottom: 1px solid var(--color-outline-subtle);
+  }
+
+  .menu-item__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-md, 1rem);
+    margin-bottom: var(--space-xs, 0.5rem);
+  }
+
+  .menu-item__name {
+    font-family: var(--font-display);
+    font-size: var(--text-lg, 1.125rem);
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .menu-item__name-en {
+    color: var(--color-ink-muted);
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  .menu-item__price {
+    font-family: var(--font-display);
+    font-size: var(--text-base, 1rem);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .menu-item__description {
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-secondary);
+    margin: 0;
+    max-width: 50ch;
+  }
+
+  .menu__footer {
+    text-align: center;
+    margin-top: var(--space-xl, 2rem);
+  }
+
+  .menu__view-all {
+    color: var(--color-brand-primary);
+    text-decoration: none;
+    font-weight: 500;
+  }
+</style>

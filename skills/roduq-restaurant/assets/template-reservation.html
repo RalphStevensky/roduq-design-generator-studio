@@ -1,0 +1,239 @@
+<!--
+  Reservation templates dla roduq-restaurant skill.
+  Block type: "reservation"
+  Variants:
+  - form-inline       — owned channel form
+  - embed-opentable   — OpenTable / Resy widget container
+  - phone-prominent   — older audience / casual places
+-->
+
+<section class="reservation reservation--form" data-block-type="reservation" data-variant="form-inline">
+  <div class="reservation__container">
+    <div class="reservation__intro">
+      <h2 class="reservation__title">{{reservation-title}}</h2>
+      <!-- "Zarezerwuj stolik" / "Make a reservation" -->
+      <p class="reservation__subtitle">{{reservation-subtitle}}</p>
+      <!-- "Potwierdzimy w 2h. Bez karty kredytowej." -->
+      <div class="reservation__contact">
+        <p>{{reservation-contact-label}}</p>
+        <a href="tel:{{phone-tel}}" class="reservation__phone">☎ {{phone-display}}</a>
+        <span class="reservation__or">{{or-label}}</span>
+        <a href="mailto:{{email}}" class="reservation__email">{{email}}</a>
+      </div>
+    </div>
+    <form class="reservation__form" action="{{reservation-form-action}}" method="post">
+      <div class="form-row">
+        <div class="form-field">
+          <label for="res-name">{{form-name-label}} *</label>
+          <input type="text" id="res-name" name="name" required autocomplete="name">
+        </div>
+        <div class="form-field">
+          <label for="res-phone">{{form-phone-label}} *</label>
+          <input type="tel" id="res-phone" name="phone" required autocomplete="tel" placeholder="+48 ___ ___ ___">
+        </div>
+      </div>
+      <div class="form-field">
+        <label for="res-email">{{form-email-label}}</label>
+        <input type="email" id="res-email" name="email" autocomplete="email">
+      </div>
+      <div class="form-row form-row--three">
+        <div class="form-field">
+          <label for="res-date">{{form-date-label}} *</label>
+          <input type="date" id="res-date" name="date" required>
+        </div>
+        <div class="form-field">
+          <label for="res-time">{{form-time-label}} *</label>
+          <select id="res-time" name="time" required>
+            <option value="">{{form-time-placeholder}}</option>
+            <option value="12:00">12:00</option>
+            <option value="12:30">12:30</option>
+            <option value="13:00">13:00</option>
+            <option value="13:30">13:30</option>
+            <option value="14:00">14:00</option>
+            <option value="18:00">18:00</option>
+            <option value="18:30">18:30</option>
+            <option value="19:00">19:00</option>
+            <option value="19:30">19:30</option>
+            <option value="20:00">20:00</option>
+            <option value="20:30">20:30</option>
+            <option value="21:00">21:00</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="res-guests">{{form-guests-label}} *</label>
+          <select id="res-guests" name="guests" required>
+            <option value="">{{form-guests-placeholder}}</option>
+            <option value="1">1 osoba</option>
+            <option value="2">2 osoby</option>
+            <option value="3">3 osoby</option>
+            <option value="4">4 osoby</option>
+            <option value="5">5 osób</option>
+            <option value="6">6 osób</option>
+            <option value="7">7 osób</option>
+            <option value="8">8+ osób</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-field">
+        <label for="res-notes">{{form-notes-label}}</label>
+        <textarea id="res-notes" name="notes" rows="3" placeholder="{{form-notes-placeholder}}"></textarea>
+        <!-- "Alergie, urodziny, preferowany stolik..." -->
+      </div>
+      <div class="form-field form-field--checkbox">
+        <input type="checkbox" id="res-consent" name="consent" required>
+        <label for="res-consent">
+          {{form-consent-label}}
+          <!-- "Zgadzam się na przetwarzanie danych dla rezerwacji (RODO)." -->
+        </label>
+      </div>
+      <button type="submit" class="reservation__submit">{{form-submit-label}}</button>
+      <p class="reservation__trust">{{form-trust-label}}</p>
+      <!-- "Bez karty kredytowej. Potwierdzenie w SMS." -->
+    </form>
+  </div>
+</section>
+
+<style>
+  .reservation {
+    padding: var(--space-4xl, 6rem) var(--space-md, 1rem);
+    background: var(--color-surface-sunken);
+  }
+
+  .reservation__container {
+    max-width: var(--container-sm, 48rem);
+    margin: 0 auto;
+  }
+
+  .reservation__intro {
+    text-align: center;
+    margin-bottom: var(--space-2xl, 3rem);
+  }
+
+  .reservation__title {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl, 2.25rem);
+    font-weight: 700;
+    margin: 0 0 var(--space-md, 1rem);
+  }
+
+  .reservation__subtitle {
+    font-size: var(--text-lg, 1.125rem);
+    color: var(--color-ink-secondary);
+    margin: 0 0 var(--space-md, 1rem);
+  }
+
+  .reservation__contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-sm, 0.75rem);
+    flex-wrap: wrap;
+    font-size: var(--text-base, 1rem);
+  }
+
+  .reservation__phone,
+  .reservation__email {
+    color: var(--color-brand-primary);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .reservation__or {
+    color: var(--color-ink-muted);
+  }
+
+  .reservation__form {
+    background: var(--color-surface-default);
+    padding: var(--space-xl, 2rem);
+    border-radius: var(--radius-lg, 0.75rem);
+    border: 1px solid var(--color-outline-subtle);
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md, 1rem);
+    margin-bottom: var(--space-md, 1rem);
+  }
+
+  .form-row--three {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 600px) {
+    .form-row,
+    .form-row--three {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .form-field {
+    margin-bottom: var(--space-md, 1rem);
+  }
+
+  .form-field label {
+    display: block;
+    font-size: var(--text-sm, 0.875rem);
+    font-weight: 500;
+    margin-bottom: var(--space-xs, 0.5rem);
+  }
+
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    width: 100%;
+    padding: var(--space-md, 0.75rem);
+    border: 1px solid var(--color-outline-default);
+    border-radius: var(--radius-md, 0.5rem);
+    font-size: var(--text-base, 1rem);
+    background: var(--color-surface-default);
+    color: var(--color-ink-primary);
+    min-height: 44px; /* WCAG touch target */
+  }
+
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus {
+    outline: 2px solid var(--color-brand-primary);
+    outline-offset: -1px;
+    border-color: var(--color-brand-primary);
+  }
+
+  .form-field--checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm, 0.75rem);
+  }
+
+  .form-field--checkbox input {
+    width: auto;
+    min-height: auto;
+    margin-top: 0.25rem;
+  }
+
+  .form-field--checkbox label {
+    margin-bottom: 0;
+    font-weight: 400;
+    color: var(--color-ink-secondary);
+  }
+
+  .reservation__submit {
+    width: 100%;
+    padding: var(--space-md, 1rem);
+    background: var(--color-brand-primary);
+    color: var(--color-ink-inverse, #fff);
+    border: none;
+    border-radius: var(--radius-md, 0.5rem);
+    font-weight: 600;
+    font-size: var(--text-base, 1rem);
+    cursor: pointer;
+    min-height: 48px;
+  }
+
+  .reservation__trust {
+    text-align: center;
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-muted);
+    margin: var(--space-md, 1rem) 0 0;
+  }
+</style>

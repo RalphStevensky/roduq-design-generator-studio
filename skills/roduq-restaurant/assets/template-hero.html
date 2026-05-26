@@ -1,0 +1,199 @@
+<!--
+  Hero templates dla roduq-restaurant skill.
+  Photo-heavy. Hours visible. Tap-to-call mobile.
+-->
+
+<!-- ==================== Variant 1: photo-fullscreen ==================== -->
+<section class="hero hero--photo-fullscreen" data-block-type="hero" data-variant="photo-fullscreen">
+  <div class="hero__photo">
+    <img src="{{hero-image}}" alt="{{hero-image-alt}}" loading="eager" decoding="sync">
+    <div class="hero__overlay" aria-hidden="true"></div>
+  </div>
+  <div class="hero__container">
+    <span class="hero__eyebrow">{{hero-eyebrow}}</span>
+    <!-- "Kraków · ul. Floriańska 41" -->
+    <h1 class="hero__title">{{hero-title}}</h1>
+    <!-- "Nowoczesna kuchnia polska. Bez kompromisów." -->
+    <p class="hero__subtitle">{{hero-subtitle}}</p>
+    <div class="hero__hours">
+      <strong>{{hero-hours-label}}</strong> <!-- "Dziś otwarte" -->
+      {{hero-hours-today}} <!-- "12:00 - 23:00" -->
+    </div>
+    <div class="hero__ctas">
+      <a class="hero__cta hero__cta--primary" href="{{reservation-href}}">
+        {{cta-reservation}} <!-- "Zarezerwuj stolik" -->
+      </a>
+      <a class="hero__cta hero__cta--phone" href="tel:{{phone-tel}}">
+        ☎ {{phone-display}}
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== Variant 2: split-with-photo ==================== -->
+<section class="hero hero--split" data-block-type="hero" data-variant="split-with-photo">
+  <div class="hero__container hero__container--grid">
+    <div class="hero__content">
+      <span class="hero__eyebrow">{{hero-eyebrow}}</span>
+      <h1 class="hero__title">{{hero-title}}</h1>
+      <p class="hero__subtitle">{{hero-subtitle}}</p>
+      <div class="hero__hours">
+        <strong>{{hero-hours-label}}</strong>
+        {{hero-hours-today}}
+      </div>
+      <div class="hero__ctas">
+        <a class="hero__cta hero__cta--primary" href="{{reservation-href}}">
+          {{cta-reservation}}
+        </a>
+        <a class="hero__cta hero__cta--phone" href="tel:{{phone-tel}}">
+          ☎ {{phone-display}}
+        </a>
+      </div>
+    </div>
+    <div class="hero__photo-side">
+      <img src="{{hero-image}}" alt="{{hero-image-alt}}" loading="eager">
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero--photo-fullscreen {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: flex-end;
+    color: var(--color-ink-inverse, #fff);
+    padding: var(--space-4xl, 6rem) var(--space-md, 1rem);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .hero__photo {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+  }
+
+  .hero__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 30%, rgba(0, 0, 0, 0.7) 100%);
+    z-index: -1;
+  }
+
+  .hero__container {
+    max-width: var(--container-md, 72rem);
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .hero__container--grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl, 3rem);
+    align-items: center;
+  }
+
+  .hero--split {
+    background: var(--color-surface-default);
+    color: var(--color-ink-primary);
+    padding: var(--space-2xl, 3rem) var(--space-md, 1rem);
+  }
+
+  .hero--split .hero__photo-side img {
+    width: 100%;
+    height: 100%;
+    min-height: 24rem;
+    object-fit: cover;
+    border-radius: var(--radius-lg, 0.75rem);
+  }
+
+  @media (max-width: 768px) {
+    .hero__container--grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .hero__eyebrow {
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: var(--text-sm, 0.875rem);
+    font-weight: 500;
+    margin-bottom: var(--space-md, 1rem);
+    opacity: 0.9;
+  }
+
+  .hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0 0 var(--space-md, 1rem);
+    letter-spacing: -0.02em;
+  }
+
+  .hero__subtitle {
+    font-size: var(--text-xl, 1.25rem);
+    line-height: 1.5;
+    margin: 0 0 var(--space-lg, 1.5rem);
+    max-width: 40ch;
+    opacity: 0.92;
+  }
+
+  .hero__hours {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs, 0.5rem);
+    padding: var(--space-xs, 0.5rem) var(--space-md, 1rem);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border-radius: var(--radius-full, 9999px);
+    font-size: var(--text-sm, 0.875rem);
+    margin-bottom: var(--space-lg, 1.5rem);
+  }
+
+  .hero--split .hero__hours {
+    background: var(--color-surface-raised);
+    color: var(--color-ink-primary);
+  }
+
+  .hero__ctas {
+    display: flex;
+    gap: var(--space-md, 1rem);
+    flex-wrap: wrap;
+  }
+
+  .hero__cta {
+    padding: var(--space-md, 1rem) var(--space-xl, 2rem);
+    border-radius: var(--radius-md, 0.5rem);
+    text-decoration: none;
+    font-weight: 500;
+    min-height: 44px; /* WCAG touch target */
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .hero__cta--primary {
+    background: var(--color-brand-primary);
+    color: var(--color-ink-inverse, #fff);
+  }
+
+  .hero__cta--phone {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    color: inherit;
+  }
+
+  .hero--split .hero__cta--phone {
+    background: var(--color-surface-raised);
+    color: var(--color-ink-primary);
+    border: 1px solid var(--color-outline-default);
+  }
+</style>
