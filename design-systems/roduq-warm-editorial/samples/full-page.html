@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roduq Warm Editorial — Sample</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFFAF5; --surface: #FFFFFF; --surface-warm: #F5EFE6;
+    --fg: #1C1C1C; --muted: #5C5C5C; --meta: #8A8A8A;
+    --border: rgba(28,28,28,0.16); --border-soft: rgba(28,28,28,0.08);
+    --accent: #A8321B; --accent-on: #FFFAF5;
+    --accent-hover: color-mix(in oklab, var(--accent), black 10%);
+    --forest: #0E4F35;
+    --font-display: "Fraunces", Georgia, serif;
+    --font-body: "Lora", Georgia, serif;
+    --line-height-body: 1.7;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { font-family: var(--font-body); color: var(--fg); background: var(--bg); }
+  body { margin: 0; line-height: var(--line-height-body); -webkit-font-smoothing: antialiased; font-size: 1.125rem; }
+  section { padding: 7rem 1.5rem; }
+  .container { max-width: 38rem; margin: 0 auto; }
+  .container--wide { max-width: 65rem; }
+  h1, h2, h3 { font-family: var(--font-display); margin: 0; font-variation-settings: "opsz" 80; letter-spacing: -0.01em; line-height: 1.15; }
+
+  .nav { padding: 1.5rem 1.5rem; border-bottom: 1px solid var(--border-soft); background: var(--bg); }
+  .nav__inner { display: flex; justify-content: space-between; align-items: center; max-width: 65rem; margin: 0 auto; }
+  .nav__brand { font-family: var(--font-display); font-weight: 700; font-size: 1.75rem; letter-spacing: -0.02em; }
+  .nav__links { display: flex; gap: 2rem; }
+  .nav__links a { color: var(--muted); text-decoration: none; font-size: 0.9375rem; }
+  .nav__links a:hover { color: var(--accent); }
+
+  /* Hero — magazine cover style */
+  .hero { padding: 5rem 1.5rem 4rem; text-align: center; }
+  .hero__eyebrow { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.8125rem; font-weight: 600; color: var(--accent); margin-bottom: 1.5rem; display: inline-block; }
+  .hero__title { font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 700; line-height: 1.05; margin-bottom: 1.5rem; font-variation-settings: "opsz" 144; }
+  .hero__title em { font-style: italic; }
+  .hero__subtitle { font-size: 1.25rem; color: var(--muted); max-width: 36ch; margin: 0 auto 1.5rem; font-style: italic; line-height: 1.5; }
+  .hero__byline { font-size: 0.9375rem; color: var(--meta); }
+  .hero__byline strong { color: var(--fg); font-weight: 500; }
+
+  /* Article body */
+  .article { padding: 3rem 1.5rem; }
+  .article__lead { font-size: 1.375rem; line-height: 1.55; color: var(--muted); margin-bottom: 2.5rem; font-style: italic; max-width: 38rem; margin-inline: auto; }
+  .article__body p { margin: 0 0 1.5rem; }
+  .article__body p:first-of-type::first-letter { font-family: var(--font-display); font-size: 4.5rem; font-weight: 700; float: left; line-height: 0.85; margin-right: 0.5rem; margin-top: 0.4rem; color: var(--accent); }
+  .article__body h2 { font-size: 2rem; margin-top: 3rem; margin-bottom: 1rem; max-width: 30ch; }
+  .pull-quote { margin: 3rem -2rem; padding: 0 2rem; border-left: 4px solid var(--accent); }
+  .pull-quote blockquote { font-family: var(--font-display); font-size: 2rem; font-weight: 500; font-style: italic; line-height: 1.25; margin: 0 0 1rem; color: var(--fg); font-variation-settings: "opsz" 80; }
+  .pull-quote cite { font-style: normal; font-size: 0.9375rem; color: var(--meta); }
+
+  /* Subscribe section */
+  .subscribe { background: var(--surface-warm); text-align: center; }
+  .subscribe__title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; line-height: 1.15; margin-bottom: 1rem; max-width: 24ch; margin-inline: auto; }
+  .subscribe__subtitle { color: var(--muted); margin-bottom: 2rem; font-size: 1.125rem; }
+  .subscribe__form { display: flex; gap: 0.5rem; max-width: 28rem; margin: 0 auto 1rem; }
+  @media (max-width: 600px) { .subscribe__form { flex-direction: column; } }
+  .subscribe__input { flex: 1; padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 0.25rem; font-family: var(--font-body); font-size: 1rem; background: var(--surface); color: var(--fg); min-height: 48px; }
+  .subscribe__input:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: var(--accent); }
+  .subscribe__submit { padding: 1rem 1.5rem; background: var(--accent); color: var(--accent-on); border: none; border-radius: 0.25rem; font-family: var(--font-body); font-weight: 600; font-size: 1rem; cursor: pointer; min-height: 48px; }
+  .subscribe__trust { font-size: 0.875rem; color: var(--meta); font-style: italic; }
+
+  /* Related articles */
+  .related { background: var(--bg); }
+  .related__title { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.875rem; font-weight: 600; color: var(--meta); margin-bottom: 2rem; text-align: center; }
+  .related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; max-width: 65rem; margin: 0 auto; }
+  @media (max-width: 768px) { .related__grid { grid-template-columns: 1fr; } }
+  .related-item__date { font-size: 0.8125rem; color: var(--meta); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+  .related-item__title { font-size: 1.375rem; margin-bottom: 0.5rem; }
+  .related-item__excerpt { color: var(--muted); font-size: 1rem; line-height: 1.55; }
+
+  .footer { padding: 3rem 1.5rem; text-align: center; color: var(--meta); font-size: 0.9375rem; border-top: 1px solid var(--border-soft); background: var(--bg); }
+  .footer a { color: var(--accent); text-decoration: none; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; } }
+</style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav__inner">
+      <div class="nav__brand">Lustro</div>
+      <div class="nav__links">
+        <a href="#article">Najnowsze</a>
+        <a href="#archive">Archiwum</a>
+        <a href="#about">O nas</a>
+        <a href="#subscribe">Subskrybuj</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <span class="hero__eyebrow">Esej · Numer 47</span>
+      <h1 class="hero__title">Dlaczego nikt nie czyta <em>długich</em> tekstów. (I dlaczego się mylimy.)</h1>
+      <p class="hero__subtitle">Jan K. spędził 6 lat publikując długie eseje na Substacku. Średnia długość: 4200 słów. Średni czas czytania: 18 minut. Wnioski są zaskakujące.</p>
+      <p class="hero__byline"><strong>Anna Wójcik</strong> · 18 minut czytania · 26 maja 2026</p>
+    </div>
+  </section>
+
+  <article class="article" id="article">
+    <div class="container">
+      <p class="article__lead">"Twitter mnie nauczył pisać krótko. Substack mnie nauczył pisać prawdziwie." — to pierwsze co Jan powiedział kiedy zaczęliśmy rozmowę.</p>
+
+      <div class="article__body">
+        <p>Pierwsze co Jan robi rano to nie sprawdzanie maila. Pierwsze co robi to wstaje, gotuje espresso, siada na 3-piętrową kanapę w salonie swojego mieszkania w Krakowie, i czyta. Przez godzinę. Nie newsy. Nie Twitter. Książki — papierowe, z notatkami marginesowymi, prawie zawsze non-fiction.</p>
+
+        <p>"Bez tego nie potrafiłbym pisać" mówi. "Krótkie teksty mogą powstawać z reakcji. Długie teksty wymagają trawienia."</p>
+
+        <p>Jan publikuje na Substacku od 2019. Jego pierwszy esej miał 1200 słów i przeczytało go 47 osób. Po sześciu latach jego ostatni miał 5400 słów i przeczytało go 12 000.</p>
+
+        <h2>Mit krótkich tekstów</h2>
+
+        <p>Branża content marketingu od lat powtarza tę samą mantrę: "Nikt nie czyta długich tekstów". Dane Substack pokazują coś innego. Średnia długość najpopularniejszych newsletterów rośnie. Median word count w 2024: 2 100 słów. W 2020: 850.</p>
+
+        <div class="pull-quote">
+          <blockquote>"Krótkie teksty mogą powstawać z reakcji. Długie teksty wymagają trawienia."</blockquote>
+          <cite>— Jan K.</cite>
+        </div>
+
+        <p>Co zmieniło się? Wzrosła konkurencja o uwagę. Spadła wartość 5-zdaniowych "hot takes". Wartością stała się głębia — nie objętość. Pierwszych 200 słów decyduje czy ktoś przeczyta resztę.</p>
+
+        <p>Dla Jana ta zmiana była nie tylko strategiczna. Była egzystencjalna. "Pisanie krótkie wymaga sprytu. Pisanie długie wymaga prawdy. Trudniej kłamać przez 4000 słów."</p>
+      </div>
+    </div>
+  </article>
+
+  <section class="subscribe" id="subscribe">
+    <div class="container">
+      <h2 class="subscribe__title">Co tydzień. Bezpłatnie. Trzy tysiące słów.</h2>
+      <p class="subscribe__subtitle">Eseje o pisaniu, mediach, i kulturze internetowej. 12 000 subskrybentów.</p>
+      <form class="subscribe__form" action="#" method="post">
+        <input type="email" class="subscribe__input" placeholder="adres@email.com" required>
+        <button type="submit" class="subscribe__submit">Subskrybuj</button>
+      </form>
+      <p class="subscribe__trust">Bez spamu. Możesz anulować jednym kliknięciem.</p>
+    </div>
+  </section>
+
+  <section class="related" id="archive">
+    <div class="container--wide" style="max-width: 65rem; margin: 0 auto;">
+      <p class="related__title">Może też Cię zainteresuje</p>
+      <div class="related__grid">
+        <article class="related-item">
+          <p class="related-item__date">5 maja 2026</p>
+          <h3 class="related-item__title"><a href="#" style="color:inherit;text-decoration:none">O czytaniu papierowych książek w 2026 roku</a></h3>
+          <p class="related-item__excerpt">Dlaczego wracam do papieru po 10 latach Kindla.</p>
+        </article>
+        <article class="related-item">
+          <p class="related-item__date">12 kwietnia 2026</p>
+          <h3 class="related-item__title"><a href="#" style="color:inherit;text-decoration:none">Newsletter to gatunek. Nie dystrybucja.</a></h3>
+          <p class="related-item__excerpt">Substack przyniosł nowy gatunek dziennikarstwa.</p>
+        </article>
+        <article class="related-item">
+          <p class="related-item__date">28 marca 2026</p>
+          <h3 class="related-item__title"><a href="#" style="color:inherit;text-decoration:none">Jak pisać o ludziach którzy nie chcą o sobie pisać.</a></h3>
+          <p class="related-item__excerpt">Sześć lekcji z wywiadów które nie miały się odbyć.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    © 2026 Lustro · Czasopismo niezależne · <a href="#">RODO</a> · <a href="#">O nas</a>
+  </footer>
+</body>
+</html>

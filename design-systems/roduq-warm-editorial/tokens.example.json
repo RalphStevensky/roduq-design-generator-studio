@@ -1,0 +1,65 @@
+{
+  "$schema": "https://roduq.dev/schemas/v1/tokens.schema.json",
+  "version": "1.0.0",
+  "_meta": {
+    "preset": "roduq-warm-editorial",
+    "category": "editorial-longform-content",
+    "tagline": "Słowa mają wagę. Dla content-driven sites — blog, newsletter, journalism.",
+    "description": "Magazine-style. Tiempos/Fraunces serif body + headlines, cream surfaces, brick red accent."
+  },
+  "tokens": {
+    "color": {
+      "surface": {
+        "default": "#FFFAF5",
+        "raised": "#FFFFFF",
+        "sunken": "#F5EFE6"
+      },
+      "ink": {
+        "primary": "#1C1C1C",
+        "secondary": "#5C5C5C",
+        "muted": "#8A8A8A",
+        "inverse": "#FFFAF5"
+      },
+      "outline": {
+        "subtle": "rgba(28, 28, 28, 0.08)",
+        "default": "rgba(28, 28, 28, 0.16)",
+        "strong": "rgba(28, 28, 28, 0.24)"
+      },
+      "brand": {
+        "primary": "#A8321B",
+        "secondary": "#0E4F35"
+      },
+      "status": {
+        "success": "#0E4F35",
+        "warning": "#B07A1E",
+        "danger": "#A8321B"
+      }
+    },
+    "font": {
+      "display": "Tiempos Headline, Fraunces, Georgia, serif",
+      "body": "Tiempos Text, Lora, Georgia, serif",
+      "mono": "JetBrains Mono, ui-monospace, monospace"
+    },
+    "spacing": {
+      "3xs": "0.125rem", "2xs": "0.25rem", "xs": "0.5rem",
+      "sm": "0.75rem", "md": "1rem", "lg": "1.5rem",
+      "xl": "2rem", "2xl": "3rem", "3xl": "4.5rem", "4xl": "7rem"
+    },
+    "radii": {
+      "sm": "0.125rem", "md": "0.25rem", "lg": "0.375rem",
+      "xl": "0.5rem", "full": "9999px"
+    },
+    "fontSize": {
+      "xs": "0.8125rem", "sm": "0.9375rem", "base": "1.125rem",
+      "lg": "1.25rem", "xl": "1.5rem", "2xl": "1.875rem",
+      "3xl": "2.5rem", "4xl": "3.25rem", "5xl": "4.25rem", "6xl": "5.5rem"
+    },
+    "lineHeight": {
+      "tight": 1.15,
+      "snug": 1.4,
+      "normal": 1.7,
+      "relaxed": 1.85,
+      "loose": 2.1
+    }
+  }
+}
