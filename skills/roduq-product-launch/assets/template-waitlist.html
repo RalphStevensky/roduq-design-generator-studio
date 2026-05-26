@@ -1,0 +1,226 @@
+<!--
+  Waitlist final CTA template dla roduq-product-launch skill.
+  Block type: "waitlist"
+  Variants:
+  - form-with-incentive — single email + incentive
+  - stepped-form        — email + qualifying questions
+-->
+
+<section class="waitlist" data-block-type="waitlist" data-variant="form-with-incentive">
+  <div class="waitlist__bg" aria-hidden="true"></div>
+  <div class="waitlist__container">
+    <h2 class="waitlist__title">{{waitlist-title}}</h2>
+    <!-- "Bądź na liście pierwszych." -->
+    <p class="waitlist__subtitle">{{waitlist-subtitle}}</p>
+    <!-- "Pierwsi 500 zapisanych: 30% off cenę premierową + early access do bety." -->
+
+    <form class="waitlist__form" action="{{waitlist-action}}" method="post">
+      <div class="waitlist__form-row">
+        <label for="waitlist-email" class="visually-hidden">{{email-label}}</label>
+        <input
+          type="email"
+          id="waitlist-email"
+          name="email"
+          class="waitlist__input"
+          placeholder="{{email-placeholder}}"
+          required
+          autocomplete="email"
+        >
+        <button type="submit" class="waitlist__submit">
+          {{cta-label}} <!-- "Dołącz do listy" -->
+        </button>
+      </div>
+      <div class="waitlist__form-meta">
+        <label class="waitlist__consent">
+          <input type="checkbox" name="consent" required>
+          <span>{{consent-label}}</span>
+          <!-- "Zgadzam się na otrzymywanie informacji o produkcie. RODO compliant." -->
+        </label>
+      </div>
+    </form>
+
+    <div class="waitlist__stats">
+      <div class="waitlist-stat">
+        <span class="waitlist-stat__value">{{stat-1-value}}</span>
+        <span class="waitlist-stat__label">{{stat-1-label}}</span>
+        <!-- "847" "osób zapisanych" -->
+      </div>
+      <div class="waitlist-stat">
+        <span class="waitlist-stat__value">{{stat-2-value}}</span>
+        <span class="waitlist-stat__label">{{stat-2-label}}</span>
+        <!-- "347/500" "miejsc early-bird" -->
+      </div>
+      <div class="waitlist-stat">
+        <span class="waitlist-stat__value">{{stat-3-value}}</span>
+        <span class="waitlist-stat__label">{{stat-3-label}}</span>
+        <!-- "47" "dni do premiery" -->
+      </div>
+    </div>
+
+    <div class="waitlist__trust">
+      <span>{{trust-1}}</span>
+      <!-- "Bezpłatne" -->
+      <span>{{trust-2}}</span>
+      <!-- "Anuluj w 1 klik" -->
+      <span>{{trust-3}}</span>
+      <!-- "Bez spamu — sprawdź regulamin" -->
+    </div>
+  </div>
+</section>
+
+<style>
+  .waitlist {
+    position: relative;
+    padding: var(--space-4xl, 6rem) var(--space-md, 1rem);
+    overflow: hidden;
+    isolation: isolate;
+    text-align: center;
+    background: var(--color-surface-default);
+  }
+
+  .waitlist__bg {
+    position: absolute;
+    inset: -10%;
+    background:
+      radial-gradient(at 25% 30%, var(--color-brand-primary) 0%, transparent 50%),
+      radial-gradient(at 75% 70%, var(--color-brand-secondary) 0%, transparent 50%);
+    opacity: 0.18;
+    filter: blur(60px);
+    z-index: -1;
+  }
+
+  .waitlist__container {
+    max-width: 48rem;
+    margin: 0 auto;
+  }
+
+  .waitlist__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0 0 var(--space-md, 1rem);
+    letter-spacing: -0.02em;
+  }
+
+  .waitlist__subtitle {
+    font-size: var(--text-lg, 1.125rem);
+    color: var(--color-ink-secondary);
+    margin: 0 auto var(--space-xl, 2rem);
+    max-width: 50ch;
+  }
+
+  .waitlist__form-row {
+    display: flex;
+    gap: var(--space-sm, 0.75rem);
+    margin-bottom: var(--space-md, 1rem);
+    max-width: 32rem;
+    margin-inline: auto;
+  }
+
+  @media (max-width: 600px) {
+    .waitlist__form-row {
+      flex-direction: column;
+    }
+  }
+
+  .waitlist__input {
+    flex: 1;
+    padding: var(--space-md, 1rem);
+    border: 1px solid var(--color-outline-default);
+    border-radius: var(--radius-md, 0.5rem);
+    font-size: var(--text-base, 1rem);
+    background: var(--color-surface-default);
+    color: var(--color-ink-primary);
+    min-height: 48px;
+  }
+
+  .waitlist__input:focus {
+    outline: 2px solid var(--color-brand-primary);
+    outline-offset: -1px;
+    border-color: var(--color-brand-primary);
+  }
+
+  .waitlist__submit {
+    padding: var(--space-md, 1rem) var(--space-xl, 2rem);
+    background: var(--color-brand-primary);
+    color: var(--color-ink-inverse, #fff);
+    border: none;
+    border-radius: var(--radius-md, 0.5rem);
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 48px;
+    white-space: nowrap;
+  }
+
+  .waitlist__form-meta {
+    margin-bottom: var(--space-xl, 2rem);
+  }
+
+  .waitlist__consent {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm, 0.75rem);
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-muted);
+  }
+
+  .waitlist__stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md, 1rem);
+    padding: var(--space-lg, 1.5rem);
+    background: var(--color-surface-raised);
+    border-radius: var(--radius-lg, 0.75rem);
+    margin-bottom: var(--space-md, 1rem);
+  }
+
+  @media (max-width: 600px) {
+    .waitlist__stats {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .waitlist-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .waitlist-stat__value {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl, 1.875rem);
+    font-weight: 700;
+    color: var(--color-brand-primary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .waitlist-stat__label {
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-secondary);
+    margin-top: var(--space-2xs, 0.25rem);
+  }
+
+  .waitlist__trust {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-xl, 2rem);
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-muted);
+    flex-wrap: wrap;
+  }
+
+  .waitlist__trust span::before {
+    content: "✓ ";
+    color: var(--color-brand-primary);
+    font-weight: 700;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+  }
+</style>

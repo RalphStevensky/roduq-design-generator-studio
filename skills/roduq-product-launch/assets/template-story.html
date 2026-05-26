@@ -1,0 +1,173 @@
+<!--
+  Story / founders' letter template dla roduq-product-launch skill.
+  Block type: "story"
+  Universal structure: hook → journey → vision → why now → signature.
+-->
+
+<section class="story" data-block-type="story" data-variant="founders-letter">
+  <div class="story__container">
+    <header class="story__header">
+      <span class="story__eyebrow">{{story-eyebrow}}</span>
+      <!-- "Skąd to się wzięło" / "Why we built it" -->
+      <h2 class="story__title">{{story-title}}</h2>
+      <!-- "Dlaczego smart home należy do Ciebie. Nie do chmury." -->
+    </header>
+
+    <div class="story__content">
+      <p class="story__hook">{{story-hook}}</p>
+      <!-- "Półtora roku temu próbowałem ustawić żarówki bez aplikacji producenta. Po 3 godzinach przyznałem się: bez chmury nie ma kontroli." -->
+
+      <p class="story__journey">{{story-journey}}</p>
+      <!-- "To było dziwne. Miałem serwer w piwnicy. Miałem Zigbee dongle. Miałem urządzenia mówiące Zigbee. Dlaczego kontrolowała je firma 3000km dalej?" -->
+
+      <p class="story__vision">{{story-vision}}</p>
+      <!-- "Aria powstała żeby smart home został w domu. Lokalna sieć, lokalne automation, lokalne dane. Internet używamy tylko gdy go potrzebujemy — nie żeby uruchomić lampę." -->
+
+      <p class="story__why-now">{{story-why-now}}</p>
+      <!-- "W 2025 Zigbee + Matter + Thread tworzą standardy które wreszcie współpracują. Hub może być jeden. Nie trzeba 5 aplikacji. Pora to wykorzystać." -->
+
+      <figure class="story__signature">
+        <img src="{{founder-photo}}" alt="{{founder-name}}" class="story__founder-photo">
+        <figcaption>
+          <strong>{{founder-name}}</strong>
+          <span>{{founder-role}}</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="story__process-photos">
+      <figure class="process-photo">
+        <img src="{{process-1-image}}" alt="{{process-1-alt}}" loading="lazy">
+        <figcaption>{{process-1-caption}}</figcaption>
+        <!-- "Prototyp 1.0 — Raspberry Pi + Zigbee USB" -->
+      </figure>
+      <figure class="process-photo">
+        <img src="{{process-2-image}}" alt="{{process-2-alt}}" loading="lazy">
+        <figcaption>{{process-2-caption}}</figcaption>
+      </figure>
+      <figure class="process-photo">
+        <img src="{{process-3-image}}" alt="{{process-3-alt}}" loading="lazy">
+        <figcaption>{{process-3-caption}}</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<style>
+  .story {
+    padding: var(--space-4xl, 6rem) var(--space-md, 1rem);
+    background: var(--color-surface-sunken);
+  }
+
+  .story__container {
+    max-width: 56rem;
+    margin: 0 auto;
+  }
+
+  .story__header {
+    text-align: center;
+    margin-bottom: var(--space-2xl, 3rem);
+  }
+
+  .story__eyebrow {
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: var(--text-sm, 0.875rem);
+    font-weight: 600;
+    color: var(--color-brand-primary);
+    margin-bottom: var(--space-md, 1rem);
+  }
+
+  .story__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.875rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0;
+    max-width: 30ch;
+    margin-inline: auto;
+  }
+
+  .story__content {
+    background: var(--color-surface-default);
+    padding: var(--space-2xl, 3rem);
+    border-radius: var(--radius-lg, 0.75rem);
+    border-left: 4px solid var(--color-brand-primary);
+  }
+
+  .story__content p {
+    font-size: var(--text-lg, 1.125rem);
+    line-height: 1.7;
+    color: var(--color-ink-primary);
+    margin: 0 0 var(--space-lg, 1.5rem);
+  }
+
+  .story__hook {
+    font-size: var(--text-xl, 1.25rem) !important;
+    font-weight: 500;
+    color: var(--color-ink-primary);
+  }
+
+  .story__signature {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md, 1rem);
+    margin: var(--space-xl, 2rem) 0 0;
+    padding-top: var(--space-md, 1rem);
+    border-top: 1px solid var(--color-outline-subtle);
+  }
+
+  .story__founder-photo {
+    width: 4rem;
+    height: 4rem;
+    border-radius: var(--radius-full, 9999px);
+    object-fit: cover;
+  }
+
+  .story__signature figcaption {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .story__signature strong {
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  .story__signature span {
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-muted);
+  }
+
+  .story__process-photos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md, 1rem);
+    margin-top: var(--space-2xl, 3rem);
+  }
+
+  @media (max-width: 768px) {
+    .story__process-photos {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .process-photo {
+    margin: 0;
+  }
+
+  .process-photo img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-md, 0.5rem);
+    margin-bottom: var(--space-xs, 0.5rem);
+  }
+
+  .process-photo figcaption {
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-muted);
+    font-style: italic;
+  }
+</style>

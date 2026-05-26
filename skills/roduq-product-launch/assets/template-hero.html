@@ -1,0 +1,278 @@
+<!--
+  Hero templates dla roduq-product-launch skill.
+  Variants:
+  - countdown-teaser — countdown timer + email field
+  - story-hero       — provocative statement + product reveal
+  - video-bg         — looping product video background
+-->
+
+<section class="hero hero--countdown" data-block-type="hero" data-variant="countdown-teaser">
+  <div class="hero__container">
+    <div class="hero__content">
+      <span class="hero__eyebrow">{{hero-eyebrow}}</span>
+      <!-- "Premiera 15 kwietnia 2026" -->
+      <h1 class="hero__title">{{hero-title}}</h1>
+      <!-- "Aria. Smart home bez wifi." -->
+      <p class="hero__subtitle">{{hero-subtitle}}</p>
+      <!-- "Lokalna sieć Zigbee + Z-Wave + Thread. Bez chmury. Bez zależności." -->
+
+      <div class="countdown" data-target="{{launch-date-iso}}" aria-live="polite">
+        <div class="countdown__cell">
+          <span class="countdown__value" data-unit="days">00</span>
+          <span class="countdown__label">{{label-days}}</span>
+          <!-- "dni" -->
+        </div>
+        <div class="countdown__cell">
+          <span class="countdown__value" data-unit="hours">00</span>
+          <span class="countdown__label">{{label-hours}}</span>
+        </div>
+        <div class="countdown__cell">
+          <span class="countdown__value" data-unit="minutes">00</span>
+          <span class="countdown__label">{{label-minutes}}</span>
+        </div>
+        <div class="countdown__cell">
+          <span class="countdown__value" data-unit="seconds">00</span>
+          <span class="countdown__label">{{label-seconds}}</span>
+        </div>
+      </div>
+
+      <form class="hero__waitlist" action="{{waitlist-action}}" method="post">
+        <label for="hero-email" class="visually-hidden">{{email-label}}</label>
+        <input
+          type="email"
+          id="hero-email"
+          name="email"
+          class="hero__waitlist-input"
+          placeholder="{{email-placeholder}}"
+          required
+          autocomplete="email"
+        >
+        <button type="submit" class="hero__waitlist-submit">
+          {{cta-join}}
+          <!-- "Dołącz do listy" -->
+        </button>
+      </form>
+
+      <div class="hero__counter">
+        <strong>{{counter-value}}</strong> {{counter-label}}
+        <!-- "847" "osób na liście" -->
+      </div>
+
+      <div class="hero__incentive">
+        ★ {{incentive-text}}
+        <!-- "Pierwsi 500 zapisanych — 30% off cenę premierową (349 zł zamiast 499 zł)" -->
+      </div>
+    </div>
+
+    <div class="hero__visual">
+      <img src="{{product-image}}" alt="{{product-image-alt}}" loading="eager">
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero--countdown {
+    padding: var(--space-4xl, 6rem) var(--space-md, 1rem);
+    background: var(--color-surface-default);
+    color: var(--color-ink-primary);
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero__container {
+    max-width: var(--container-md, 72rem);
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--space-2xl, 3rem);
+    align-items: center;
+  }
+
+  @media (max-width: 768px) {
+    .hero__container {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .hero__eyebrow {
+    display: inline-block;
+    padding: var(--space-2xs, 0.25rem) var(--space-md, 1rem);
+    background: color-mix(in srgb, var(--color-brand-primary) 12%, transparent);
+    color: var(--color-brand-primary);
+    border-radius: var(--radius-full, 9999px);
+    font-size: var(--text-sm, 0.875rem);
+    font-weight: 600;
+    margin-bottom: var(--space-md, 1rem);
+  }
+
+  .hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    margin: 0 0 var(--space-md, 1rem);
+    letter-spacing: -0.02em;
+  }
+
+  .hero__subtitle {
+    font-size: var(--text-lg, 1.125rem);
+    line-height: 1.5;
+    color: var(--color-ink-secondary);
+    margin: 0 0 var(--space-xl, 2rem);
+    max-width: 50ch;
+  }
+
+  .countdown {
+    display: flex;
+    gap: var(--space-md, 1rem);
+    margin-bottom: var(--space-xl, 2rem);
+  }
+
+  .countdown__cell {
+    background: var(--color-surface-raised);
+    padding: var(--space-md, 1rem) var(--space-lg, 1.5rem);
+    border-radius: var(--radius-md, 0.5rem);
+    text-align: center;
+    min-width: 4.5rem;
+  }
+
+  .countdown__value {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--text-2xl, 1.5rem);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .countdown__label {
+    display: block;
+    font-size: var(--text-xs, 0.75rem);
+    color: var(--color-ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .hero__waitlist {
+    display: flex;
+    gap: var(--space-sm, 0.75rem);
+    margin-bottom: var(--space-md, 1rem);
+    max-width: 32rem;
+  }
+
+  .hero__waitlist-input {
+    flex: 1;
+    padding: var(--space-md, 1rem);
+    border: 1px solid var(--color-outline-default);
+    border-radius: var(--radius-md, 0.5rem);
+    font-size: var(--text-base, 1rem);
+    background: var(--color-surface-default);
+    color: var(--color-ink-primary);
+    min-height: 48px;
+  }
+
+  .hero__waitlist-input:focus {
+    outline: 2px solid var(--color-brand-primary);
+    outline-offset: -1px;
+    border-color: var(--color-brand-primary);
+  }
+
+  .hero__waitlist-submit {
+    padding: var(--space-md, 1rem) var(--space-xl, 2rem);
+    background: var(--color-brand-primary);
+    color: var(--color-ink-inverse, #fff);
+    border: none;
+    border-radius: var(--radius-md, 0.5rem);
+    font-weight: 600;
+    font-size: var(--text-base, 1rem);
+    cursor: pointer;
+    min-height: 48px;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 600px) {
+    .hero__waitlist { flex-direction: column; }
+  }
+
+  .hero__counter {
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-secondary);
+    margin-bottom: var(--space-sm, 0.75rem);
+  }
+
+  .hero__counter strong {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--color-brand-primary);
+  }
+
+  .hero__incentive {
+    display: inline-block;
+    padding: var(--space-xs, 0.5rem) var(--space-md, 1rem);
+    background: color-mix(in srgb, var(--color-brand-primary) 8%, transparent);
+    border-left: 3px solid var(--color-brand-primary);
+    border-radius: var(--radius-md, 0.5rem);
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-primary);
+  }
+
+  .hero__visual {
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius-lg, 0.75rem);
+    overflow: hidden;
+  }
+
+  .hero__visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+  }
+</style>
+
+<script>
+  /* Countdown — vanilla JS, no deps. Reads data-target="{{launch-date-iso}}" */
+  (function() {
+    const target = document.querySelector('.countdown')?.dataset?.target;
+    if (!target) return;
+    const targetTime = new Date(target).getTime();
+    if (isNaN(targetTime)) return;
+
+    const cells = {
+      days: document.querySelector('.countdown__value[data-unit="days"]'),
+      hours: document.querySelector('.countdown__value[data-unit="hours"]'),
+      minutes: document.querySelector('.countdown__value[data-unit="minutes"]'),
+      seconds: document.querySelector('.countdown__value[data-unit="seconds"]'),
+    };
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function tick() {
+      const diff = targetTime - Date.now();
+      if (diff <= 0) {
+        Object.values(cells).forEach(c => c && (c.textContent = '00'));
+        return;
+      }
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
+
+      if (cells.days) cells.days.textContent = pad(days);
+      if (cells.hours) cells.hours.textContent = pad(hours);
+      if (cells.minutes) cells.minutes.textContent = pad(minutes);
+      if (cells.seconds) cells.seconds.textContent = pad(seconds);
+    }
+
+    tick();
+    setInterval(tick, 1000);
+  })();
+</script>
