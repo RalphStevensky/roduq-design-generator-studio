@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roduq Monolith Meadow — Sample</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF7; --surface: #FFFFFF; --surface-warm: #F0EFEA;
+    --fg: #1A1C19; --muted: #525249; --meta: #8A8A7F;
+    --border: rgba(26, 28, 25, 0.14); --border-soft: rgba(26, 28, 25, 0.08);
+    --accent: #5C7A4F; --accent-on: #FAFAF7;
+    --accent-hover: color-mix(in oklab, var(--accent), black 10%);
+    --terracotta: #C97B5A;
+    --font-display: "Fraunces", "Recoleta", Georgia, serif;
+    --font-body: "Inter", -apple-system, system-ui, sans-serif;
+    --container-md: 70rem;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { font-family: var(--font-body); color: var(--fg); background: var(--bg); }
+  body { margin: 0; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  section { padding: 6rem 1rem; }
+  .container { max-width: var(--container-md); margin: 0 auto; }
+  h1, h2, h3 { font-family: var(--font-display); margin: 0; font-variation-settings: "opsz" 80; }
+
+  .nav { padding: 1.5rem 0; border-bottom: 1px solid var(--border-soft); }
+  .nav__inner { display: flex; justify-content: space-between; align-items: center; max-width: var(--container-md); margin: 0 auto; padding: 0 1rem; }
+  .nav__brand { font-family: var(--font-display); font-weight: 500; font-size: 1.5rem; }
+  .nav__links { display: flex; gap: 2rem; }
+  .nav__links a { color: var(--muted); text-decoration: none; }
+
+  /* Asymmetric hero z photo */
+  .hero { padding: 4rem 1rem; background: var(--bg); }
+  .hero__grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: center; max-width: var(--container-md); margin: 0 auto; }
+  @media (max-width: 768px) { .hero__grid { grid-template-columns: 1fr; } }
+  .hero__eyebrow { text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.75rem; font-weight: 500; color: var(--accent); margin-bottom: 1.5rem; display: inline-block; }
+  .hero__title { font-size: clamp(2.5rem, 6vw, 4rem); line-height: 1.1; font-weight: 700; margin-bottom: 1.5rem; }
+  .hero__title em { font-style: italic; color: var(--accent); }
+  .hero__subtitle { font-size: 1.25rem; color: var(--muted); margin-bottom: 2rem; line-height: 1.7; max-width: 42ch; }
+  .hero__photo { aspect-ratio: 4/5; background: linear-gradient(135deg, var(--surface-warm) 0%, color-mix(in srgb, var(--accent) 25%, var(--surface-warm)) 100%); border-radius: 1rem; display: flex; align-items: center; justify-content: center; color: var(--meta); font-style: italic; }
+  .btn { display: inline-flex; padding: 1rem 2rem; border-radius: 1rem; font-weight: 500; text-decoration: none; min-height: 48px; align-items: center; font-family: var(--font-body); }
+  .btn--primary { background: var(--accent); color: var(--accent-on); }
+  .btn--primary:hover { background: var(--accent-hover); }
+  .btn--secondary { background: transparent; color: var(--fg); border: 1px solid var(--border); margin-left: 1rem; }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* Story section */
+  .story { background: var(--surface-warm); }
+  .story__inner { max-width: 48rem; margin: 0 auto; }
+  .story__eyebrow { text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.75rem; font-weight: 500; color: var(--accent); margin-bottom: 1rem; display: inline-block; }
+  .story__title { font-size: 2.5rem; line-height: 1.15; font-weight: 700; margin-bottom: 2rem; max-width: 30ch; }
+  .story p { font-size: 1.125rem; line-height: 1.75; margin: 0 0 1.5rem; color: var(--fg); }
+  .story p:first-of-type::first-letter { font-family: var(--font-display); font-size: 4rem; font-weight: 700; float: left; line-height: 0.9; margin-right: 0.5rem; color: var(--accent); }
+
+  /* Menu / Features */
+  .menu { background: var(--bg); }
+  .menu__header { text-align: center; margin-bottom: 3rem; }
+  .menu__title { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
+  .menu__subtitle { color: var(--muted); max-width: 50ch; margin: 0 auto; font-style: italic; }
+  .menu__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  @media (max-width: 768px) { .menu__grid { grid-template-columns: 1fr; } }
+  .dish { background: var(--surface); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-soft); }
+  .dish__photo { aspect-ratio: 4/3; background: linear-gradient(135deg, var(--surface-warm), color-mix(in srgb, var(--terracotta) 30%, var(--surface-warm))); }
+  .dish__info { padding: 1.5rem; }
+  .dish__name { font-family: var(--font-display); font-weight: 600; font-size: 1.25rem; margin-bottom: 0.5rem; }
+  .dish__name-en { color: var(--meta); font-style: italic; font-weight: 400; }
+  .dish__desc { font-size: 0.875rem; color: var(--muted); margin-bottom: 1rem; line-height: 1.6; }
+  .dish__meta { display: flex; justify-content: space-between; padding-top: 1rem; border-top: 1px solid var(--border-soft); }
+  .dish__price { font-family: var(--font-display); font-weight: 600; }
+  .dish__tags { display: flex; gap: 0.25rem; }
+  .dish__tag { background: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--accent); padding: 0.125rem 0.5rem; border-radius: 0.375rem; font-size: 0.75rem; font-weight: 600; }
+
+  /* CTA */
+  .cta { text-align: center; background: var(--surface-warm); }
+  .cta__title { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; font-weight: 700; margin-bottom: 1rem; max-width: 24ch; margin-inline: auto; }
+  .cta__title em { font-style: italic; color: var(--accent); }
+  .cta__subtitle { color: var(--muted); margin-bottom: 2rem; max-width: 50ch; margin-inline: auto; font-style: italic; }
+  .cta__hours { display: inline-block; padding: 0.5rem 1rem; background: var(--surface); border-radius: 9999px; border: 1px solid var(--border); margin-top: 1.5rem; font-size: 0.875rem; }
+
+  .footer { background: var(--bg); border-top: 1px solid var(--border-soft); padding: 2rem 1rem; text-align: center; color: var(--meta); font-size: 0.875rem; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; } }
+</style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav__inner">
+      <div class="nav__brand">Atelier Wilanów</div>
+      <div class="nav__links">
+        <a href="#story">Historia</a>
+        <a href="#menu">Menu</a>
+        <a href="#cta">Rezerwacja</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero__grid">
+      <div>
+        <span class="hero__eyebrow">Restauracja · Warszawa, Wilanów · od 2014</span>
+        <h1 class="hero__title">Kuchnia polska. <em>Bez kompromisów.</em><br>Bez ostentacji.</h1>
+        <p class="hero__subtitle">Lokalne składniki. Tradycyjne receptury z modernistycznym twistem. 32 miejsca, otwarta kuchnia, chef przy stole.</p>
+        <a class="btn btn--primary" href="#cta">Zarezerwuj stolik</a>
+        <a class="btn btn--secondary" href="#menu">Zobacz menu</a>
+      </div>
+      <div class="hero__photo" aria-label="Wnętrze restauracji">Hero photo placeholder</div>
+    </div>
+  </section>
+
+  <section class="story" id="story">
+    <div class="story__inner">
+      <span class="story__eyebrow">Nasza historia</span>
+      <h2 class="story__title">Półtora roku temu wybraliśmy ścieżkę długą — i niewygodną.</h2>
+      <p>Mogliśmy otworzyć kolejną restaurację z menu z 30 daniami i dostawą z hurtowni. Wybraliśmy 18 dań sezonowych i 12 dostawców których znamy z imienia. Pasterz z Mazowsza dostarcza jagnięcinę. Pszczelarz spod Warszawy dostarcza miód. Warzywa z gospodarstwa Tomka pod Pruszkowem.</p>
+      <p>To znaczy że czasem czegoś nie ma. Czasem coś jest droższe. Ale wiemy skąd pochodzi i co je. To kosztuje. Ale my kosztu nie schodzimy do gości — kosztu schodzimy do siebie.</p>
+      <p>Chef Tomek trenował dwa lata w restauracji 3-gwiazdkowej w Berlinie. Wrócił do Polski w 2022 z planem prostym: pokazać że polska kuchnia ma więcej niż schabowego.</p>
+    </div>
+  </section>
+
+  <section class="menu" id="menu">
+    <div class="container">
+      <header class="menu__header">
+        <h2 class="menu__title">Wybrane z menu</h2>
+        <p class="menu__subtitle">Menu zmieniamy co kwartał, zgodnie z sezonem. Pełne menu — przy stole.</p>
+      </header>
+      <div class="menu__grid">
+        <article class="dish">
+          <div class="dish__photo" aria-label="Pierogi"></div>
+          <div class="dish__info">
+            <h3 class="dish__name">Pierogi z białą rzepą <span class="dish__name-en">/ White turnip dumplings</span></h3>
+            <p class="dish__desc">Z masłem klarowanym i smażoną cebulką. Domowa kuchnia z północy.</p>
+            <div class="dish__meta">
+              <span class="dish__price">34 zł</span>
+              <div class="dish__tags"><span class="dish__tag">V</span></div>
+            </div>
+          </div>
+        </article>
+        <article class="dish">
+          <div class="dish__photo" aria-label="Jagnięcina"></div>
+          <div class="dish__info">
+            <h3 class="dish__name">Jagnięcina z Mazowsza <span class="dish__name-en">/ Mazovian lamb</span></h3>
+            <p class="dish__desc">Wolno pieczona, z purée pasternakowym i sosem demi-glace.</p>
+            <div class="dish__meta">
+              <span class="dish__price">78 zł</span>
+              <div class="dish__tags"><span class="dish__tag">GF</span></div>
+            </div>
+          </div>
+        </article>
+        <article class="dish">
+          <div class="dish__photo" aria-label="Sernik"></div>
+          <div class="dish__info">
+            <h3 class="dish__name">Sernik z miodem <span class="dish__name-en">/ Cheesecake z honey</span></h3>
+            <p class="dish__desc">Twaróg ze Spiżarni Kazimierskich. Miód pszczelarza Marka.</p>
+            <div class="dish__meta">
+              <span class="dish__price">28 zł</span>
+              <div class="dish__tags"><span class="dish__tag">VG</span></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="cta">
+    <div class="container">
+      <h2 class="cta__title">Zapraszamy <em>do stołu.</em></h2>
+      <p class="cta__subtitle">Rezerwacja telefoniczna lub przez formularz. Potwierdzenie w SMS w 2h. Bez karty kredytowej.</p>
+      <a class="btn btn--primary" href="#">Zarezerwuj stolik</a>
+      <div class="cta__hours">Dziś otwarte: <strong>12:00 - 23:00</strong></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    © 2026 Atelier Wilanów · ul. Klimczaka 8, Warszawa · <a href="#" style="color:inherit">RODO</a>
+  </footer>
+</body>
+</html>
