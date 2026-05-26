@@ -17,7 +17,7 @@ Klej między dwoma światami: **`@roduq/design-tokens` (shared package) + `.rodu
 
 ## 1. Dlaczego dwa osobne repo
 
-Patrz ADR-0003 (`docs/decisions/0003-open-design-separate-repo.md`).
+Patrz ADR-0003 (`.docs/decisions/0001-separate-repo.md`).
 
 **Skrót:**
 - Open Design to ~100MB+ kodu Next.js 16 + SQLite + 132 skills + 150 design systems. **Włożenie tego do monorepo zaśmieci git history i complicate updates upstream.**

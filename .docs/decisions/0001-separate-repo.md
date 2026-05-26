@@ -71,10 +71,10 @@ Czynniki:
 - [ ] Sklonowanie lokalnie do `C:/Users/stefa/GIT/roduq-design-generator-studio/`
 - [ ] Pierwszy customization: nasze skills + DESIGN.md systems + multi-variant skill
 - [ ] Bridge przez `@roduq/cli` (file watcher na `.roduq/output/`)
-- [ ] Dokumentacja w `docs/DESIGN_GENERATOR_BRIDGE.md` (DONE)
+- [ ] Dokumentacja w `.docs/BRIDGE.md` (DONE)
 - [ ] Schema versioning dla `.roduq/output/*.json` (TBD ADR)
 
 ## Linki
 
 - Open Design: [github.com/nexu-io/open-design](https://github.com/nexu-io/open-design)
-- Powiązane: ADR-0004 (modules as packages), `docs/DESIGN_GENERATOR_BRIDGE.md`
+- Powiązane: ADR-0004 (modules as packages), `.docs/BRIDGE.md`

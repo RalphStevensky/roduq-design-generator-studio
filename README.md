@@ -6,7 +6,7 @@
 
 🔴 **Pre-implementation** — repo zainicjowane, kod nie wzięty z upstream yet.
 
-Aktualny stan = puste repo z `docs/` directory zawierającym pełne implementation plan dla autonomous agent execution.
+Aktualny stan = puste repo z `.docs/` directory zawierającym pełne implementation plan dla autonomous agent execution.
 
 ## Co to ma być
 
@@ -45,21 +45,21 @@ Standalone aplikacja desktopowa (Next.js 16 + SQLite + Anthropic skills) która:
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
-Pełna architektura: [`docs/BRIDGE.md`](docs/BRIDGE.md).
+Pełna architektura: [`.docs/BRIDGE.md`](.docs/BRIDGE.md).
 
 ## Documentation
 
 | File | Purpose |
 |---|---|
-| [`docs/IMPLEMENTATION.md`](docs/IMPLEMENTATION.md) | **MAIN GUIDE** — 7-phase plan, Anthropic skills convention, JSON schemas, MCP spec, AI integration, industry references, definition of done. |
-| [`docs/DESIGN_SYSTEMS.md`](docs/DESIGN_SYSTEMS.md) | 7 brand-agnostic preset specs z full color palettes + typography + voice + layout + inspiration links. |
-| [`docs/AGENT_PROMPT.md`](docs/AGENT_PROMPT.md) | Copy-paste prompt dla nowej Claude Code sesji w tym repo. Self-contained marching orders. |
-| [`docs/BRIDGE.md`](docs/BRIDGE.md) | Symbioza marketing-starter ↔ Open Design fork. File protocol, @roduq/cli orchestrator flow. |
-| [`docs/decisions/0001-separate-repo.md`](docs/decisions/0001-separate-repo.md) | ADR — dlaczego separate repo, NIE monorepo z roduq-web-starter. |
+| [`.docs/IMPLEMENTATION.md`](.docs/IMPLEMENTATION.md) | **MAIN GUIDE** — 7-phase plan, Anthropic skills convention, JSON schemas, MCP spec, AI integration, industry references, definition of done. |
+| [`.docs/DESIGN_SYSTEMS.md`](.docs/DESIGN_SYSTEMS.md) | 7 brand-agnostic preset specs z full color palettes + typography + voice + layout + inspiration links. |
+| [`.docs/AGENT_PROMPT.md`](.docs/AGENT_PROMPT.md) | Copy-paste prompt dla nowej Claude Code sesji w tym repo. Self-contained marching orders. |
+| [`.docs/BRIDGE.md`](.docs/BRIDGE.md) | Symbioza marketing-starter ↔ Open Design fork. File protocol, @roduq/cli orchestrator flow. |
+| [`.docs/decisions/0001-separate-repo.md`](.docs/decisions/0001-separate-repo.md) | ADR — dlaczego separate repo, NIE monorepo z roduq-web-starter. |
 
 ## How to start work (parallel agent)
 
-1. **Read** [`docs/AGENT_PROMPT.md`](docs/AGENT_PROMPT.md) end-to-end
+1. **Read** [`.docs/AGENT_PROMPT.md`](.docs/AGENT_PROMPT.md) end-to-end
 2. **Open new Claude Code session** w tym folderze (`C:/Users/stefa/GIT/roduq-design-generator-studio/`)
 3. **Paste startup prompt** (see CLAUDE.md lub AGENT_PROMPT.md)
 4. **Agent execute autonomously** phase-by-phase z commit per phase
@@ -82,4 +82,4 @@ Estimated effort: **~37h Opus solo + ~$45-70 LLM tokens** dla pełnej implementa
 Po starcie implementacji, agent powinien:
 - Commit per phase (`feat(phase-1):`, `feat(skills):`, etc.)
 - Update tego README z status badge per phase
-- Update INVENTORY w `docs/INVENTORY.md` (na wzór roduq-web-starter)
+- Update INVENTORY w `.docs/INVENTORY.md` (na wzór roduq-web-starter)

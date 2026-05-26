@@ -6,7 +6,7 @@
 
 `roduq-design-generator-studio` = **AI-driven design generator** dla Roduq agency. Fork [nexu-io/open-design](https://github.com/nexu-io/open-design) (Next.js 16 + SQLite + Anthropic skills) z Roduq customizations.
 
-**Status**: Pre-implementation. Repo zainicjowane jako empty git repo. Czeka na agent execution per `docs/AGENT_PROMPT.md`.
+**Status**: Pre-implementation. Repo zainicjowane jako empty git repo. Czeka na agent execution per `.docs/AGENT_PROMPT.md`.
 
 ## Misja
 
@@ -20,11 +20,31 @@ Stworzyć aplikację która:
 
 ## Przed startem przeczytaj (kolejność)
 
-1. **[docs/AGENT_PROMPT.md](docs/AGENT_PROMPT.md)** ⭐ — MASTER PROMPT z execution plan. Self-contained.
-2. **[docs/IMPLEMENTATION.md](docs/IMPLEMENTATION.md)** — szczegółowy plan 7 faz + Anthropic skills convention + JSON schemas + MCP spec + industry references
-3. **[docs/DESIGN_SYSTEMS.md](docs/DESIGN_SYSTEMS.md)** — 7 brand-agnostic preset specs (default / monolith-meadow / tech-modern / warm-editorial / brutalist / soft-pastel / dark-cinematic) z full palettes + typography + voice
-4. **[docs/BRIDGE.md](docs/BRIDGE.md)** — file protocol contract z `roduq-web-starter` (sister repo)
-5. **[docs/decisions/0001-separate-repo.md](docs/decisions/0001-separate-repo.md)** — ADR dlaczego separate repo
+### Step 1: Cursor rules (operational policies)
+
+1. **[.cursor/rules/README.md](.cursor/rules/README.md)** ⭐ — index 9 cursor rules + format `.mdc` + zasady utrzymania
+2. **[.cursor/rules/009-docs-sync.mdc](.cursor/rules/009-docs-sync.mdc)** — **META** rule: synchronizuj `.docs/` + `.cursor/rules/` razem. **NAJWAŻNIEJSZA**.
+3. **[.cursor/rules/001-project-overview.mdc](.cursor/rules/001-project-overview.mdc)** — co to za repo, end-state, phase plan
+4. Pozostałe rules (002-008) — per glob loaded gdy ścieżki pasują (Cursor IDE) lub na żądanie (Claude Code)
+
+### Step 2: Narrative documentation
+
+5. **[.docs/AGENT_PROMPT.md](.docs/AGENT_PROMPT.md)** ⭐ — MASTER PROMPT z execution plan. Self-contained.
+6. **[.docs/IMPLEMENTATION.md](.docs/IMPLEMENTATION.md)** — szczegółowy plan 7 faz + Anthropic skills convention + JSON schemas + MCP spec + industry references
+7. **[.docs/DESIGN_SYSTEMS.md](.docs/DESIGN_SYSTEMS.md)** — 7 brand-agnostic preset specs (default / monolith-meadow / tech-modern / warm-editorial / brutalist / soft-pastel / dark-cinematic) z full palettes + typography + voice
+8. **[.docs/BRIDGE.md](.docs/BRIDGE.md)** — file protocol contract z `roduq-web-starter` (sister repo)
+9. **[.docs/decisions/0001-separate-repo.md](.docs/decisions/0001-separate-repo.md)** — ADR dlaczego separate repo
+
+### Dwa źródła wiedzy — synchronizacja (CRITICAL)
+
+Projekt ma **dwie lokalizacje** dla agent context. Każda decyzja/wzorzec MUSI być w obu:
+
+| Lokalizacja | Strength | Use case |
+|---|---|---|
+| `.docs/` markdown | Long-form: ADRs, design specs, plans, why + how | Deep context, narrative explanation |
+| `.cursor/rules/*.mdc` | Auto-loaded w Cursor per glob, YAML frontmatter | Operational: what to do (TL;DR) |
+
+Patrz [.cursor/rules/009-docs-sync.mdc](.cursor/rules/009-docs-sync.mdc) dla pełnej polityki sync.
 
 ## Najważniejsze zasady (non-negotiable)
 
@@ -61,7 +81,7 @@ Stworzyć aplikację która:
 
 ## Phase execution
 
-7 faz definiowanych w `docs/AGENT_PROMPT.md` § "Execution plan":
+7 faz definiowanych w `.docs/AGENT_PROMPT.md` § "Execution plan":
 
 | Phase | Goal | Estimated time |
 |---|---|---|
@@ -79,7 +99,7 @@ Agent commits per phase + pauses na approval. User redirect mid-flight gdy potrz
 
 ## Reference projects
 
-Industry references do study przed building (full list w docs/IMPLEMENTATION.md § 4):
+Industry references do study przed building (full list w .docs/IMPLEMENTATION.md § 4):
 
 - **[Refactoring UI](https://www.refactoringui.com/)** — typography + spacing + color theory
 - **[Tailwind UI](https://tailwindui.com/)** — production component patterns
@@ -93,33 +113,56 @@ Industry references do study przed building (full list w docs/IMPLEMENTATION.md 
 
 ## Quick start dla nowej sesji
 
-1. **Open Claude Code** w tym folderze
+1. **Open Claude Code lub Cursor IDE** w tym folderze
 2. **Copy this prompt verbatim** jako pierwsza wiadomość:
 
 ```
 Pracujemy nad roduq-design-generator-studio (osobny repo równolegle z roduq-web-starter).
 
-Read te 5 docs w kolejności:
-1. CLAUDE.md (ten plik)
-2. docs/AGENT_PROMPT.md — main execution prompt z 7-phase plan
-3. docs/IMPLEMENTATION.md — szczegóły każdej fazy
-4. docs/DESIGN_SYSTEMS.md — 7 brand-agnostic presets
-5. docs/BRIDGE.md — file protocol z marketing-starter
+Read w kolejności (najpierw rules — operational, potem docs — narrative):
 
-Po przeczytaniu, start z Phase 1 (Fork + project setup) per docs/AGENT_PROMPT.md.
+STEP 1 — Cursor rules:
+1. .cursor/rules/README.md — index 9 rules
+2. .cursor/rules/009-docs-sync.mdc — META: sync .docs/ + .cursor/rules/ razem
+3. .cursor/rules/001-project-overview.mdc — projekt overview
+4. Pozostałe rules per glob match gdy będziesz dotykać konkretne ścieżki
 
-Reguły:
+STEP 2 — Narrative docs:
+5. CLAUDE.md (ten plik)
+6. .docs/AGENT_PROMPT.md — main execution prompt z 7-phase plan
+7. .docs/IMPLEMENTATION.md — szczegóły każdej fazy
+8. .docs/DESIGN_SYSTEMS.md — 7 brand-agnostic presets
+9. .docs/BRIDGE.md — file protocol z marketing-starter
+
+Po przeczytaniu, start z Phase 1 (Fork + project setup) per .docs/AGENT_PROMPT.md.
+
+Reguły operational (full list w .cursor/rules/):
 - Commit per phase z conventional message (feat(phase-1):, feat(skills):, etc.)
 - Po każdej fazie PAUSE i czekaj na "kontynuuj" lub feedback
 - TypeScript strict + Anthropic skills convention + JSON Schema validation strict
 - Polish-first content (test z "Łódź żółw pięć słów")
+- LLM provider abstraction (Anthropic primary, OpenAI/Gemini alternative, Mock dla CI)
 - NIE łącz w monorepo z roduq-web-starter
+- **CRITICAL**: każda nowa decyzja/wzorzec → update OBYDWA: .docs/ + .cursor/rules/ (patrz rule 009)
 
 Zaczynaj od Phase 1.
 ```
 
 3. **Agent execute** + commits + pauses
 4. **You approve** każdy phase po review
+
+## Agent maintenance protocol (CRITICAL)
+
+Po każdej Phase agent **MUSI**:
+
+1. Update `.docs/IMPLEMENTATION.md § Phase N` z lessons learned + actual implementation notes
+2. Review touched `.cursor/rules/*.mdc` — czy nadal accurate? Czy potrzebne nowe rules?
+3. Sync dwie lokalizacje (patrz [.cursor/rules/009-docs-sync.mdc](.cursor/rules/009-docs-sync.mdc))
+4. Commit z conventional message wskazującym oba updates: `feat(skills): roduq-saas-landing + update rule 002 + .docs/IMPLEMENTATION § Phase 2`
+
+**Cursor IDE user benefit**: gdy edytuje pliki w `skills/`, Cursor auto-loaduje rule 002 (Anthropic Skills convention) i pokazuje frontmatter description w toolbar — natywne enforcement bez czytania długiej dokumentacji.
+
+**Claude Code user benefit**: rule files są krótkie + actionable, łatwiejsze do skanowania niż 500-line `.docs/IMPLEMENTATION.md`. Plus linki cross-reference do deep context gdy potrzeba.
 
 ## Sister repo
 

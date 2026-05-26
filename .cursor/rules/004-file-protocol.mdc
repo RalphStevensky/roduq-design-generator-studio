@@ -1,0 +1,190 @@
+---
+description: "File protocol — JSON Schema v1 dla tokens.json + sections.json + content.json. Output do ~/.roduq/output/<client-id>/. STRICT ajv validation przed write."
+globs: "schemas/**/*,src/output/**/*,src/export/**/*"
+alwaysApply: false
+---
+
+# File Protocol (cross-repo contract)
+
+## Output directory
+
+```
+~/.roduq/output/<client-id>/        # client-id = kebab-case slug
+├── .complete                       # written LAST — signals CLI ready
+├── meta.json                       # generation metadata
+├── design-system.md                # human-readable summary
+├── tokens.json                     # JSON Schema v1 validated
+├── sections.json                   # JSON Schema v1 validated
+├── content.json                    # JSON Schema v1 validated
+├── preview.html                    # static snapshot dla verification
+└── assets/                         # optional uploaded brand files
+```
+
+## Schema host
+
+JSON Schemas hostowane w `schemas/` katalog (local) + production at `https://roduq.dev/schemas/v1/`.
+
+Każdy output JSON file MUSI mieć `$schema` field wskazujący wersję:
+
+```json
+{
+  "$schema": "https://roduq.dev/schemas/v1/tokens.schema.json",
+  "version": "1.0.0",
+  ...
+}
+```
+
+## tokens.json (REQUIRED fields)
+
+```json
+{
+  "$schema": "https://roduq.dev/schemas/v1/tokens.schema.json",
+  "version": "1.0.0",
+  "generatedAt": "2026-05-26T19:45:00Z",
+  "generatedBy": "roduq-design-generator-studio@1.0.0",
+  "sourcePrompt": "<original user brief>",
+  "selectedVariant": 2,
+  "tokens": {
+    "color": {
+      "surface": { "default": "#FFFFFF", "raised": "#FAFAFA", "sunken": "#F5F5F5" },
+      "ink": { "primary": "#0F0F0F", "secondary": "#525252" },
+      "outline": { "subtle": "rgba(0,0,0,0.06)", "default": "rgba(0,0,0,0.12)" },
+      "brand": { "primary": "#2563EB", "secondary": "#0EA5E9" }
+    },
+    "font": {
+      "display": "Inter Tight, system-ui, sans-serif",
+      "body": "Inter, system-ui, sans-serif",
+      "mono": "JetBrains Mono, monospace"
+    },
+    "spacing": { "3xs": "0.125rem", "2xs": "0.25rem", ... },
+    "radii": { "sm": "0.25rem", "md": "0.5rem", ... }
+  }
+}
+```
+
+## sections.json (REQUIRED fields)
+
+```json
+{
+  "$schema": "https://roduq.dev/schemas/v1/sections.schema.json",
+  "version": "1.0.0",
+  "homepage": {
+    "blocks": [
+      {
+        "blockType": "hero",
+        "variant": "centered",
+        "title": "...",
+        "subtitle": "...",
+        "ctaPrimary": { "label": "...", "href": "..." }
+      }
+    ]
+  },
+  "pages": {
+    "/o-nas": { "blocks": [...] },
+    "/cennik": { "blocks": [...] }
+  }
+}
+```
+
+**Block types MUST match** `apps/marketing-starter/src/blocks/types.ts` w roduq-web-starter (canonical source). NIE wymyślaj nowych blockType.
+
+## content.json (REQUIRED fields)
+
+```json
+{
+  "$schema": "https://roduq.dev/schemas/v1/content.schema.json",
+  "version": "1.0.0",
+  "siteSettings": { "siteName": "...", "tagline": "...", "metaDescription": "..." },
+  "draftCopy": {
+    "homepage-hero-title": { "pl": "...", "en": "..." },
+    "homepage-hero-subtitle": { "pl": "...", "en": "..." }
+  },
+  "imagePrompts": {
+    "hero-1": "Modern accountant at desk z laptop, warm natural lighting...",
+    "feature-1": "..."
+  }
+}
+```
+
+## meta.json
+
+```json
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-05-26T19:45:00Z",
+  "skill": "roduq-saas-landing",
+  "prompt": "<full user brief>",
+  "variant": 2,
+  "llmProvider": "anthropic",
+  "model": "claude-sonnet-4-6",
+  "executionTimeMs": 24500
+}
+```
+
+## Atomic write protocol
+
+✅ **Atomic file generation**:
+1. Write wszystkie files do temp directory (`~/.roduq/output/<client-id>.tmp/`)
+2. Validate each file z ajv against JSON Schema v1
+3. Rename temp dir → final location
+4. Write `.complete` flag LAST (signals CLI consumer ready do read)
+
+✅ **Schema validation MUSI pass przed write**:
+```typescript
+import Ajv from "ajv";
+const ajv = new Ajv({ strict: true, allErrors: true });
+const validate = ajv.compile(tokensSchema);
+if (!validate(tokens)) {
+  throw new Error(`Tokens schema invalid: ${ajv.errorsText(validate.errors)}`);
+}
+```
+
+## Anti-patterns
+
+❌ **Pomijanie `$schema` field** — CLI nie wie której wersji oczekiwać.
+
+❌ **Block types nie matched** z roduq-web-starter — CLI rzuci error przy seed Payload.
+
+❌ **English-only content** — content.json MUSI mieć PL + EN per key (PL primary).
+
+❌ **Hardcoded ścieżki** w schema — używaj relative (CLI rozumie).
+
+❌ **Write `.complete` przed innymi files** — race condition (CLI może read incomplete state).
+
+## Patterns
+
+✅ **Schema versioning**:
+```json
+{ "$schema": "https://roduq.dev/schemas/v1/tokens.schema.json", "version": "1.0.0" }
+```
+Future v2 = breaking change → schema.v2/, CLI rozumie both.
+
+✅ **Mockable atomic write**:
+```typescript
+interface AtomicWriter {
+  writeTemp(path: string, content: string): Promise<void>;
+  validate(path: string, schema: object): Promise<void>;
+  commit(clientId: string): Promise<void>;
+}
+// In tests, mock AtomicWriter — fast feedback.
+```
+
+✅ **Backward compat (CLI rozumie kilka wersji)**:
+```typescript
+const VERSION_HANDLERS: Record<string, (data: unknown) => InternalState> = {
+  "1.0.0": parseV1,
+  "2.0.0": parseV2,
+};
+```
+
+## Po Phase 5 ukończony
+
+Update `.docs/IMPLEMENTATION.md § Phase 5` z final schema specs + ajv setup notes. Patrz `.cursor/rules/009-docs-sync.mdc`.
+
+## Powiązane
+
+- `.docs/IMPLEMENTATION.md § Phase 5` — pełen file protocol deep dive
+- `.docs/BRIDGE.md` — cross-repo contract z roduq-web-starter
+- `apps/marketing-starter/src/blocks/types.ts` (w sister repo) — canonical block types
+- [JSON Schema Draft 7](https://json-schema.org/draft-07/schema) — schema standard
+- [ajv](https://ajv.js.org/) — recommended validator

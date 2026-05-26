@@ -4,10 +4,10 @@
 
 ## 1. Context (read first)
 
-- **[ADR-0003](decisions/0003-open-design-separate-repo.md)** — dlaczego osobne repo, NIE monorepo
-- **[DESIGN_GENERATOR_BRIDGE.md](DESIGN_GENERATOR_BRIDGE.md)** — symbioza marketing-starter ↔ Open Design fork, file protocol, `@roduq/cli` orchestrator
-- **[OPEN_DESIGN_DESIGN_SYSTEMS.md](OPEN_DESIGN_DESIGN_SYSTEMS.md)** — 7 preset DESIGN.md systems do zaimplementowania
-- **[OPEN_DESIGN_AGENT_PROMPT.md](OPEN_DESIGN_AGENT_PROMPT.md)** — copy-paste prompt do nowej Opus sesji
+- **[ADR-0003](decisions/0001-separate-repo.md)** — dlaczego osobne repo, NIE monorepo
+- **[BRIDGE.md](BRIDGE.md)** — symbioza marketing-starter ↔ Open Design fork, file protocol, `@roduq/cli` orchestrator
+- **[DESIGN_SYSTEMS.md](DESIGN_SYSTEMS.md)** — 7 preset DESIGN.md systems do zaimplementowania
+- **[AGENT_PROMPT.md](AGENT_PROMPT.md)** — copy-paste prompt do nowej Opus sesji
 
 ## 2. End state (what success looks like)
 
@@ -122,7 +122,7 @@ Każdy preset to katalog `design-systems/<name>/` z:
 - `inspiration.md` — references (Refactoring UI / Tailwind UI / shadcn / Linear / Mantine snippets)
 - `samples/` — HTML snippets dla każdej section type
 
-**7 presets** (szczegóły w [OPEN_DESIGN_DESIGN_SYSTEMS.md](OPEN_DESIGN_DESIGN_SYSTEMS.md)):
+**7 presets** (szczegóły w [DESIGN_SYSTEMS.md](DESIGN_SYSTEMS.md)):
 1. `default` — neutral, "starter" preset (Inter + zinc grays)
 2. `monolith-meadow` — warm earthy, twierdza-boyen sanitized (Recoleta + sage/terracotta)
 3. `tech-modern` — Linear/Vercel inspired (Geist + dark indigo + crisp shadows)
@@ -414,8 +414,8 @@ Phase complete gdy:
 
 ## Next steps (start here)
 
-1. Read [OPEN_DESIGN_AGENT_PROMPT.md](OPEN_DESIGN_AGENT_PROMPT.md) — copy do nowej Opus sesji
-2. Read [OPEN_DESIGN_DESIGN_SYSTEMS.md](OPEN_DESIGN_DESIGN_SYSTEMS.md) — 7 preset specs
+1. Read [AGENT_PROMPT.md](AGENT_PROMPT.md) — copy do nowej Opus sesji
+2. Read [DESIGN_SYSTEMS.md](DESIGN_SYSTEMS.md) — 7 preset specs
 3. Fork [nexu-io/open-design](https://github.com/nexu-io/open-design)
 4. Execute Phase 1 → 7 sequentially
 

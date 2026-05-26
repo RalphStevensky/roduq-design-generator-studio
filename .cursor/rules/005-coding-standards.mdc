@@ -1,0 +1,211 @@
+---
+description: "TypeScript strict + exactOptionalPropertyTypes + naming + imports. Same standard as roduq-web-starter."
+globs: ""
+alwaysApply: true
+---
+
+# Coding Standards
+
+## TypeScript config
+
+`tsconfig.json` (extends `@roduq/tsconfig/base.json` gdy fork z roduq-web-starter, lub własna z same settings):
+
+```jsonc
+{
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "moduleResolution": "Bundler",
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true
+  }
+}
+```
+
+## exactOptionalPropertyTypes pattern
+
+❌ **NIE pisz**:
+```typescript
+const obj: SomeType = {
+  optional: maybeUndefined,  // ts error: undefined NIE assignable do string
+};
+```
+
+✅ **Use conditional spread**:
+```typescript
+const obj: SomeType = {
+  required: value,
+  ...(maybeUndefined && { optional: maybeUndefined }),
+  ...(optionalNested && { nested: { ...optionalNested } }),
+};
+```
+
+## Naming conventions
+
+| Type | Convention | Example |
+|---|---|---|
+| Files | `kebab-case.ts` lub `camelCase.ts` (consistency within folder) | `multi-variant.ts` |
+| Components / Classes | `PascalCase` | `LLMRouter`, `SkillRunner` |
+| Functions / variables | `camelCase` | `compileMdx`, `slugify` |
+| Constants | `UPPER_SNAKE_CASE` | `DEFAULT_TIMEOUT_MS`, `MAX_VARIANTS` |
+| Types / interfaces | `PascalCase` | `SkillInput`, `TokenSchema` |
+| Generic params | `T`, `U`, `V` lub `TName` descriptive | `Promise<TResult>` |
+
+## Imports
+
+✅ **Use absolute paths** via tsconfig paths gdy avaiable:
+```typescript
+import { foo } from "@/lib/foo";       // OK
+import { bar } from "@/skills/utils";  // OK
+```
+
+✅ **Type-only imports**:
+```typescript
+import type { SkillInput, SkillContext } from "@/types";
+import { runSkill } from "@/skills/runner";  // value imports separately
+```
+
+❌ **NIE mieszaj** value + type imports w jednej linii (verbatimModuleSyntax wymaga).
+
+## Comments — default to NONE
+
+Zasada z roduq-web-starter cursor rules: **default to no comments**. Add comment TYLKO gdy WHY jest non-obvious:
+- Hidden constraint (np. "Schema requires lowercase — Mongo case-sensitive")
+- Subtle invariant ("Atomic write — DON'T reorder steps below")
+- Workaround dla specific bug ("Workaround for ajv issue #1234")
+- Behavior że surprise reader ("Returns null on missing — caller handles")
+
+❌ **NIE explain WHAT** code does (well-named identifiers + types are enough)
+❌ **NIE reference current task** ("added for X", "used by Y") — belongs in PR description
+❌ **NIE multi-paragraph docstrings** ever
+✅ **Max 1 short line** comments
+
+## Async patterns
+
+✅ **async/await over Promise chains**:
+```typescript
+const result = await fetchData();
+const validated = validate(result);
+return validated;
+```
+
+❌ **Promise.then() chains** — harder to follow.
+
+✅ **Promise.all dla parallel**:
+```typescript
+const [variant1, variant2, variant3] = await Promise.all([
+  generateVariant("conservative"),
+  generateVariant("modern"),
+  generateVariant("bold"),
+]);
+```
+
+## Error handling
+
+✅ **Result type lub throw**:
+```typescript
+// Option A: Result type (Zod-style)
+type Result<T, E = Error> = { success: true; data: T } | { success: false; error: E };
+
+// Option B: throw + try/catch at boundary
+async function execute(input: Input): Promise<Output> {
+  const parsed = inputSchema.parse(input);   // throws ZodError
+  // ...
+}
+```
+
+❌ **NIE silent catch** (np. `catch {}`). Always log lub re-throw.
+
+## Validation z Zod
+
+✅ **Zod parse na boundary**:
+```typescript
+import { z } from "zod";
+
+const InputSchema = z.object({
+  brief: z.string().min(10).max(5000),
+  audience: z.string(),
+  tone: z.enum(["professional", "warm", "bold"]),
+});
+
+export type Input = z.infer<typeof InputSchema>;
+
+export async function runSkill(rawInput: unknown): Promise<SkillResult> {
+  const input = InputSchema.parse(rawInput);  // throws z helpful error
+  // ... typed input z tu
+}
+```
+
+❌ **NIE manual type guards** gdy Zod może to zrobić.
+
+## File organization
+
+```
+src/
+├── skills/
+│   ├── runner.ts                  # universal skill runner
+│   ├── multi-variant.ts           # parallel variant generation
+│   └── <skill-name>/
+│       └── index.ts               # skill-specific logic
+├── llm/                           # LLM provider abstraction (patrz rule 007)
+├── output/                        # file export (patrz rule 004)
+├── mcp/                           # MCP server (patrz rule 008)
+├── schemas/                       # JSON Schema v1 definitions
+└── lib/
+    └── ...
+```
+
+## Tests
+
+✅ **Vitest** dla unit + integration tests
+✅ **Co-located** `*.test.ts` obok source files (preferred) lub `__test__/`
+✅ **describe / it / expect** structure
+✅ **Polish character tests** wszędzie gdzie text input handling
+
+```typescript
+describe("slugify", () => {
+  it("handles Polish diacritics", () => {
+    expect(slugify("Łódź żółw")).toBe("lodz-zolw");
+  });
+});
+```
+
+## Anti-patterns
+
+❌ **`any` type** — use `unknown` + type guards lub Zod
+❌ **`as` casts** — use type guards lub schema validation
+❌ **Empty catch blocks** — at least log z context
+❌ **Mutable global state** — pass via context lub use module-scoped const
+❌ **Magic numbers** w code — extract do `const MAX_X = 100`
+❌ **Console.log w production code** — use ctx.logger lub structured logger
+
+## Patterns
+
+✅ **Dependency injection via context**:
+```typescript
+interface SkillContext {
+  readonly llm: LLMProvider;
+  readonly logger: Logger;
+  readonly outputWriter: AtomicWriter;
+}
+```
+
+✅ **Pure functions where possible** — easier testing, better composability.
+
+## Po Phase 1 ukończony
+
+Verify all rules tu enforced w fork. Update jeśli nowe patterns discovered. Patrz `.cursor/rules/009-docs-sync.mdc`.
+
+## Powiązane
+
+- `.docs/IMPLEMENTATION.md § Phase 1` — TypeScript setup notes
+- `.cursor/rules/006-git-workflow.mdc` — conventional commits
+- `.cursor/rules/007-llm-providers.mdc` — provider abstraction (uses context pattern)
+- [TypeScript strict docs](https://www.typescriptlang.org/tsconfig#strict)

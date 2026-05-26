@@ -1,0 +1,63 @@
+---
+description: "Project overview — co to jest roduq-design-generator-studio, jakie są cele + jak fit z sister repo roduq-web-starter"
+globs: ""
+alwaysApply: true
+---
+
+# Project Overview
+
+## Co to za repo
+
+`roduq-design-generator-studio` = **AI-driven design generator** dla Roduq agency.
+
+Fork [nexu-io/open-design](https://github.com/nexu-io/open-design) (Apache-2.0, Next.js 16 + SQLite + Anthropic skills) z Roduq customizations.
+
+## End-state
+
+User wpisuje brief → AI generuje 3 design variants równolegle → user wybiera + eksportuje → `@roduq/cli` (w sister repo `roduq-web-starter`) konsumuje i scaffolduje working website.
+
+**Czas**: brief → AI-designed website w **<5 min** (vs. 2-5 dni manual setup).
+
+## Stack
+
+- **Next.js 16** (upstream — UI w przeglądarce)
+- **SQLite** (upstream — local-first state)
+- **Anthropic skills** convention (SKILL.md format)
+- **MCP server** stdio dla Claude Code bridge
+- **TypeScript strict** + exactOptionalPropertyTypes
+- **LLM providers**: Anthropic Claude Sonnet 4.6+ (primary) / OpenAI GPT-5 / Google Gemini 2.5 Pro
+
+## Sister repo
+
+[`roduq-web-starter`](../roduq-web-starter/) — main monorepo z Astro 6 + Payload CMS + 29 business modules.
+
+**NIE łączymy kodem** — kontrakt to **file protocol** `~/.roduq/output/{client-id}/` (JSON Schema v1 validated). Patrz `.cursor/rules/004-file-protocol.mdc`.
+
+## Phase plan (7 fazy)
+
+| # | Goal | Scope |
+|---|------|-------|
+| 1 | Fork + setup | Rebrand, license, .env |
+| 2 | 7 Roduq skills | saas-landing / agency / restaurant / clinic / real-estate / product-launch / portfolio |
+| 3 | 7 DESIGN.md presets | default / monolith-meadow / tech-modern / warm-editorial / brutalist / soft-pastel / dark-cinematic |
+| 4 | Multi-variant skill | 3 designs parallel (Conservative / Modern / Bold) |
+| 5 | File export protocol | JSON Schema v1 ajv validation |
+| 6 | MCP server bridge | stdio + 3 tools |
+| 7 | Testing + polish | Unit + integration + visual regression |
+
+Pełen plan: `.docs/IMPLEMENTATION.md`.
+
+## Non-negotiable rules (TL;DR)
+
+- ❌ NIE łącz w monorepo z roduq-web-starter
+- ❌ NIE custom skill format (Anthropic SKILL.md mandatory)
+- ❌ NIE proprietary LLM-only features (multi-provider abstraction wymagana)
+- ❌ NIE skip schema validation
+- ✅ TypeScript strict + Polish-first content
+- ✅ License preservation (Apache-2.0 dla upstream forked, proprietary dla Roduq additions)
+
+## Powiązane
+
+- `.docs/IMPLEMENTATION.md` — pełen 7-phase plan
+- `.docs/BRIDGE.md` — symbioza z roduq-web-starter
+- `.docs/decisions/0001-separate-repo.md` — ADR

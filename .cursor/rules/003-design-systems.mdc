@@ -1,0 +1,148 @@
+---
+description: "DESIGN.md preset systems — 7 brand-agnostic visual systems z palette + typography + voice + layout principles"
+globs: "design-systems/**/*"
+alwaysApply: false
+---
+
+# Design Systems Convention
+
+## Struktura preset
+
+```
+design-systems/<preset-name>/
+├── DESIGN.md                      # Main spec (palette + typography + voice + layout)
+├── tokens.example.json            # Working example dla referencji
+├── inspiration.md                 # Industry references + URL screenshots
+└── samples/
+    ├── hero.html                  # HTML snippet
+    ├── features.html
+    ├── cta.html
+    ├── pricing.html
+    └── full-page.html             # Combined sample dla preview
+```
+
+## 7 presets do zaimplementowania
+
+| # | Name | Tagline | Vibe |
+|---|------|---------|------|
+| 1 | `default` | Bezpieczny start dla każdego projektu | Neutral, Inter, zinc grays, blue accent |
+| 2 | `monolith-meadow` | Solidność z natury (heritage/hospitality/wellness) | Earthy, Recoleta, sage/terracotta, cream surfaces |
+| 3 | `tech-modern` | Crisp, fast, opinionated (dev tools) | Geist, indigo gradient, sharp shadows |
+| 4 | `warm-editorial` | Słowa mają wagę (magazyny/blogs/journalism) | Tiempos, cream, brick red, 65ch reading width |
+| 5 | `brutalist` | Statement piece (stand out brands) | Söhne Breit, B/W + pure RGB accents, radius 0, 4px borders |
+| 6 | `soft-pastel` | Approachable, calm (wellness/edu/lifestyle) | Recoleta soft, dusty pastels, rounded |
+| 7 | `dark-cinematic` | Premium (SaaS/dev tools/finance) | Inter Display, jet black, neon accents, backdrop blur |
+
+Pełne specs (palettes / typography / voice / layout / inspiration) w `.docs/DESIGN_SYSTEMS.md`.
+
+## DESIGN.md structure (per preset)
+
+```markdown
+# <Preset Name>
+
+**Tagline**: "..."
+
+## Color palette
+
+```json
+{
+  "surface": { "default": "#...", "raised": "#...", "sunken": "#..." },
+  "ink": { "primary": "#...", "secondary": "#...", "muted": "#..." },
+  "outline": { "subtle": "rgba(...)", "default": "rgba(...)", "strong": "rgba(...)" },
+  "brand": { "primary": "#...", "secondary": "#..." }
+}
+```
+
+## Typography
+
+- Display: ... (700/800 weight)
+- Body: ... (400/500 weight)
+- Mono: ... (rare use)
+- Scale: xs 0.75 / sm 0.875 / base 1 / lg 1.125 / xl 1.25 / 2xl 1.5 / 3xl 1.875 / 4xl 2.25 / 5xl 3 / 6xl 3.75 (rem)
+- Line-height: tight 1.25 / normal 1.5 / relaxed 1.625 / loose 2
+
+## Voice
+
+- Tone: ...
+- Reading level: ...
+- Use "you" / "Ty"
+- Active voice
+- Avoid jargon
+
+## Layout principles
+
+- Max content width: ...
+- Section padding: ... desktop / ... mobile
+- Hero variant: ...
+- Buttons radii: ...
+- Animation strategy: ...
+
+## Inspiration
+
+- [Link 1](url) — what to learn from
+- [Link 2](url) — ...
+```
+
+## Cross-cutting requirements (every preset)
+
+### Accessibility (WCAG 2.2 AA minimum)
+
+✅ Color contrast ratio ≥4.5 normal text / ≥3 large text
+✅ Focus visible states (2px outline lub equivalent)
+✅ Touch targets ≥24×24px mobile
+✅ Color NIE jest sole indicator (use icons + text)
+
+### Performance
+
+✅ Fonts subset + preload (woff2 only, max 2 font families)
+✅ Images max 250kb hero / max 50kb thumbnails
+✅ CSS critical inline (above fold), rest async
+✅ JS lazy by default
+
+### Polish-market readiness
+
+✅ Polish characters (ą/ć/ę/ł/ń/ó/ś/ź/ż) render OK w fontach
+✅ Polish patterns (NIP/REGON display, +48 phone, postal code XX-XXX)
+✅ RODO compliance w cookie banner
+✅ WCAG dla podmiotów publicznych
+
+### Brand override capability
+
+✅ Klient w admin SiteSettings może override (single CSS variable swap):
+- Primary color
+- Display font (Google Fonts dropdown)
+- Brand voice tone
+
+## Anti-patterns
+
+❌ **Hardcoded fonts/colors w samples** — wszystko via CSS variables (override-friendly).
+
+❌ **Hardcoded English w samples** — Polish first.
+
+❌ **React-specific patterns** (np. `useState`, JSX z hooks) — generated HTML target = framework-agnostic (Astro consumer).
+
+❌ **Heavy animations bez prefers-reduced-motion check** — accessibility violation.
+
+❌ **Brak full-page.html sample** — preview verification wymagane.
+
+## Validation per preset
+
+Każdy preset MUSI pass:
+- Lighthouse Performance ≥90 dla full-page.html (mocked content)
+- Lighthouse Accessibility ≥95
+- Lighthouse SEO ≥95
+- Color contrast WCAG AA all combinations
+- Polish character render (visual test z "Łódź żółw pięć")
+- Schema validation tokens.example.json
+
+## Po Phase 3 ukończony
+
+Update `.docs/DESIGN_SYSTEMS.md` z final specs + lessons learned. Patrz `.cursor/rules/009-docs-sync.mdc`.
+
+## Powiązane
+
+- `.docs/DESIGN_SYSTEMS.md` — pełen spec wszystkich 7 presets
+- `.cursor/rules/002-skills-convention.mdc` — skills które używają presets
+- `.cursor/rules/004-file-protocol.mdc` — tokens.json schema dla output
+- [Refactoring UI](https://refactoringui.com/) — typography + color theory
+- [Tailwind UI](https://tailwindui.com/) — production component patterns

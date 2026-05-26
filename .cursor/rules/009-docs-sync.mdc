@@ -1,0 +1,104 @@
+---
+description: "META: zawsze synchronizuj .docs/ + .cursor/rules/ — dwa źródła wiedzy projektu. Każda nowa decyzja/wzorzec MUSI być w obu lokalizacjach."
+globs: ""
+alwaysApply: true
+---
+
+# Docs Sync — META Rule (najważniejsza)
+
+## Dwa źródła wiedzy
+
+Ten projekt ma **dwie lokalizacje** dla agent context:
+
+1. **`.docs/`** — narrative markdown (długie wyjaśnienia, ADRs, design specs, plans, walkthroughs)
+2. **`.cursor/rules/*.mdc`** — operational rules (krótkie, z YAML frontmatter, per-glob loaded w Cursor)
+
+## Reguła synchronizacji
+
+✅ **Każda nowa decyzja / wzorzec / standard MUSI być dodany w OBYDWU**:
+- Pełen opis + kontekst + dlaczego w `.docs/<plik>.md`
+- Concise actionable rule w `.cursor/rules/NNN-<slug>.mdc` z linkiem do `.docs/` po deeper context
+
+❌ **NIE dodawaj** rule tylko w jednym miejscu — Cursor user nie zobaczy `.docs/`, Claude Code user przeczyta CLAUDE.md ale może pominąć rule files.
+
+## Kiedy update obu lokalizacji
+
+| Trigger | `.docs/` update | `.cursor/rules/` update |
+|---------|-----------------|-------------------------|
+| Nowa Phase ukończona | Update IMPLEMENTATION.md z status + lessons learned | Update relevant rule z patterns wykrytymi w trakcie |
+| ADR podjęty | Add `decisions/NNNN-<slug>.md` z pełen kontekst | Add rule (lub update istniejącą) z policy |
+| Convention discovered | Add section w relevant `.docs/` file | Add `NNN-<slug>.mdc` w `.cursor/rules/` |
+| Anti-pattern caught | Document w `.docs/` z konkretnym przykładem | Add ❌ section w relevant rule |
+| API/schema change | Update `.docs/` z migration notes | Update rule globs gdy dotknięte ścieżki się zmieniły |
+
+## Workflow agentów
+
+### Claude Code workflow (ten plik czyta przez CLAUDE.md)
+
+1. Read CLAUDE.md root → delegates do `.docs/` + `.cursor/rules/`
+2. Make changes
+3. **PRZED commit**: check if change requires update w obu lokalizacjach
+4. Update OBYDWA gdy applicable
+5. Commit z conventional message wskazującym oba updates: `feat(skills): add roduq-saas-landing + update rule 002 + .docs/IMPLEMENTATION § Phase 2`
+
+### Cursor IDE workflow
+
+1. Open file → Cursor auto-loads matching `.cursor/rules/*.mdc` (per glob + alwaysApply)
+2. Make changes z guidance od rules
+3. **PRZED commit**: check if discovered new pattern → add to rule + `.docs/`
+4. Commit per pattern: rule file w `.cursor/rules/` + matching update w `.docs/`
+
+## Konwencja commit-ów dla docs sync
+
+```bash
+# Single source — tylko narrative
+git commit -m "docs: clarify Phase 4 multi-variant strategy"
+
+# Single source — tylko rule
+git commit -m "docs(rules): tighten 005-coding-standards na exactOptionalPropertyTypes"
+
+# OBYDWA (recommended dla większości changes)
+git commit -m "docs: add MCP transport policy (rule 008 + .docs/IMPLEMENTATION § Phase 6)"
+```
+
+## Anti-patterns
+
+❌ **Rule bez context w `.docs/`** — Cursor user widzi krótką regułę ale nie rozumie why. Claude Code agent może misinterpret.
+
+❌ **`.docs/` decyzja bez rule** — Cursor user nie wie, że to applies. Convention nie enforced w IDE.
+
+❌ **Duplicate full content w obu** — krótka rule + długie wyjaśnienie w `.docs/` z linkami stąd. NIE copy-paste całe sekcje.
+
+❌ **Stale linki** — gdy rename plików w `.docs/`, update wszystkie linki w rules.
+
+## Patterns
+
+✅ **Rule = TL;DR z `.docs/`**:
+```mdc
+# Rule body
+- Use Anthropic SKILL.md format
+- Frontmatter wymagane: name, description, when_to_use
+
+❌ Custom skill format (np. config.json)
+✅ skills/<name>/SKILL.md z YAML frontmatter
+
+## Powiązane
+- `.docs/IMPLEMENTATION.md § Phase 2` — full Anthropic Skills convention deep dive
+```
+
+✅ **Cross-link in BOTH directions**:
+- Rule linkuje do `.docs/IMPLEMENTATION.md § Phase X` po context
+- `.docs/IMPLEMENTATION.md` linkuje do `.cursor/rules/NNN-<slug>.mdc` po enforced policy
+
+## Pre-implementation note
+
+Teraz (przed Phase 1), większość rules są **principles**. Po każdej Phase agent MUSI:
+1. Review wszystkie touched rules — czy nadal accurate?
+2. Update z lessons learned (new patterns / anti-patterns wykryte)
+3. Sync `.docs/IMPLEMENTATION.md § Phase X` z actual implementation
+
+## Powiązane
+
+- `.cursor/rules/README.md` — index wszystkich rules
+- `CLAUDE.md` (root) — delegator dla Claude Code
+- `.docs/AGENT_PROMPT.md` § rules — non-negotiable list

@@ -1,0 +1,196 @@
+---
+description: "MCP server bridge — stdio + 3 tools (get_design_state / regenerate_section / pick_variant). Klient w roduq-web-starter używa przez .claude/settings.json"
+globs: "src/mcp-server.ts,src/mcp/**/*"
+alwaysApply: false
+---
+
+# MCP Server Bridge
+
+## Purpose
+
+MCP (Model Context Protocol) server stdio expose'uje Open Design state do Claude Code w **client repos** (typically z roduq-web-starter scaffold).
+
+Klient w `roduq-web-starter`/`.claude/settings.json`:
+
+```jsonc
+{
+  "mcpServers": {
+    "roduq-design": {
+      "command": "node",
+      "args": ["C:/Users/stefa/GIT/roduq-design-generator-studio/dist/mcp-server.js"],
+      "env": { "ROduQ_OUTPUT_DIR": "C:/Users/stefa/.roduq/output" }
+    }
+  }
+}
+```
+
+## Tools exposed (3 minimum)
+
+### `get_design_state(clientId: string)`
+
+Returns current artifacts dla client:
+
+```typescript
+{
+  meta: { generatedAt, skill, variant },
+  tokens: { ... },
+  sections: { ... },
+  content: { ... },
+  status: "complete" | "in-progress" | "error"
+}
+```
+
+### `regenerate_section(clientId: string, sectionId: string, hint?: string)`
+
+Re-runs single section generation z optional hint dla LLM:
+
+```typescript
+// Example call:
+{
+  clientId: "acme-corp",
+  sectionId: "hero",
+  hint: "Make it more focused na enterprise z social proof"
+}
+// → updates sections.json + meta.json (regeneratedAt timestamp)
+```
+
+### `pick_variant(clientId: string, variantNum: number)`
+
+Updates meta.json z user's variant selection (post multi-variant generation):
+
+```typescript
+// Example call:
+{ clientId: "acme-corp", variantNum: 2 }
+// → meta.json.variant = 2, tokens/sections/content updated do variant 2 versions
+```
+
+## Transport: stdio
+
+✅ **Stdio MCP** (standard pattern for Claude Code MCP servers):
+```typescript
+import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+
+const server = new Server(
+  { name: "roduq-design", version: "1.0.0" },
+  { capabilities: { tools: {} } }
+);
+
+server.setRequestHandler(/* ListToolsRequest */, async () => ({
+  tools: [
+    { name: "get_design_state", description: "...", inputSchema: { ... } },
+    { name: "regenerate_section", description: "...", inputSchema: { ... } },
+    { name: "pick_variant", description: "...", inputSchema: { ... } },
+  ],
+}));
+
+server.setRequestHandler(/* CallToolRequest */, async (request) => {
+  // dispatch do tool handler
+});
+
+const transport = new StdioServerTransport();
+await server.connect(transport);
+```
+
+❌ **HTTP transport** — używamy tylko dla future server-side deployments (out of scope v1).
+
+## File system access
+
+✅ **MCP server reads from `~/.roduq/output/<client-id>/`**:
+```typescript
+const outputDir = process.env.ROduQ_OUTPUT_DIR ?? path.join(os.homedir(), ".roduq", "output");
+const clientDir = path.join(outputDir, clientId);
+```
+
+✅ **Atomic reads** — check `.complete` flag exists przed reading:
+```typescript
+if (!await fileExists(path.join(clientDir, ".complete"))) {
+  return { status: "in-progress", message: "Generation nie ukończony" };
+}
+```
+
+## Schema validation w tools
+
+✅ **Every tool input** validated z Zod:
+```typescript
+const GetDesignStateInput = z.object({
+  clientId: z.string().min(1).regex(/^[a-z0-9-]+$/),
+});
+
+const result = GetDesignStateInput.safeParse(request.params.arguments);
+if (!result.success) {
+  return { error: { code: "INVALID_PARAMS", message: result.error.message } };
+}
+```
+
+## Error handling
+
+✅ **Structured errors** w MCP responses:
+```typescript
+{
+  content: [{ type: "text", text: "..." }],
+  isError: true,
+}
+```
+
+❌ **NIE throw** w handlers — return structured error response.
+
+## Anti-patterns
+
+❌ **MCP server modyfies state w sister repo** (roduq-web-starter) — read-only z `.roduq/output/`. Updates do meta.json/sections.json zostają w tym repo.
+
+❌ **MCP server runs design generation locally** w Claude Code session — design generation odbywa się w UI Open Design app (Next.js). MCP tylko expose'uje wyniki.
+
+❌ **Synchronous file operations** — wszystko async.
+
+❌ **No tool description** — Claude Code wymaga dla tool discovery.
+
+## Patterns
+
+✅ **Tool dispatcher**:
+```typescript
+const TOOL_HANDLERS: Record<string, (args: never) => Promise<ToolResult>> = {
+  get_design_state: handleGetDesignState,
+  regenerate_section: handleRegenerateSection,
+  pick_variant: handlePickVariant,
+};
+
+server.setRequestHandler(CallToolRequestSchema, async (request) => {
+  const handler = TOOL_HANDLERS[request.params.name];
+  if (!handler) throw new Error(`Unknown tool: ${request.params.name}`);
+  return handler(request.params.arguments);
+});
+```
+
+✅ **Tool result format**:
+```typescript
+return {
+  content: [
+    { type: "text", text: JSON.stringify(designState, null, 2) }
+  ],
+};
+```
+
+## Testing
+
+✅ **Integration test** z MCP SDK client:
+```typescript
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+
+const client = new Client({ name: "test", version: "1.0.0" }, { capabilities: {} });
+await client.connect(/* stdio transport spawn'ujący server */);
+const result = await client.callTool({ name: "get_design_state", arguments: { clientId: "test" } });
+expect(result.content[0].text).toContain("tokens");
+```
+
+## Po Phase 6 ukończony
+
+Update `.docs/IMPLEMENTATION.md § Phase 6` z final tools list + testing notes. Verify w sample roduq-web-starter client repo że Claude Code może callować tools.
+
+## Powiązane
+
+- `.docs/IMPLEMENTATION.md § Phase 6` — pełen MCP server spec
+- `.cursor/rules/004-file-protocol.mdc` — file format MCP server reads/writes
+- [MCP specification](https://spec.modelcontextprotocol.io/)
+- [Anthropic MCP docs](https://docs.anthropic.com/en/docs/build-with-claude/mcp)
+- [MCP TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk)

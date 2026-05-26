@@ -1,0 +1,246 @@
+---
+description: "LLM provider abstraction — Anthropic primary, OpenAI/Gemini alternative. NIE hardcoded SDK calls."
+globs: "src/llm/**/*,src/skills/**/*,**/skill.ts"
+alwaysApply: false
+---
+
+# LLM Provider Abstraction
+
+## Multi-provider mandatory
+
+Klient może chcieć użyć dowolnego LLM providera. **Zero vendor lock-in**:
+
+| Provider | Use case | Default model | SDK |
+|---|---|---|---|
+| **Anthropic** (primary) | Design generation, multi-variant orchestration | `claude-sonnet-4-6` | `@anthropic-ai/sdk` |
+| **OpenAI** (alternative) | Klient z OpenAI subscription | `gpt-5` (or gpt-4.6) | `openai` |
+| **Google Gemini** (alternative) | Klient z Google Workspace | `gemini-2.5-pro` | `@google/genai` |
+
+## Provider interface
+
+```typescript
+// src/llm/types.ts
+export interface LLMProvider {
+  readonly name: string;
+  readonly defaultModel: string;
+  complete(messages: ChatMessage[], opts?: CompleteOptions): Promise<CompleteResult>;
+  stream(messages: ChatMessage[], opts?: CompleteOptions): AsyncIterable<string>;
+  countTokens(text: string): number;
+}
+
+export interface ChatMessage {
+  role: "system" | "user" | "assistant";
+  content: string;
+}
+
+export interface CompleteOptions {
+  model?: string;
+  temperature?: number;
+  maxTokens?: number;
+  responseFormat?: "text" | "json";
+}
+
+export interface CompleteResult {
+  content: string;
+  model: string;
+  inputTokens: number;
+  outputTokens: number;
+  stopReason?: string;
+}
+```
+
+## LLMRouter pattern
+
+```typescript
+// src/llm/router.ts
+export class LLMRouter {
+  private providers = new Map<string, LLMProvider>();
+  private defaultKey: string | null = null;
+
+  register(key: string, provider: LLMProvider): this {
+    this.providers.set(key, provider);
+    this.defaultKey ??= key;  // first registered = default
+    return this;
+  }
+
+  setDefault(key: string): this { /* ... */ }
+  pick(key?: string | null): LLMProvider { /* ... */ }
+  list(): string[] { return [...this.providers.keys()]; }
+  describe(): Array<{ key: string; name: string; defaultModel: string }> { /* ... */ }
+  has(key: string): boolean { return this.providers.has(key); }
+}
+```
+
+## Peer-dep design
+
+✅ **SDK installation = opt-in**. LLMRouter NIE ma direct dep na żaden LLM SDK:
+
+```typescript
+// src/llm/providers/AnthropicProvider.ts
+export interface AnthropicSdkLike {
+  messages: {
+    stream: (params: never) => never;  // typed loosely — caller wstrzykuje real SDK
+  };
+}
+
+export interface AnthropicProviderConfig {
+  sdk: AnthropicSdkLike;  // caller wstrzykuje initialized SDK instance
+}
+
+export class AnthropicProvider implements LLMProvider {
+  // ... uses config.sdk dla calls
+}
+```
+
+User installuje only SDK których chce używać:
+```bash
+pnpm add @anthropic-ai/sdk     # gdy chce Anthropic
+pnpm add openai                # gdy chce OpenAI
+pnpm add @google/genai         # gdy chce Gemini
+```
+
+## Initialization pattern
+
+```typescript
+// app startup
+import { LLMRouter, AnthropicProvider, OpenAIProvider, GeminiProvider, MockProvider } from "@/llm";
+
+const router = new LLMRouter();
+router.register("mock", new MockProvider());  // zawsze available dla dev/CI
+
+if (process.env.ANTHROPIC_API_KEY) {
+  const { default: Anthropic } = await import("@anthropic-ai/sdk");
+  const sdk = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  router.register("anthropic", new AnthropicProvider({ sdk }));
+}
+
+if (process.env.OPENAI_API_KEY) {
+  const { default: OpenAI } = await import("openai");
+  const sdk = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  router.register("openai", new OpenAIProvider({ sdk }));
+}
+
+if (process.env.GOOGLE_API_KEY) {
+  const mod = await import("@google/genai");
+  const sdk = new mod.GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
+  router.register("gemini", new GeminiProvider({ sdk }));
+}
+```
+
+## Skill execution z LLMRouter
+
+```typescript
+// src/skills/runner.ts
+export async function runSkill(
+  skillName: string,
+  input: SkillInput,
+  ctx: SkillContext,  // ctx.llmRouter wstrzykuje wybranego providera
+): Promise<SkillOutput> {
+  const skill = await loadSkill(skillName);
+  const provider = ctx.llmRouter.pick(skill.modelHint);  // skill może preferować provider
+
+  const result = await provider.complete([
+    { role: "system", content: skill.instructions },
+    { role: "user", content: input.brief },
+  ], {
+    temperature: 0.7,
+    responseFormat: "json",
+  });
+
+  return parseSkillOutput(result.content);
+}
+```
+
+## MockProvider dla dev/CI
+
+✅ **MockProvider** zawsze rejestrowana — agent może iterować bez API key:
+
+```typescript
+export class MockProvider implements LLMProvider {
+  readonly name = "Mock";
+  readonly defaultModel = "mock-1";
+
+  async complete(messages: ChatMessage[]): Promise<CompleteResult> {
+    const userMsg = messages.find(m => m.role === "user");
+    return {
+      content: `[Mock] Response to: ${userMsg?.content.slice(0, 100)}`,
+      model: "mock-1",
+      inputTokens: 100,
+      outputTokens: 50,
+    };
+  }
+
+  async *stream(messages: ChatMessage[]) {
+    yield "[Mock] ";
+    yield "streaming ";
+    yield "response.";
+  }
+
+  countTokens(text: string): number {
+    return Math.ceil(text.length / 4);  // rough heuristic
+  }
+}
+```
+
+## Anti-patterns
+
+❌ **Hardcoded SDK calls** w skill code:
+```typescript
+// ZŁY KOD
+import Anthropic from "@anthropic-ai/sdk";
+const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+const response = await client.messages.create({ ... });  // ZŁY — vendor lock-in
+```
+
+❌ **Provider check w skill**:
+```typescript
+// ZŁY KOD
+if (process.env.OPENAI_API_KEY) {
+  // call OpenAI
+} else {
+  // call Anthropic
+}
+```
+
+❌ **No fallback gdy SDK missing** — runtime crash. Use graceful warn + Mock fallback.
+
+❌ **Sync API calls** — wszystkie LLM operacje są async.
+
+## Patterns
+
+✅ **Provider-agnostic skill**:
+```typescript
+export async function generateHero(brief: string, ctx: SkillContext): Promise<HeroOutput> {
+  const provider = ctx.llmRouter.pick();  // user picks default
+  const result = await provider.complete([
+    { role: "system", content: heroInstructions },
+    { role: "user", content: brief },
+  ]);
+  return parseHero(result.content);
+}
+```
+
+✅ **JSON-mode response gdy supported**:
+```typescript
+const result = await provider.complete(messages, {
+  responseFormat: "json",  // provider opcjonalnie supports — fallback do parsing JSON z text
+});
+```
+
+✅ **Token tracking dla cost monitoring**:
+```typescript
+ctx.logger.info(`Skill ${skillName}: ${result.inputTokens} in / ${result.outputTokens} out tokens`);
+```
+
+## Po Phase 1/2 ukończony
+
+Verify wszystkie skills use LLMRouter abstraction. Add nowych providers w `src/llm/providers/` gdy potrzeba (DeepSeek / Mistral / etc.). Update tę regułę z lessons learned.
+
+## Powiązane
+
+- `.docs/IMPLEMENTATION.md § Phase 2` — Anthropic Skills convention z LLM context
+- `.cursor/rules/002-skills-convention.mdc` — skills używają tej abstrakcji
+- `roduq-web-starter/packages/llm-router/` (sister repo) — reference implementation dla pattern (read-only — NIE kopiuj kodu, kopiuj idea)
+- [Anthropic SDK](https://github.com/anthropics/anthropic-sdk-typescript)
+- [OpenAI SDK](https://github.com/openai/openai-node)
+- [Google GenAI SDK](https://github.com/googleapis/js-genai)

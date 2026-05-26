@@ -1,0 +1,126 @@
+---
+description: "Anthropic Skills convention — SKILL.md frontmatter + assets/ + references/. Skill = generator design content per industry."
+globs: "skills/**/*,**/SKILL.md"
+alwaysApply: false
+---
+
+# Skills Convention (Anthropic standard)
+
+## Struktura skill
+
+```
+skills/<skill-name>/                  # kebab-case
+├── SKILL.md                          # REQUIRED — main instructions
+├── assets/                           # static resources (templates, examples)
+│   ├── template-hero.html
+│   ├── template-features.html
+│   └── ...
+└── references/                       # additional context (markdown OK)
+    ├── inspiration.md
+    ├── content-patterns.md
+    └── target-audience.md
+```
+
+## SKILL.md frontmatter (REQUIRED)
+
+```yaml
+---
+name: roduq-saas-landing          # kebab-case, matches folder name
+description: |
+  Generate SaaS landing page z hero + features + pricing + CTA + testimonials + FAQ.
+  Use when user wants conversion-focused page dla software product.
+when_to_use: |
+  - User mentions "SaaS landing", "product page", "software website"
+  - Brief includes pricing tiers, feature comparisons
+  - Target audience = decision-makers (CTOs, founders, ops)
+model_hint: "anthropic"             # preferred provider gdy multiple available
+---
+```
+
+## SKILL.md body structure
+
+```markdown
+# <Skill Display Name>
+
+## Instructions
+
+Step-by-step procedure agent follows. Reference assets/ files via relative path.
+
+## Examples
+
+Concrete input → output examples z fixtures.
+
+## Output contract
+
+Każda skill produkuje 4 files w `~/.roduq/output/<client-id>/`:
+- `tokens.json` — design tokens (validated z JSON Schema v1)
+- `sections.json` — Payload-ready block configs
+- `content.json` — draft copy (PL + EN per section)
+- `design-system.md` — human-readable summary
+
+Patrz `.cursor/rules/004-file-protocol.mdc` dla schema details.
+```
+
+## 7 Roduq skills do implementacji
+
+| Skill | Use case | Sections | Asset templates |
+|-------|----------|----------|-----------------|
+| `roduq-saas-landing` | Software product page | hero, features, pricing, testimonials, FAQ, CTA | per section type |
+| `roduq-agency` | Kreatywna agencja | hero, services, case-studies, team, contact | portfolio grid |
+| `roduq-restaurant` | Restauracja / kawiarnia | hero, menu, gallery, reservation, location | menu cards + booking |
+| `roduq-clinic` | Gabinet (lekarz/dietetyk/psycholog) | hero, services, doctor-bio, booking, contact | service cards |
+| `roduq-real-estate` | Biuro nieruchomości | hero, search, listings, agent-bio, contact | property cards + map |
+| `roduq-product-launch` | Single-product launch | hero, features, waitlist, FAQ, social-proof | hero variants + forms |
+| `roduq-portfolio` | Portfolio freelancer/agency | hero, work, about, contact | masonry/grid layouts |
+
+## Anti-patterns
+
+❌ **Custom skill format** (np. config.json zamiast SKILL.md) — Anthropic convention jest standard.
+
+❌ **Brak when_to_use** — agent nie wie kiedy uruchomić skill.
+
+❌ **Hardcoded LLM provider w skill** (np. `import { anthropic } from "@anthropic-ai/sdk"`) — naruszenie LLM abstraction. Patrz `.cursor/rules/007-llm-providers.mdc`.
+
+❌ **Output NIE w JSON Schema v1** — naruszenie file protocol. Validation MUSI pass przed write.
+
+❌ **English-only content** — wszystkie skills MUSZĄ wspierać Polish output (test z "Łódź żółw pięć słów"). EN drafts dodatkowe.
+
+## Patterns
+
+✅ **Skill = pure data transformation**:
+```typescript
+// skills/roduq-saas-landing/index.ts (lub jak upstream organizuje)
+export async function execute(input: SkillInput, ctx: SkillContext): Promise<SkillOutput> {
+  // 1. Validate input z Zod
+  // 2. Call ctx.llm (provider-agnostic interface)
+  // 3. Parse + validate output z JSON Schema v1
+  // 4. Return SkillOutput
+}
+```
+
+✅ **Component allowlist explicit** dla generated HTML:
+```typescript
+const ALLOWED_BLOCKS = ["hero", "features", "cta", "testimonials", "pricing", "faq", "stats"];
+// MUSI match apps/marketing-starter/src/blocks/types.ts w roduq-web-starter
+```
+
+✅ **Polish-first w content.json**:
+```json
+{
+  "homepage-hero-title": {
+    "pl": "Księgowość bez nerwów. Dla freelancerów.",
+    "en": "Stress-free accounting. For freelancers."
+  }
+}
+```
+
+## Po Phase 2 ukończony
+
+Update `.docs/IMPLEMENTATION.md § Phase 2` z lessons learned + extend tę rule jeśli new patterns discovered. Patrz `.cursor/rules/009-docs-sync.mdc`.
+
+## Powiązane
+
+- `.docs/IMPLEMENTATION.md § Phase 2` — pełen Anthropic Skills convention deep dive
+- `.cursor/rules/003-design-systems.mdc` — DESIGN.md preset systems (komplementarne do skills)
+- `.cursor/rules/004-file-protocol.mdc` — JSON Schema v1 output contract
+- [Anthropic Skills docs](https://docs.anthropic.com/en/docs/build-with-claude/skills) — canonical reference

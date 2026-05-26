@@ -1,0 +1,133 @@
+---
+description: "Conventional commits + commit per phase + co-author Claude. Match roduq-web-starter workflow."
+globs: ""
+alwaysApply: true
+---
+
+# Git Workflow
+
+## Conventional commits
+
+Format: `<type>(<scope>): <subject>`
+
+### Types
+
+| Type | Use case |
+|---|---|
+| `feat` | New feature lub significant addition |
+| `fix` | Bug fix |
+| `docs` | Documentation only changes |
+| `chore` | Maintenance (deps update, config, file moves) |
+| `refactor` | Code change neither fix ani feature |
+| `test` | Adding tests, no production code change |
+| `perf` | Performance improvement |
+| `style` | Formatting only (no code logic) |
+| `ci` | CI/CD changes |
+
+### Scopes (dla tego repo)
+
+| Scope | Use case |
+|---|---|
+| `phase-N` | Phase-specific work (e.g., `feat(phase-1):`) |
+| `skills` | Skill implementations |
+| `presets` | DESIGN.md preset systems |
+| `multi-variant` | Multi-variant generator |
+| `output` | File export protocol |
+| `mcp` | MCP server |
+| `llm` | LLM provider abstraction |
+| `rules` | Cursor rules updates |
+| `deps` | Dependencies |
+| `setup` | Initial setup, fork, branding |
+
+## Commit per phase
+
+✅ **MINIMUM commit per phase** (better: per skill / per preset / per logical unit):
+
+```bash
+git commit -m "feat(phase-1): fork nexu-io/open-design + Roduq rebranding"
+git commit -m "feat(skills): roduq-saas-landing"
+git commit -m "feat(skills): roduq-agency"
+# ...
+git commit -m "feat(presets): default"
+git commit -m "feat(presets): monolith-meadow"
+# ...
+```
+
+## Co-Author footer
+
+Wszystkie commits robione przez agenta:
+
+```
+Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
+```
+
+## Multi-line commit messages
+
+✅ **Used heredoc dla multi-line** (preserves formatting):
+
+```bash
+git commit -m "$(cat <<'EOF'
+feat(skills): roduq-saas-landing z multi-section templates
+
+Implementacja Phase 2 — pierwsza z 7 Roduq skills. Anthropic SKILL.md convention:
+- Frontmatter: name + description + when_to_use + model_hint=anthropic
+- assets/template-hero.html + template-features.html + template-pricing.html + ...
+- references/inspiration.md (Stripe / Linear / Vercel)
+
+Output: tokens.json + sections.json + content.json (PL + EN) validated z JSON Schema v1.
+
+Test z 3 brief variations (SaaS B2B, SaaS B2C, DevTools) — all generate valid output.
+
+Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
+EOF
+)"
+```
+
+## Pause-after-phase protocol
+
+Po każdej Phase agent:
+1. Commit z conventional message
+2. Display summary co zostało zrobione
+3. **PAUSE** — czekaj na user `kontynuuj` lub feedback
+4. NIE start next phase autonomously
+
+## Hard rules
+
+❌ **NIE pushuj force** bez explicit user request (lub destroys upstream history)
+❌ **NIE amend published commits** (use new commits instead)
+❌ **NIE skip hooks** (`--no-verify`) bez user request
+❌ **NIE commit files which contain secrets** (`.env`, credentials.json, etc.) — check `.gitignore` first
+❌ **NIE commit pre-implementation files w masowy commit** — incremental discovery > big bang
+
+## Pre-commit checklist
+
+Przed commit:
+- [ ] Files staged są intended (`git diff --staged`)
+- [ ] Brak secret leak (check `.env` patterns w diff)
+- [ ] Tests passing (`pnpm test` jeśli applicable)
+- [ ] TypeScript clean (`pnpm typecheck`)
+- [ ] Lint clean (gdy lint setup exists)
+- [ ] CHANGELOG updated jeśli releasing version
+- [ ] `.docs/` + `.cursor/rules/` synced gdy decision/pattern change (patrz rule 009)
+
+## Branch strategy (post-implementation)
+
+- `main` — stable, production-ready
+- `develop` — integration branch (jeśli używasz)
+- `feature/<slug>` — feature branches
+- `phase-N/<slug>` — phase-specific branches (np. `phase-1/fork-setup`)
+
+Pre-implementation = wszystko direct na main (low risk gdy solo agent).
+
+## After Phase 7
+
+When implementation complete:
+- Tag v1.0.0
+- Update tego repo README z status badge
+- Update `.docs/IMPLEMENTATION.md` z final retrospective
+
+## Powiązane
+
+- `.docs/AGENT_PROMPT.md § "Execution protocol"` — phase pause-after pattern
+- `.cursor/rules/009-docs-sync.mdc` — META rule docs sync (each commit może require both)
+- [Conventional Commits spec](https://www.conventionalcommits.org/en/v1.0.0/)

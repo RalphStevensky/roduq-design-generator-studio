@@ -26,14 +26,31 @@ Cel końcowy: standalone aplikacja desktopowa (Next.js + SQLite + ~140 Anthropic
 
 Wynik: **2-5 dni manual setup → 5 minut AI-driven**.
 
-## Context (READ FIRST z roduq-web-starter repo)
+## Context (READ FIRST — dwa źródła wiedzy)
 
-1. **`docs/decisions/0003-open-design-separate-repo.md`** — DLACZEGO separate repo (NIE monorepo) — Apache-2.0 vs proprietary, upstream sync, lifecycle
-2. **`docs/DESIGN_GENERATOR_BRIDGE.md`** — Architektura symbiozy marketing-starter ↔ Open Design fork, file protocol `.roduq/output/`, @roduq/cli orchestrator flow
-3. **`docs/OPEN_DESIGN_IMPLEMENTATION.md`** — **MAIN GUIDE** — 7 phases, 1-2 weeks. Phase 1 (fork) → Phase 7 (testing). Anthropic skills convention. Industry references.
-4. **`docs/OPEN_DESIGN_DESIGN_SYSTEMS.md`** — 7 brand-agnostic visual presets (default / monolith-meadow / tech-modern / warm-editorial / brutalist / soft-pastel / dark-cinematic) z full color palettes + typography + voice + layout principles + inspiration links.
+### Step 1: Cursor rules (operational TL;DR — auto-loaded w Cursor IDE)
 
-Read all 4 docs przed startem. Nie skip.
+1. **`.cursor/rules/README.md`** ⭐ — index 9 rules + sync policy między `.docs/` + `.cursor/rules/`
+2. **`.cursor/rules/009-docs-sync.mdc`** — **META** rule: każda nowa decyzja MUSI być w obu lokalizacjach
+3. **`.cursor/rules/001-project-overview.mdc`** — repo overview
+4. Pozostałe rules (002-008) per glob match — Cursor IDE auto-loaduje, Claude Code czyta gdy zaczyna dotykać konkretne ścieżki
+
+### Step 2: Narrative documentation (deep context)
+
+5. **`.docs/decisions/0001-separate-repo.md`** — DLACZEGO separate repo (NIE monorepo) — Apache-2.0 vs proprietary, upstream sync, lifecycle
+6. **`.docs/BRIDGE.md`** — Architektura symbiozy marketing-starter ↔ Open Design fork, file protocol `.roduq/output/`, @roduq/cli orchestrator flow
+7. **`.docs/IMPLEMENTATION.md`** — **MAIN GUIDE** — 7 phases, 1-2 weeks. Phase 1 (fork) → Phase 7 (testing). Anthropic skills convention. Industry references.
+8. **`.docs/DESIGN_SYSTEMS.md`** — 7 brand-agnostic visual presets (default / monolith-meadow / tech-modern / warm-editorial / brutalist / soft-pastel / dark-cinematic) z full color palettes + typography + voice + layout principles + inspiration links.
+
+Read wszystkie przed startem. NIE skip. Cursor user czyta rules natywnie per glob, ale przy starcie warto explicit przeczytać.
+
+### Step 3 (CRITICAL): docs sync protocol
+
+Po każdej decyzji / nowym wzorcu / lesson learned → **update OBYDWA**:
+- Pełen opis + kontekst w `.docs/<plik>.md`
+- Concise actionable rule w `.cursor/rules/NNN-<slug>.mdc` z linkiem do `.docs/`
+
+Patrz `.cursor/rules/009-docs-sync.mdc` dla pełnej polityki.
 
 ## Execution plan
 
@@ -56,7 +73,7 @@ Execute phases sequentially. Commit każdy phase jako separate commit z conventi
 
 ### Phase 2 — Anthropic skills convention deep dive (~3h reading + ~6h implementation)
 
-Read OPEN_DESIGN_IMPLEMENTATION.md § 3 (Anthropic Skills Convention canonical) + study existing nexu-io/open-design skills format.
+Read IMPLEMENTATION.md § 3 (Anthropic Skills Convention canonical) + study existing nexu-io/open-design skills format.
 
 Implement 7 custom Roduq skills (każda skill = `skills/<name>/` katalog):
 
@@ -92,7 +109,7 @@ Każda skill produkuje 4 output files w `.roduq/output/<client-id>/`:
 
 ### Phase 3 — 7 DESIGN.md preset systems (~8h)
 
-Read OPEN_DESIGN_DESIGN_SYSTEMS.md (every preset spec szczegółowy). Implement w `design-systems/<name>/`:
+Read DESIGN_SYSTEMS.md (every preset spec szczegółowy). Implement w `design-systems/<name>/`:
 
 ```
 design-systems/<preset>/
@@ -126,7 +143,7 @@ Każdy preset musi pass:
 
 ### Phase 4 — Multi-variant skill (KEY DIFFERENTIATOR, ~6h)
 
-Read OPEN_DESIGN_IMPLEMENTATION.md § Phase 4.
+Read IMPLEMENTATION.md § Phase 4.
 
 Implement `skills/multi-variant/SKILL.md` które:
 1. Receives brief + audience + tone + optional brand colors
@@ -164,7 +181,7 @@ Implement deterministic file output do `${HOME}/.roduq/output/<client-id>/`:
 - `sections.v1.schema.json`
 - `content.v1.schema.json`
 
-Reference: full schema specs w OPEN_DESIGN_IMPLEMENTATION.md § Phase 5.
+Reference: full schema specs w IMPLEMENTATION.md § Phase 5.
 
 Use `ajv` library dla validation przed write. Atomic write (temp file + rename).
 
@@ -307,7 +324,7 @@ Zaczynaj.
 - [Refactoring UI](https://www.refactoringui.com/) — design quality bar
 - [JSON Schema Draft 7](https://json-schema.org/draft-07/schema) — validation standard
 - [MCP specification](https://spec.modelcontextprotocol.io/) — bridge protocol
-- This repo's `docs/OPEN_DESIGN_*` files (4 docs together)
+- This repo's `.docs/` files (4 docs together: IMPLEMENTATION.md / DESIGN_SYSTEMS.md / BRIDGE.md / decisions/0001-separate-repo.md)
 
 ## Cost estimate
 
