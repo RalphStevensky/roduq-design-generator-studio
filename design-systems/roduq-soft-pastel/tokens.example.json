@@ -1,0 +1,71 @@
+{
+  "$schema": "https://roduq.dev/schemas/v1/tokens.schema.json",
+  "version": "1.0.0",
+  "_meta": {
+    "preset": "roduq-soft-pastel",
+    "category": "wellness-education-lifestyle",
+    "tagline": "Approachable, calm, friendly. Dla wellness / education / lifestyle.",
+    "description": "Dusty pastels (lavender primary + peach + mint + sky + rose). Recoleta soft, rounded everything."
+  },
+  "tokens": {
+    "color": {
+      "surface": {
+        "default": "#FAFAFA",
+        "raised": "#FFFFFF",
+        "sunken": "#F0F0F2"
+      },
+      "ink": {
+        "primary": "#37352F",
+        "secondary": "#787774",
+        "muted": "#A5A5A0",
+        "inverse": "#FFFFFF"
+      },
+      "outline": {
+        "subtle": "rgba(55, 53, 47, 0.08)",
+        "default": "rgba(55, 53, 47, 0.16)",
+        "strong": "rgba(55, 53, 47, 0.24)"
+      },
+      "brand": {
+        "primary": "#8B7EC8",
+        "secondary": "#F4A8B5"
+      },
+      "pastel": {
+        "lavender": "#E6E0F5",
+        "peach": "#FCE7DD",
+        "mint": "#D9F0E6",
+        "sky": "#DCEAF5",
+        "rose": "#F5DCE4"
+      },
+      "status": {
+        "success": "#6BB99B",
+        "warning": "#E8B97A",
+        "danger": "#E89396"
+      }
+    },
+    "font": {
+      "display": "Recoleta, Söhne Schmal, Fraunces, -apple-system, system-ui, sans-serif",
+      "body": "Inter, Söhne, -apple-system, system-ui, sans-serif",
+      "mono": "JetBrains Mono, monospace"
+    },
+    "spacing": {
+      "3xs": "0.125rem", "2xs": "0.25rem", "xs": "0.5rem",
+      "sm": "0.875rem", "md": "1.125rem", "lg": "1.75rem",
+      "xl": "2.5rem", "2xl": "3.5rem", "3xl": "5rem", "4xl": "7rem"
+    },
+    "radii": {
+      "sm": "0.5rem", "md": "1rem", "lg": "1.5rem",
+      "xl": "2rem", "full": "9999px"
+    },
+    "fontSize": {
+      "xs": "0.75rem", "sm": "0.875rem", "base": "1rem",
+      "lg": "1.125rem", "xl": "1.25rem", "2xl": "1.5rem",
+      "3xl": "1.75rem", "4xl": "2.25rem", "5xl": "2.75rem", "6xl": "3.25rem"
+    },
+    "shadow": {
+      "sm": "0 2px 8px rgba(139, 126, 200, 0.06)",
+      "md": "0 8px 24px rgba(139, 126, 200, 0.08)",
+      "lg": "0 20px 40px rgba(139, 126, 200, 0.10)",
+      "xl": "0 32px 64px rgba(139, 126, 200, 0.12)"
+    }
+  }
+}

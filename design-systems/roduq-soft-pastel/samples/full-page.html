@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roduq Soft Pastel — Sample</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAFA; --surface: #FFFFFF; --surface-sunken: #F0F0F2;
+    --fg: #37352F; --muted: #787774; --meta: #A5A5A0;
+    --border: rgba(55,53,47,0.16); --border-soft: rgba(55,53,47,0.08);
+    --accent: #8B7EC8; --accent-on: #FFFFFF; --peach: #F4A8B5;
+    --pastel-lavender: #E6E0F5; --pastel-peach: #FCE7DD;
+    --pastel-mint: #D9F0E6; --pastel-sky: #DCEAF5;
+    --shadow-md: 0 8px 24px rgba(139, 126, 200, 0.08);
+    --shadow-lg: 0 20px 40px rgba(139, 126, 200, 0.10);
+    --font-display: "Fraunces", "Recoleta", Georgia, serif;
+    --font-body: "Inter", -apple-system, system-ui, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { font-family: var(--font-body); color: var(--fg); background: var(--bg); }
+  body { margin: 0; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  section { padding: 5rem 1.125rem; }
+  .container { max-width: 72rem; margin: 0 auto; }
+  h1, h2, h3 { font-family: var(--font-display); margin: 0; line-height: 1.2; font-weight: 600; font-variation-settings: "opsz" 60; letter-spacing: -0.01em; }
+
+  .nav { padding: 1.125rem 1.125rem; background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 10; }
+  .nav__inner { display: flex; justify-content: space-between; align-items: center; max-width: 72rem; margin: 0 auto; }
+  .nav__brand { font-family: var(--font-display); font-weight: 600; font-size: 1.5rem; }
+  .nav__brand span { color: var(--accent); }
+  .nav__links { display: flex; gap: 2rem; }
+  .nav__links a { color: var(--muted); text-decoration: none; font-size: 0.9375rem; }
+  .nav__links a:hover { color: var(--accent); }
+  .nav__cta { padding: 0.625rem 1.25rem; background: var(--accent); color: var(--accent-on); border-radius: 9999px; text-decoration: none; font-size: 0.9375rem; font-weight: 500; }
+
+  /* Hero — friendly + spacious */
+  .hero { padding: 5rem 1.125rem 6rem; position: relative; overflow: hidden; }
+  .hero__blobs { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+  .hero__blobs::before, .hero__blobs::after { content: ""; position: absolute; width: 24rem; height: 24rem; border-radius: 9999px; filter: blur(80px); opacity: 0.5; }
+  .hero__blobs::before { background: var(--pastel-lavender); top: -8rem; left: -8rem; }
+  .hero__blobs::after { background: var(--pastel-peach); bottom: -8rem; right: -8rem; }
+  .hero__grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: center; max-width: 72rem; margin: 0 auto; }
+  @media (max-width: 768px) { .hero__grid { grid-template-columns: 1fr; } }
+  .hero__eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.375rem 1.125rem; background: var(--pastel-mint); color: var(--fg); border-radius: 9999px; font-size: 0.875rem; font-weight: 500; margin-bottom: 1.5rem; }
+  .hero__title { font-size: clamp(2.5rem, 5vw, 3.25rem); margin-bottom: 1.25rem; }
+  .hero__title em { font-style: italic; color: var(--accent); }
+  .hero__subtitle { font-size: 1.25rem; color: var(--muted); margin-bottom: 2rem; max-width: 38ch; line-height: 1.6; }
+  .hero__ctas { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .btn { display: inline-flex; padding: 1rem 1.75rem; border-radius: 9999px; font-weight: 500; text-decoration: none; min-height: 48px; align-items: center; font-family: var(--font-body); }
+  .btn--primary { background: var(--accent); color: var(--accent-on); }
+  .btn--primary:hover { background: color-mix(in oklab, var(--accent), black 8%); }
+  .btn--secondary { background: var(--surface); color: var(--fg); border: 1px solid var(--border); box-shadow: var(--shadow-md); }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .hero__avatars { display: flex; align-items: center; gap: 0.75rem; }
+  .hero__avatars-stack { display: flex; }
+  .hero__avatar { width: 2rem; height: 2rem; border-radius: 9999px; border: 2px solid var(--surface); margin-left: -0.5rem; background: var(--pastel-sky); display: flex; align-items: center; justify-content: center; font-size: 0.875rem; font-weight: 600; }
+  .hero__avatar:nth-child(1) { background: var(--pastel-lavender); margin-left: 0; }
+  .hero__avatar:nth-child(2) { background: var(--pastel-peach); }
+  .hero__avatar:nth-child(3) { background: var(--pastel-mint); }
+  .hero__avatar:nth-child(4) { background: var(--pastel-sky); }
+  .hero__avatar-text { font-size: 0.875rem; color: var(--muted); }
+  .hero__visual { aspect-ratio: 1/1; background: linear-gradient(135deg, var(--pastel-lavender), var(--pastel-peach), var(--pastel-mint)); border-radius: 2rem; box-shadow: var(--shadow-lg); display: flex; align-items: center; justify-content: center; font-style: italic; color: var(--muted); }
+
+  /* Features — 3 pastel cards */
+  .features { background: var(--surface-sunken); }
+  .features__header { text-align: center; margin-bottom: 3.5rem; }
+  .features__title { font-size: clamp(2rem, 4vw, 2.75rem); margin-bottom: 1rem; }
+  .features__subtitle { color: var(--muted); max-width: 50ch; margin: 0 auto; font-size: 1.125rem; }
+  .features__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  @media (max-width: 768px) { .features__grid { grid-template-columns: 1fr; } }
+  .feature-card { padding: 2rem; background: var(--surface); border-radius: 1.5rem; box-shadow: var(--shadow-md); }
+  .feature-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .feature-card__icon { display: inline-flex; width: 3.5rem; height: 3.5rem; align-items: center; justify-content: center; border-radius: 1rem; margin-bottom: 1.25rem; font-size: 1.75rem; }
+  .feature-card:nth-child(1) .feature-card__icon { background: var(--pastel-lavender); }
+  .feature-card:nth-child(2) .feature-card__icon { background: var(--pastel-peach); }
+  .feature-card:nth-child(3) .feature-card__icon { background: var(--pastel-mint); }
+  .feature-card__title { font-size: 1.375rem; margin-bottom: 0.5rem; }
+  .feature-card__desc { color: var(--muted); font-size: 1rem; line-height: 1.6; }
+
+  /* Quote section */
+  .quote { text-align: center; }
+  .quote__inner { max-width: 48rem; margin: 0 auto; }
+  .quote blockquote { font-family: var(--font-display); font-size: clamp(1.75rem, 4vw, 2.25rem); font-style: italic; line-height: 1.35; margin: 0 0 1.5rem; color: var(--fg); }
+  .quote cite { display: flex; align-items: center; justify-content: center; gap: 1rem; font-style: normal; }
+  .quote cite img, .quote cite .avatar-fallback { width: 3rem; height: 3rem; border-radius: 9999px; background: var(--pastel-lavender); display: inline-flex; align-items: center; justify-content: center; font-weight: 600; }
+  .quote cite strong { display: block; font-weight: 600; }
+  .quote cite span { color: var(--muted); font-size: 0.9375rem; }
+
+  /* CTA */
+  .cta { text-align: center; background: linear-gradient(135deg, var(--pastel-lavender) 0%, var(--pastel-peach) 100%); }
+  .cta__title { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 1rem; max-width: 24ch; margin-inline: auto; }
+  .cta__subtitle { color: var(--muted); margin-bottom: 2rem; max-width: 50ch; margin-inline: auto; font-size: 1.125rem; }
+  .cta__trust { font-size: 0.9375rem; color: var(--muted); margin-top: 1rem; }
+
+  .footer { padding: 2rem 1.125rem; text-align: center; color: var(--meta); font-size: 0.9375rem; background: var(--bg); border-top: 1px solid var(--border-soft); }
+
+  @media (prefers-reduced-motion: reduce) { * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; } .feature-card:hover { transform: none; } }
+</style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav__inner">
+      <div class="nav__brand">Spokój<span>.</span></div>
+      <div class="nav__links">
+        <a href="#features">Jak działa</a>
+        <a href="#testimonials">Opinie</a>
+        <a href="#cta">Wypróbuj</a>
+      </div>
+      <a class="nav__cta" href="#cta">Zacznij za darmo</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero__blobs" aria-hidden="true"></div>
+    <div class="hero__grid">
+      <div>
+        <span class="hero__eyebrow">★ 12 000+ użytkowników</span>
+        <h1 class="hero__title">Codzienna <em>medytacja</em>. Bez 30 minut spokoju w grafiku.</h1>
+        <p class="hero__subtitle">Sesje 3, 5 i 10 minut. Bez aplikacji, bez logowania. Otwierasz przeglądarkę, klikasz Start.</p>
+        <div class="hero__ctas">
+          <a class="btn btn--primary" href="#cta">Spróbuj 7 dni za darmo</a>
+          <a class="btn btn--secondary" href="#features">Zobacz jak działa</a>
+        </div>
+        <div class="hero__avatars">
+          <div class="hero__avatars-stack">
+            <span class="hero__avatar">A</span>
+            <span class="hero__avatar">M</span>
+            <span class="hero__avatar">K</span>
+            <span class="hero__avatar">+</span>
+          </div>
+          <span class="hero__avatar-text">Dołączyło 247 osób w tym tygodniu</span>
+        </div>
+      </div>
+      <div class="hero__visual" aria-label="Ilustracja medytacji">Soft illustration placeholder</div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="container">
+      <header class="features__header">
+        <h2 class="features__title">Trzy proste sposoby <em>żeby zacząć</em>.</h2>
+        <p class="features__subtitle">Nie musisz nic instalować. Wszystko działa w przeglądarce. Bez tworzenia konta dla pierwszego tygodnia.</p>
+      </header>
+      <div class="features__grid">
+        <article class="feature-card">
+          <div class="feature-card__icon">🌿</div>
+          <h3 class="feature-card__title">Sesje 3-minutowe</h3>
+          <p class="feature-card__desc">Idealne na przerwę w pracy. Spróbuj między spotkaniami.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon">☁️</div>
+          <h3 class="feature-card__title">Bez logowania</h3>
+          <p class="feature-card__desc">Tydzień darmowy zanim cokolwiek od Ciebie poprosimy. Po prostu kliknij Start.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon">🌸</div>
+          <h3 class="feature-card__title">Po polsku</h3>
+          <p class="feature-card__desc">Wszystkie sesje nagrane w języku polskim. Bez tłumaczenia z angielskiego.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote" id="testimonials">
+    <div class="quote__inner">
+      <blockquote>"Spróbowałam Headspace, Calm i Endel. Spokój. jest jedyną apką która tłumaczy bez tłumaczenia — Polski głos, polskie skojarzenia."</blockquote>
+      <cite>
+        <span class="avatar-fallback">K</span>
+        <div>
+          <strong>Kasia, 34</strong>
+          <span>Warszawa · 6 miesięcy z nami</span>
+        </div>
+      </cite>
+    </div>
+  </section>
+
+  <section class="cta" id="cta">
+    <div class="container">
+      <h2 class="cta__title">Zaczynamy <em>razem</em>. Spokojnie.</h2>
+      <p class="cta__subtitle">7 dni za darmo. Bez podawania karty. Bez zobowiązań. Spróbuj.</p>
+      <a class="btn btn--primary" href="#">Spróbuj 7 dni za darmo</a>
+      <p class="cta__trust">Anulujesz jednym kliknięciem · Bez ukrytych kosztów</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    © 2026 Spokój. · <a href="#" style="color:inherit">RODO</a> · <a href="#" style="color:inherit">Regulamin</a> · Stworzone w Krakowie 🌸
+  </footer>
+</body>
+</html>

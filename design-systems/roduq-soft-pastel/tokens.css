@@ -1,0 +1,74 @@
+/* design-systems/roduq-soft-pastel/tokens.css
+ * Roduq Soft Pastel — Lavender + peach + mint. Rounded everything. Soft shadows. */
+
+:root {
+  --bg: #FAFAFA;
+  --surface: #FFFFFF;
+  --surface-warm: var(--surface);
+  --fg: #37352F;             /* Notion-style warm dark */
+  --fg-2: var(--fg);
+  --muted: #787774;
+  --meta: #A5A5A0;
+  --border: rgba(55, 53, 47, 0.16);
+  --border-soft: rgba(55, 53, 47, 0.08);
+
+  --accent: #8B7EC8;         /* lavender */
+  --accent-on: #FFFFFF;
+  --accent-hover: color-mix(in oklab, var(--accent), black 8%);
+  --accent-active: color-mix(in oklab, var(--accent), black 14%);
+
+  --success: #6BB99B;
+  --warn: #E8B97A;
+  --danger: #E89396;
+
+  --font-display: "Recoleta", "Söhne Schmal", "Fraunces", -apple-system, system-ui, sans-serif;
+  --font-body: "Inter", "Söhne", -apple-system, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-surface-default: var(--bg);
+  --color-surface-raised: var(--surface);
+  --color-surface-sunken: #F0F0F2;
+  --color-ink-primary: var(--fg);
+  --color-ink-secondary: var(--muted);
+  --color-ink-muted: var(--meta);
+  --color-ink-inverse: var(--surface);
+  --color-outline-default: var(--border);
+  --color-outline-subtle: var(--border-soft);
+  --color-outline-strong: rgba(55, 53, 47, 0.24);
+  --color-brand-primary: var(--accent);
+  --color-brand-secondary: #F4A8B5;     /* peach */
+
+  /* Pastel palette dla decorative use */
+  --pastel-lavender: #E6E0F5;
+  --pastel-peach: #FCE7DD;
+  --pastel-mint: #D9F0E6;
+  --pastel-sky: #DCEAF5;
+  --pastel-rose: #F5DCE4;
+
+  --space-3xs: 0.125rem; --space-2xs: 0.25rem;
+  --space-xs: 0.5rem; --space-sm: 0.875rem; --space-md: 1.125rem;       /* slightly more generous */
+  --space-lg: 1.75rem; --space-xl: 2.5rem; --space-2xl: 3.5rem;
+  --space-3xl: 5rem; --space-4xl: 7rem;
+
+  /* Large radii — soft feeling signature */
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+  --radius-full: 9999px;
+
+  --text-xs: 0.75rem; --text-sm: 0.875rem; --text-base: 1rem;
+  --text-lg: 1.125rem; --text-xl: 1.25rem; --text-2xl: 1.5rem;
+  --text-3xl: 1.75rem; --text-4xl: 2.25rem; --text-5xl: 2.75rem;
+  --text-6xl: 3.25rem;          /* smaller heroes — friendlier scale */
+
+  /* Soft shadows — high blur, low opacity */
+  --shadow-sm: 0 2px 8px rgba(139, 126, 200, 0.06);
+  --shadow-md: 0 8px 24px rgba(139, 126, 200, 0.08);
+  --shadow-lg: 0 20px 40px rgba(139, 126, 200, 0.10);
+  --shadow-xl: 0 32px 64px rgba(139, 126, 200, 0.12);
+
+  --container-sm: 48rem;
+  --container-md: 72rem;
+  --container-lg: 80rem;
+}
