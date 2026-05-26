@@ -1,0 +1,250 @@
+<!--
+  Hero templates dla roduq-real-estate skill.
+  Search bar prominent. Quick filters. Neighborhood expertise w eyebrow.
+-->
+
+<section class="hero hero--search" data-block-type="hero" data-variant="search-prominent">
+  <div class="hero__bg" aria-hidden="true">
+    <img src="{{hero-image}}" alt="" loading="eager">
+    <div class="hero__overlay"></div>
+  </div>
+  <div class="hero__container">
+    <span class="hero__eyebrow">{{hero-eyebrow}}</span>
+    <!-- "Boutique agencja w Warszawie · od 2014" -->
+    <h1 class="hero__title">{{hero-title}}</h1>
+    <!-- "Premium nieruchomości w Warszawie. Mokotów. Powiśle. Stare Miasto." -->
+    <p class="hero__subtitle">{{hero-subtitle}}</p>
+
+    <form class="hero__search" action="{{search-action}}" method="get">
+      <div class="hero__search-row">
+        <div class="search-field">
+          <label for="search-type" class="visually-hidden">{{search-type-label}}</label>
+          <select id="search-type" name="type">
+            <option value="sale">{{search-type-sale}}</option>
+            <option value="rent">{{search-type-rent}}</option>
+          </select>
+        </div>
+        <div class="search-field search-field--location">
+          <label for="search-location" class="visually-hidden">{{search-location-label}}</label>
+          <input
+            type="text"
+            id="search-location"
+            name="location"
+            placeholder="{{search-location-placeholder}}"
+            list="neighborhoods-list"
+            autocomplete="off"
+          >
+          <datalist id="neighborhoods-list">
+            <option value="{{neighborhood-1}}"></option>
+            <option value="{{neighborhood-2}}"></option>
+            <option value="{{neighborhood-3}}"></option>
+            <option value="{{neighborhood-4}}"></option>
+          </datalist>
+        </div>
+        <div class="search-field">
+          <label for="search-rooms" class="visually-hidden">{{search-rooms-label}}</label>
+          <select id="search-rooms" name="rooms">
+            <option value="">{{search-rooms-any}}</option>
+            <option value="1+">1+</option>
+            <option value="2+">2+</option>
+            <option value="3+">3+</option>
+            <option value="4+">4+</option>
+          </select>
+        </div>
+        <div class="search-field">
+          <label for="search-price" class="visually-hidden">{{search-price-label}}</label>
+          <select id="search-price" name="price_max">
+            <option value="">{{search-price-any}}</option>
+            <option value="500000">do 500k zł</option>
+            <option value="1000000">do 1 mln zł</option>
+            <option value="2000000">do 2 mln zł</option>
+            <option value="5000000">do 5 mln zł</option>
+            <option value="999999999">{{search-price-no-limit}}</option>
+          </select>
+        </div>
+        <button type="submit" class="hero__search-submit">
+          {{search-submit-label}} <!-- "Szukaj" -->
+        </button>
+      </div>
+      <div class="hero__search-quick">
+        <span>{{quick-label}}:</span>
+        <a href="?neighborhood={{quick-1-slug}}">{{quick-1-label}}</a>
+        <a href="?neighborhood={{quick-2-slug}}">{{quick-2-label}}</a>
+        <a href="?neighborhood={{quick-3-slug}}">{{quick-3-label}}</a>
+        <a href="?type=rent">{{quick-rent-label}}</a>
+      </div>
+    </form>
+
+    <div class="hero__trust">
+      <span>{{trust-1}}</span> <!-- "12 lat doświadczenia" -->
+      <span>{{trust-2}}</span> <!-- "850+ transakcji" -->
+      <span>{{trust-3}}</span> <!-- "Licencjonowani pośrednicy" -->
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero--search {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    color: var(--color-ink-inverse, #fff);
+    padding: var(--space-4xl, 6rem) var(--space-md, 1rem);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+  }
+
+  .hero__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.7) 100%);
+    z-index: -1;
+  }
+
+  .hero__container {
+    max-width: var(--container-md, 72rem);
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .hero__eyebrow {
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: var(--text-sm, 0.875rem);
+    font-weight: 500;
+    opacity: 0.85;
+    margin-bottom: var(--space-md, 1rem);
+  }
+
+  .hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 var(--space-md, 1rem);
+    letter-spacing: -0.02em;
+    max-width: 24ch;
+  }
+
+  .hero__subtitle {
+    font-size: var(--text-lg, 1.125rem);
+    line-height: 1.5;
+    margin: 0 0 var(--space-xl, 2rem);
+    max-width: 40ch;
+    opacity: 0.9;
+  }
+
+  .hero__search {
+    background: var(--color-surface-default);
+    color: var(--color-ink-primary);
+    padding: var(--space-md, 1rem);
+    border-radius: var(--radius-lg, 0.75rem);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+    margin-bottom: var(--space-md, 1rem);
+  }
+
+  .hero__search-row {
+    display: grid;
+    grid-template-columns: 0.8fr 2fr 1fr 1.2fr auto;
+    gap: var(--space-sm, 0.75rem);
+    align-items: center;
+  }
+
+  @media (max-width: 768px) {
+    .hero__search-row {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .search-field {
+    position: relative;
+  }
+
+  .search-field input,
+  .search-field select {
+    width: 100%;
+    padding: var(--space-md, 0.75rem);
+    border: 1px solid var(--color-outline-default);
+    border-radius: var(--radius-md, 0.5rem);
+    font-size: var(--text-base, 1rem);
+    background: var(--color-surface-default);
+    color: var(--color-ink-primary);
+    min-height: 48px;
+  }
+
+  .search-field input:focus,
+  .search-field select:focus {
+    outline: 2px solid var(--color-brand-primary);
+    outline-offset: -1px;
+    border-color: var(--color-brand-primary);
+  }
+
+  .hero__search-submit {
+    padding: var(--space-md, 0.75rem) var(--space-xl, 2rem);
+    background: var(--color-brand-primary);
+    color: var(--color-ink-inverse, #fff);
+    border: none;
+    border-radius: var(--radius-md, 0.5rem);
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 48px;
+  }
+
+  .hero__search-quick {
+    display: flex;
+    gap: var(--space-md, 1rem);
+    margin-top: var(--space-md, 1rem);
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-secondary);
+  }
+
+  .hero__search-quick a {
+    color: var(--color-brand-primary);
+    text-decoration: none;
+    padding: var(--space-3xs, 0.125rem) var(--space-sm, 0.75rem);
+    border-radius: var(--radius-full, 9999px);
+    background: var(--color-surface-raised);
+  }
+
+  .hero__trust {
+    display: flex;
+    gap: var(--space-xl, 2rem);
+    margin-top: var(--space-md, 1rem);
+    font-size: var(--text-sm, 0.875rem);
+    flex-wrap: wrap;
+  }
+
+  .hero__trust span::before {
+    content: "✓ ";
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

@@ -1,0 +1,218 @@
+<!--
+  Neighborhoods tile template dla roduq-real-estate skill.
+  Block type: "neighborhoods"
+  Local area expertise visible.
+-->
+
+<section class="neighborhoods" data-block-type="neighborhoods" data-variant="tiles-with-map">
+  <div class="neighborhoods__container">
+    <header class="neighborhoods__header">
+      <h2 class="neighborhoods__title">{{neighborhoods-title}}</h2>
+      <!-- "Nasze dzielnice" -->
+      <p class="neighborhoods__subtitle">{{neighborhoods-subtitle}}</p>
+      <!-- "Specjalizujemy się w wybranych dzielnicach. Znamy każdą klatkę." -->
+    </header>
+    <div class="neighborhoods__grid">
+      <article class="neighborhood-tile">
+        <a href="{{neighborhood-1-href}}" class="neighborhood-tile__link">
+          <div class="neighborhood-tile__photo">
+            <img src="{{neighborhood-1-image}}" alt="{{neighborhood-1-image-alt}}" loading="lazy">
+          </div>
+          <div class="neighborhood-tile__info">
+            <h3 class="neighborhood-tile__name">{{neighborhood-1-name}}</h3>
+            <!-- "Mokotów" -->
+            <p class="neighborhood-tile__character">{{neighborhood-1-character}}</p>
+            <!-- "Dzielnica młodych profesjonalistów. Restauracje, parki, dobre szkoły." -->
+            <dl class="neighborhood-tile__stats">
+              <div>
+                <dt>{{stat-1-label}}</dt>
+                <dd>{{neighborhood-1-stat-1}}</dd>
+                <!-- "17 500 zł/m²" -->
+              </div>
+              <div>
+                <dt>{{stat-2-label}}</dt>
+                <dd>{{neighborhood-1-stat-2}}</dd>
+                <!-- "47 ofert" -->
+              </div>
+              <div>
+                <dt>{{stat-3-label}}</dt>
+                <dd>{{neighborhood-1-stat-3}}</dd>
+                <!-- "45 dni avg" -->
+              </div>
+            </dl>
+            <span class="neighborhood-tile__cta">{{cta-label}} →</span>
+            <!-- "Zobacz oferty" -->
+          </div>
+        </a>
+      </article>
+
+      <article class="neighborhood-tile">
+        <a href="{{neighborhood-2-href}}" class="neighborhood-tile__link">
+          <div class="neighborhood-tile__photo">
+            <img src="{{neighborhood-2-image}}" alt="{{neighborhood-2-image-alt}}" loading="lazy">
+          </div>
+          <div class="neighborhood-tile__info">
+            <h3 class="neighborhood-tile__name">{{neighborhood-2-name}}</h3>
+            <p class="neighborhood-tile__character">{{neighborhood-2-character}}</p>
+            <dl class="neighborhood-tile__stats">
+              <div>
+                <dt>{{stat-1-label}}</dt>
+                <dd>{{neighborhood-2-stat-1}}</dd>
+              </div>
+              <div>
+                <dt>{{stat-2-label}}</dt>
+                <dd>{{neighborhood-2-stat-2}}</dd>
+              </div>
+              <div>
+                <dt>{{stat-3-label}}</dt>
+                <dd>{{neighborhood-2-stat-3}}</dd>
+              </div>
+            </dl>
+            <span class="neighborhood-tile__cta">{{cta-label}} →</span>
+          </div>
+        </a>
+      </article>
+
+      <article class="neighborhood-tile">
+        <a href="{{neighborhood-3-href}}" class="neighborhood-tile__link">
+          <div class="neighborhood-tile__photo">
+            <img src="{{neighborhood-3-image}}" alt="{{neighborhood-3-image-alt}}" loading="lazy">
+          </div>
+          <div class="neighborhood-tile__info">
+            <h3 class="neighborhood-tile__name">{{neighborhood-3-name}}</h3>
+            <p class="neighborhood-tile__character">{{neighborhood-3-character}}</p>
+            <dl class="neighborhood-tile__stats">
+              <div>
+                <dt>{{stat-1-label}}</dt>
+                <dd>{{neighborhood-3-stat-1}}</dd>
+              </div>
+              <div>
+                <dt>{{stat-2-label}}</dt>
+                <dd>{{neighborhood-3-stat-2}}</dd>
+              </div>
+              <div>
+                <dt>{{stat-3-label}}</dt>
+                <dd>{{neighborhood-3-stat-3}}</dd>
+              </div>
+            </dl>
+            <span class="neighborhood-tile__cta">{{cta-label}} →</span>
+          </div>
+        </a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .neighborhoods {
+    padding: var(--space-4xl, 6rem) var(--space-md, 1rem);
+    background: var(--color-surface-sunken);
+  }
+
+  .neighborhoods__container {
+    max-width: var(--container-md, 72rem);
+    margin: 0 auto;
+  }
+
+  .neighborhoods__header {
+    text-align: center;
+    margin-bottom: var(--space-2xl, 3rem);
+  }
+
+  .neighborhoods__title {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl, 2.25rem);
+    font-weight: 700;
+    margin: 0 0 var(--space-md, 1rem);
+  }
+
+  .neighborhoods__subtitle {
+    font-size: var(--text-lg, 1.125rem);
+    color: var(--color-ink-secondary);
+    max-width: 60ch;
+    margin: 0 auto;
+  }
+
+  .neighborhoods__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl, 2rem);
+  }
+
+  @media (max-width: 768px) {
+    .neighborhoods__grid { grid-template-columns: 1fr; }
+  }
+
+  .neighborhood-tile__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: var(--color-surface-default);
+    border-radius: var(--radius-lg, 0.75rem);
+    overflow: hidden;
+    transition: transform 0.2s ease;
+  }
+
+  .neighborhood-tile__link:hover {
+    transform: translateY(-4px);
+  }
+
+  .neighborhood-tile__photo {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+
+  .neighborhood-tile__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .neighborhood-tile__info {
+    padding: var(--space-lg, 1.5rem);
+  }
+
+  .neighborhood-tile__name {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl, 1.5rem);
+    font-weight: 600;
+    margin: 0 0 var(--space-sm, 0.75rem);
+  }
+
+  .neighborhood-tile__character {
+    font-size: var(--text-base, 1rem);
+    line-height: 1.5;
+    color: var(--color-ink-secondary);
+    margin: 0 0 var(--space-md, 1rem);
+  }
+
+  .neighborhood-tile__stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md, 1rem);
+    margin: 0 0 var(--space-md, 1rem);
+    padding: var(--space-md, 1rem) 0;
+    border-top: 1px solid var(--color-outline-subtle);
+    border-bottom: 1px solid var(--color-outline-subtle);
+  }
+
+  .neighborhood-tile__stats dt {
+    font-size: var(--text-xs, 0.75rem);
+    color: var(--color-ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .neighborhood-tile__stats dd {
+    font-family: var(--font-display);
+    font-size: var(--text-base, 1rem);
+    font-weight: 600;
+    color: var(--color-ink-primary);
+    margin: 0;
+  }
+
+  .neighborhood-tile__cta {
+    color: var(--color-brand-primary);
+    font-weight: 500;
+  }
+</style>

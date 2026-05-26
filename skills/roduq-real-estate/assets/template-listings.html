@@ -1,0 +1,274 @@
+<!--
+  Listings grid template dla roduq-real-estate skill.
+  Block type: "listings-featured"
+  Property cards z photo + price + specs + agent attribution.
+-->
+
+<section class="listings" data-block-type="listings-featured" data-variant="grid-3-col">
+  <div class="listings__container">
+    <header class="listings__header">
+      <div>
+        <h2 class="listings__title">{{listings-title}}</h2>
+        <!-- "Wybrane oferty" -->
+        <p class="listings__subtitle">{{listings-subtitle}}</p>
+      </div>
+      <a href="{{listings-view-all}}" class="listings__view-all">
+        {{view-all-label}} → <!-- "Wszystkie oferty (47)" -->
+      </a>
+    </header>
+    <div class="listings__grid">
+      <!-- Per listing card (typically 3-6 featured) -->
+      <article class="listing">
+        <a href="{{listing-1-href}}" class="listing__link">
+          <div class="listing__photo">
+            <img src="{{listing-1-image}}" alt="{{listing-1-image-alt}}" loading="lazy">
+            <span class="listing__tag listing__tag--{{listing-1-tag-type}}">{{listing-1-tag-label}}</span>
+            <!-- e.g. "Nowość" / "Obniżka" / "Premium" -->
+          </div>
+          <div class="listing__info">
+            <div class="listing__price-row">
+              <span class="listing__price">{{listing-1-price}} zł</span>
+              <span class="listing__price-per-m">{{listing-1-price-per-m}} zł/m²</span>
+            </div>
+            <h3 class="listing__title">{{listing-1-title}}</h3>
+            <!-- "Mokotów, ul. Puławska" -->
+            <div class="listing__specs">
+              <span>{{listing-1-area}} m²</span>
+              <span>{{listing-1-rooms}} {{rooms-label}}</span>
+              <span>{{listing-1-floor}}/{{listing-1-total-floors}}</span>
+              <span>{{listing-1-year}}</span>
+            </div>
+            <p class="listing__neighborhood-note">{{listing-1-neighborhood-note}}</p>
+            <!-- "3 min do metra Wilanowska. Park Morskie Oko 8 min." -->
+            <div class="listing__agent">
+              <img src="{{listing-1-agent-photo}}" alt="" class="listing__agent-photo">
+              <span class="listing__agent-name">{{listing-1-agent-name}}</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <article class="listing">
+        <a href="{{listing-2-href}}" class="listing__link">
+          <div class="listing__photo">
+            <img src="{{listing-2-image}}" alt="{{listing-2-image-alt}}" loading="lazy">
+            <span class="listing__tag listing__tag--new">{{listing-2-tag-label}}</span>
+          </div>
+          <div class="listing__info">
+            <div class="listing__price-row">
+              <span class="listing__price">{{listing-2-price}} zł</span>
+              <span class="listing__price-per-m">{{listing-2-price-per-m}} zł/m²</span>
+            </div>
+            <h3 class="listing__title">{{listing-2-title}}</h3>
+            <div class="listing__specs">
+              <span>{{listing-2-area}} m²</span>
+              <span>{{listing-2-rooms}} pokoje</span>
+              <span>{{listing-2-floor}}/{{listing-2-total-floors}}</span>
+              <span>{{listing-2-year}}</span>
+            </div>
+            <p class="listing__neighborhood-note">{{listing-2-neighborhood-note}}</p>
+            <div class="listing__agent">
+              <img src="{{listing-2-agent-photo}}" alt="" class="listing__agent-photo">
+              <span class="listing__agent-name">{{listing-2-agent-name}}</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <article class="listing">
+        <a href="{{listing-3-href}}" class="listing__link">
+          <div class="listing__photo">
+            <img src="{{listing-3-image}}" alt="{{listing-3-image-alt}}" loading="lazy">
+            <span class="listing__tag listing__tag--premium">{{listing-3-tag-label}}</span>
+          </div>
+          <div class="listing__info">
+            <div class="listing__price-row">
+              <span class="listing__price">{{listing-3-price}} zł</span>
+              <span class="listing__price-per-m">{{listing-3-price-per-m}} zł/m²</span>
+            </div>
+            <h3 class="listing__title">{{listing-3-title}}</h3>
+            <div class="listing__specs">
+              <span>{{listing-3-area}} m²</span>
+              <span>{{listing-3-rooms}} pokoje</span>
+              <span>{{listing-3-floor}}/{{listing-3-total-floors}}</span>
+              <span>{{listing-3-year}}</span>
+            </div>
+            <p class="listing__neighborhood-note">{{listing-3-neighborhood-note}}</p>
+            <div class="listing__agent">
+              <img src="{{listing-3-agent-photo}}" alt="" class="listing__agent-photo">
+              <span class="listing__agent-name">{{listing-3-agent-name}}</span>
+            </div>
+          </div>
+        </a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .listings {
+    padding: var(--space-4xl, 6rem) var(--space-md, 1rem);
+    background: var(--color-surface-default);
+  }
+
+  .listings__container {
+    max-width: var(--container-md, 72rem);
+    margin: 0 auto;
+  }
+
+  .listings__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--space-2xl, 3rem);
+    flex-wrap: wrap;
+    gap: var(--space-md, 1rem);
+  }
+
+  .listings__title {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl, 2.25rem);
+    font-weight: 700;
+    margin: 0 0 var(--space-xs, 0.5rem);
+  }
+
+  .listings__subtitle {
+    font-size: var(--text-base, 1rem);
+    color: var(--color-ink-secondary);
+    margin: 0;
+  }
+
+  .listings__view-all {
+    color: var(--color-brand-primary);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .listings__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl, 2rem);
+  }
+
+  @media (max-width: 768px) {
+    .listings__grid { grid-template-columns: 1fr; }
+  }
+
+  .listing__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid var(--color-outline-subtle);
+    border-radius: var(--radius-lg, 0.75rem);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: var(--color-surface-default);
+  }
+
+  .listing__link:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+  }
+
+  .listing__photo {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+
+  .listing__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .listing__tag {
+    position: absolute;
+    top: var(--space-md, 1rem);
+    left: var(--space-md, 1rem);
+    padding: var(--space-3xs, 0.125rem) var(--space-md, 1rem);
+    border-radius: var(--radius-full, 9999px);
+    font-size: var(--text-xs, 0.75rem);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .listing__tag--new {
+    background: var(--color-brand-primary);
+    color: var(--color-ink-inverse, #fff);
+  }
+
+  .listing__tag--premium {
+    background: #1a1a1a;
+    color: #fff;
+  }
+
+  .listing__tag--discount {
+    background: #ef4444;
+    color: #fff;
+  }
+
+  .listing__info {
+    padding: var(--space-lg, 1.5rem);
+  }
+
+  .listing__price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--space-sm, 0.75rem);
+  }
+
+  .listing__price {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl, 1.5rem);
+    font-weight: 700;
+    color: var(--color-ink-primary);
+  }
+
+  .listing__price-per-m {
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-muted);
+  }
+
+  .listing__title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg, 1.125rem);
+    font-weight: 600;
+    margin: 0 0 var(--space-sm, 0.75rem);
+  }
+
+  .listing__specs {
+    display: flex;
+    gap: var(--space-md, 1rem);
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-secondary);
+    margin-bottom: var(--space-md, 1rem);
+    padding-bottom: var(--space-md, 1rem);
+    border-bottom: 1px solid var(--color-outline-subtle);
+    flex-wrap: wrap;
+  }
+
+  .listing__neighborhood-note {
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-secondary);
+    line-height: 1.4;
+    margin: 0 0 var(--space-md, 1rem);
+  }
+
+  .listing__agent {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm, 0.75rem);
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-muted);
+  }
+
+  .listing__agent-photo {
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-full, 9999px);
+    object-fit: cover;
+  }
+</style>
