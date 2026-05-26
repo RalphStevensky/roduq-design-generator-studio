@@ -100,7 +100,7 @@ Patrz [.cursor/rules/009-docs-sync.mdc](.cursor/rules/009-docs-sync.mdc) dla pe�
 |---|---|---|---|
 | 1 | ✅ done | Fork + project setup (rebrand, license, .env) | ~4h |
 | 2 | ✅ done | 7 Roduq custom skills (saas-landing, agency, restaurant, clinic, real-estate, product-launch, portfolio) | ~6h |
-| 3 | ⏳ pending | 7 DESIGN.md preset systems | ~8h |
+| 3 | ✅ done | 7 DESIGN.md preset systems | ~8h |
 | 4 | ⏳ pending | Multi-variant skill (KEY DIFFERENTIATOR — 3 parallel) | ~6h |
 | 5 | ⏳ pending | File export protocol + JSON Schema v1 validation | ~3h |
 | 6 | ⏳ pending | MCP server bridge (stdio + 3 tools) | ~4h |

@@ -221,9 +221,87 @@ Każda skill produkuje:
 - `content.json` — draft copy (PL + EN drafts)
 - `design-system.md` — human-readable design system summary
 
-### Phase 3 — 7 DESIGN.md system presets (~8h)
+### Phase 3 — 7 DESIGN.md system presets (~8h) ✅ done
 
 **Goal**: curated brand-agnostic visual systems z różnymi aesthetics.
+
+**Deliverables (executed 2026-05-26)**:
+- ✅ 7 Roduq presets shipped — commit per preset (rule 006):
+  - `design-systems/roduq-default/` — canonical depth (z DESIGN.md + tokens.css + tokens.example.json + inspiration.md + samples/full-page.html z dark mode @media)
+  - `design-systems/roduq-monolith-meadow/` — warm earthy (sage + terracotta, Fraunces serif)
+  - `design-systems/roduq-tech-modern/` — Linear/Vercel (indigo + magenta gradient, bento, wider 80rem)
+  - `design-systems/roduq-warm-editorial/` — NYT/Substack (serif body, dropcap, 38rem article width)
+  - `design-systems/roduq-brutalist/` — B/W + RGB (Helvetica 900, radius 0, 4px borders, marquee strip)
+  - `design-systems/roduq-soft-pastel/` — wellness (lavender + peach + mint, pill buttons, soft shadows)
+  - `design-systems/roduq-dark-cinematic/` — premium SaaS dark (jet black + neon purple/cyan glows)
+- Total: 35 plików (7 presetów × 5 plików each)
+
+**Lessons learned (post-Phase-3 — sync z `.cursor/rules/003-design-systems.mdc`)**:
+
+1. **Upstream uses `tokens.css`** (CSS variables w `:root`) NIE `tokens.example.json` jak nasze docs zakładały. Per `design-systems/_schema/AGENTS.md` + observed w `design-systems/default/tokens.css` (upstream). Roduq presets provide BOTH (tokens.css upstream-compatible, tokens.example.json schema preview).
+
+2. **Upstream lint contract** w `craft/color.md` (lint-enforced via `apps/daemon/src/lint-artifact.ts`):
+   - Neutrals (70-90% pixels): `--bg`, `--surface`, `--fg`, `--muted`, `--border`
+   - Accent (5-10% pixels, max 2 visible uses per screen): `--accent` (SINGLE — NIE second accent)
+   - Accent states: `--accent-hover`, `--accent-active`, `--accent-on`
+   - Semantic (0-5% pixels): `--success`, `--warn`, `--danger`
+   - Typography: `--font-display`, `--font-body`, `--font-mono`
+   - "accent-overuse" P1 fires at >6 inline occurrences per screen
+   - "raw-hex >12 outside :root" P1
+   - "indigo laundering" P0
+
+3. **Schema extensions** (optional per brand): `--fg-2`, `--meta`, `--surface-warm`, `--border-soft` — alias to richer siblings via `var()` gdy brand doesn't differentiate (per upstream default tokens.css comments). Roduq presets follow this.
+
+4. **Naming collision resolution**: upstream already has `default/` and `warm-editorial/` presets (matching our planned names). Solution: `roduq-` prefix dla all 7 presets (e.g., `roduq-default`) — coexist z upstream's 152 existing design systems bez overwrite.
+
+5. **Dual-layer token strategy** (Roduq solution dla upstream compat + skills templates compat):
+   ```css
+   :root {
+     /* Layer 1: Upstream contract (lint-enforced) */
+     --bg: ...; --surface: ...; --fg: ...; --accent: ...;
+     /* Layer 2: Roduq extensions (used by skills templates from Phase 2) */
+     --color-brand-primary: var(--accent);
+     --color-surface-default: var(--surface);
+     --space-*: ...; --text-*: ...; --radius-*: ...;
+   }
+   ```
+   Phase 2 skills templates (which use `--color-brand-primary` etc.) work transparently z any Roduq preset.
+
+6. **Pure black/white anti-pattern** (per `craft/color.md` § "Dark themes"):
+   - Light mode: `#FAFAFA` bg, `#0F0F0F` fg (NIE pure)
+   - Dark mode: `#0F0F0F` bg, `#F0F0F0` fg (NIE pure)
+   - Exception: Brutalist preset uses pure #000/#FFF (brutalism wants harshness — anti-vibration rule deliberately broken dla style statement)
+
+7. **Dark mode accent-hover requires white-mix** (NIE black-mix used dla light mode). Light accents na dark bg already low-contrast — darkening makes worse. White-mix lightens for hover visibility. Confirmed w roduq-dark-cinematic + per upstream tokens.css comments (kami brand pattern).
+
+8. **Per-preset radii signature** (visual differentiator):
+   - Brutalist: 0 (anti-rounded)
+   - Default/Tech Modern/Dark Cinematic: 0.5-0.875rem md (standard)
+   - Monolith Meadow: 0.625-1rem md (slightly softer)
+   - Soft Pastel: 1-1.5rem md (signature soft)
+   - Warm Editorial: 0.125-0.25rem md (tight print feel)
+
+9. **Per-preset container width** (layout signature):
+   - Warm Editorial: 38rem article / 48rem md (narrow 65ch optimal reading)
+   - Default / Monolith Meadow: 70-72rem
+   - Tech Modern / Dark Cinematic: 76-80rem (wider for tech)
+   - Brutalist: 84rem (very wide asymmetric layouts)
+
+10. **Per-preset font scale variations**:
+    - Brutalist: 8rem hero (statement)
+    - Tech Modern: 5rem hero (large but readable)
+    - Dark Cinematic: 4.5rem hero
+    - Default / Monolith Meadow: 3.75-4rem hero
+    - Soft Pastel: 3.25rem hero (friendlier scale)
+    - Warm Editorial: 5.5rem hero z serif (display typography weight)
+
+11. **Polish character handling** verified w all 7 presets — Inter, Fraunces, Lora, Recoleta, Geist all support full Polish charset (ą/ć/ę/ł/ń/ó/ś/ź/ż).
+
+12. **Google Fonts preconnect pattern** used w samples że include free fonts (Fraunces, Inter, JetBrains Mono, Lora). Premium fonts (Tiempos, Söhne, Recoleta proper) listed w font-family stack z free fallbacks.
+
+13. **`prefers-reduced-motion: reduce`** respected w all 7 samples — animation/transitions duration overridden do 0.01ms. Brutalist marquee, soft-pastel hover transforms, dark-cinematic badge pulse — all safe.
+
+14. **HTML samples scope**: Phase 3 delivered full-page.html primary dla each preset (renderable demo). Individual section samples (hero/features/cta/pricing) NIE created — can be derived from skills templates Phase 2 z token substitution gdy needed. Future Phase 7 może add per-preset section samples gdy visual regression testing wymaga.
 
 Każdy preset to katalog `design-systems/<name>/` z:
 - `DESIGN.md` — main spec (palette, typography, voice, layout principles)

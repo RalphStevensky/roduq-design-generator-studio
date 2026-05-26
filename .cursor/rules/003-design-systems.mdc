@@ -8,18 +8,20 @@ alwaysApply: false
 
 ## Struktura preset
 
+⚠ **Upstream convention** (confirmed Phase 3): primary file is `tokens.css` (CSS variables w `:root`) NIE `tokens.example.json`. Per `design-systems/_schema/AGENTS.md` + upstream lint w `apps/daemon/src/lint-artifact.ts`. Roduq presets provide both.
+
 ```
-design-systems/<preset-name>/
+design-systems/roduq-<preset-name>/         # ← prefix 'roduq-' żeby coexist z upstream 152 design systems
 ├── DESIGN.md                      # Main spec (palette + typography + voice + layout)
-├── tokens.example.json            # Working example dla referencji
+├── tokens.css                     # PRIMARY — upstream contract + Roduq extensions
+├── tokens.example.json            # SECONDARY — JSON Schema v1 preview dla Phase 5 ajv
 ├── inspiration.md                 # Industry references + URL screenshots
 └── samples/
-    ├── hero.html                  # HTML snippet
-    ├── features.html
-    ├── cta.html
-    ├── pricing.html
-    └── full-page.html             # Combined sample dla preview
+    └── full-page.html             # Renderable demo (primary canonical artifact)
+    # Optional dla canonical preset (default): hero.html / features.html / cta.html / pricing.html
 ```
+
+Naming: ZAWSZE `roduq-<preset>` prefix. Upstream already has `default/`, `warm-editorial/` — naming collision avoided via prefix.
 
 ## 7 presets do zaimplementowania
 
@@ -35,22 +37,67 @@ design-systems/<preset-name>/
 
 Pełne specs (palettes / typography / voice / layout / inspiration) w `.docs/DESIGN_SYSTEMS.md`.
 
+## tokens.css structure — dual-layer (Roduq pattern)
+
+Upstream lint contract z `craft/color.md` (lint-enforced):
+- Neutrals: `--bg`, `--surface`, `--fg`, `--muted`, `--border`
+- Accent: `--accent` (SINGLE — max 2 visible uses per screen)
+- Accent states: `--accent-hover`, `--accent-active`, `--accent-on`
+- Semantic: `--success`, `--warn`, `--danger`
+- Typography: `--font-display`, `--font-body`, `--font-mono`
+
+Schema extensions (optional, alias to richer siblings via `var()`): `--fg-2`, `--meta`, `--surface-warm`, `--border-soft`.
+
+Roduq dual-layer pattern:
+```css
+:root {
+  /* Layer 1: Upstream contract (lint-enforced) */
+  --bg: #FAFAFA; --surface: #FFFFFF; --fg: #0F0F0F;
+  --muted: #525252; --meta: #737373;
+  --border: #E5E5E5; --border-soft: rgba(15,15,15,0.06);
+  --accent: #2563EB; --accent-on: #FFFFFF;
+  --accent-hover: color-mix(in oklab, var(--accent), black 8%);
+  --success: #10B981; --warn: #F59E0B; --danger: #EF4444;
+  --font-display: "Inter Tight", ...; --font-body: "Inter", ...; --font-mono: ...;
+
+  /* Layer 2: Roduq extensions (used by skills templates from Phase 2) */
+  --color-brand-primary: var(--accent);
+  --color-surface-default: var(--surface);
+  --space-md: 1rem; --text-base: 1rem; --radius-md: 0.5rem;
+  /* ... full scale tokens — see roduq-default/tokens.css canonical */
+}
+```
+
+Dark mode: `--accent-hover` z `white` mix (NIE black) — light accents na dark bg already low-contrast.
+
 ## DESIGN.md structure (per preset)
 
 ```markdown
-# <Preset Name>
+# Roduq <Preset Name> — Tagline
 
-**Tagline**: "..."
+> Category: ...
+> Tagline: "..."
 
-## Color palette
+## Visual Theme & Atmosphere
+...
 
-```json
-{
-  "surface": { "default": "#...", "raised": "#...", "sunken": "#..." },
-  "ink": { "primary": "#...", "secondary": "#...", "muted": "#..." },
-  "outline": { "subtle": "rgba(...)", "default": "rgba(...)", "strong": "rgba(...)" },
-  "brand": { "primary": "#...", "secondary": "#..." }
-}
+## Color Palette
+...
+
+## Typography
+...
+
+## Voice & Tone
+...
+
+## Layout Principles
+...
+
+## Inspiration
+[Links to refs]
+
+## Compatible Roduq Skills
+[Matrix of which 7 skills work z this preset]
 ```
 
 ## Typography
@@ -135,9 +182,19 @@ Każdy preset MUSI pass:
 - Polish character render (visual test z "Łódź żółw pięć")
 - Schema validation tokens.example.json
 
-## Po Phase 3 ukończony
+## Po Phase 3 ukończony ✅
 
-Update `.docs/DESIGN_SYSTEMS.md` z final specs + lessons learned. Patrz `.cursor/rules/009-docs-sync.mdc`.
+7 Roduq presets shipped (35 files). Phase 3 lessons captured w `.docs/IMPLEMENTATION.md § Phase 3`:
+- tokens.css PRIMARY (NIE tokens.example.json) — upstream convention
+- Upstream lint contract: --bg/--surface/--fg/--muted/--border/--accent (single)
+- Naming collision: `roduq-` prefix dla coexistence z upstream's 152 presets
+- Dual-layer tokens: upstream contract + Roduq extensions (var() aliases)
+- Pure #000/#FFF anti-pattern (use #0F0F0F / #FAFAFA, Brutalist exception)
+- Dark mode accent-hover requires white-mix NIE black-mix
+- Per-preset radii signature (Brutalist 0, Soft Pastel 1-1.5rem, Default 0.5rem)
+- Per-preset container width (Warm Editorial 38rem narrow / Brutalist 84rem wide)
+- Per-preset font scale (Brutalist 8rem hero / Soft Pastel 3.25rem friendly)
+- Polish charset verified w all 7 fonts (Inter, Fraunces, Lora, Recoleta, Geist)
 
 ## Powiązane
 
