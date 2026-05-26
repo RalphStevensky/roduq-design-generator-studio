@@ -40,6 +40,10 @@ tsconfig.tsbuildinfo
 **/.claude-sessions/*
 
 .cursor/
+# Roduq exception: keep our shared operational rules tracked.
+# Local Cursor IDE state (.cursor/index.json, etc.) still ignored.
+!.cursor/rules/
+!.cursor/rules/**
 .agents/
 .opencode/
 .claude/

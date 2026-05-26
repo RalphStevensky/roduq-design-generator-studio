@@ -36,22 +36,50 @@ $ roduq new acme-corp --with-design-generator
 
 ## 3. Phase plan (7 fazy, ~1-2 tygodnie Opus solo)
 
-### Phase 1 — Fork + project setup (~4h)
+### Phase 1 — Fork + project setup (~4h) ✅ done
 
 **Goal**: standalone repo z working Open Design upstream + Roduq branding.
 
-**Deliverables**:
-1. Fork [nexu-io/open-design](https://github.com/nexu-io/open-design) → `roduq-design-generator-studio`
-2. Verify upstream działa: `pnpm install && pnpm dev` — http://localhost:8765 ładuje
-3. Rebrand minimal: logo + favicon + page title "Roduq Design Studio"
-4. README z Roduq context + link do `roduq-web-starter` documentation
-5. License preservation: Apache-2.0 (upstream) + Roduq additions under proprietary (LICENSE-ROduQ.txt)
-6. `.env.example` z required keys (ANTHROPIC_API_KEY lub OPENAI_API_KEY dla skill execution)
+**Deliverables (executed 2026-05-26)**:
+1. ✅ Merge upstream nexu-io/open-design@v0.8.0 z `--allow-unrelated-histories` (zachowano Roduq `.docs/` + `.cursor/rules/` + CLAUDE.md + README.md)
+2. ⚠ Verify upstream działa: `pnpm tools-dev` (NIE `pnpm dev` — patrz lessons learned) — install NIE wykonany jeszcze (Windows: wymaga VS Build Tools 2022+ dla better-sqlite3 compile, user może uruchomić oddzielnie)
+3. ✅ Rebrand minimal: page title `apps/web/app/layout.tsx` → "Roduq Design Studio", loading text `apps/web/app/[[...slug]]/client-app.tsx` → "Loading Roduq Design Studio…"
+4. ✅ README rewrite z Roduq context + status badges per phase + reference do `roduq-web-starter` + upstream
+5. ✅ License: Apache-2.0 preserved (upstream LICENSE) + Roduq additions w `LICENSE-ROduQ.txt` (proprietary, dual-license model)
+6. ✅ `.env.example` z 3 LLM provider keys (ANTHROPIC_API_KEY primary / OPENAI_API_KEY / GOOGLE_API_KEY) + ROduQ_OUTPUT_DIR
 
-**Acceptance**:
-- `pnpm dev` uruchamia UI
-- User widzi Roduq branding
-- Upstream skills działają (np. generate-button)
+**Acceptance criteria revision**:
+- Page title shows "Roduq Design Studio" w browser tab — ✅ done (via layout.tsx edit)
+- Loading shell shows "Loading Roduq Design Studio…" — ✅ done
+- Logo/favicon swap — ❌ DEFERRED (Roduq brand assets not yet provided; upstream Open Design assets stay until user delivers Roduq logo.svg + favicon.png)
+- `pnpm tools-dev` uruchamia UI — ⚠ NIE verified yet (requires user to run `pnpm install` first; better-sqlite3 may require ~2min compile on Windows)
+
+**Lessons learned (post-Phase-1 — sync z `.cursor/rules/001-project-overview.mdc`)**:
+
+1. **Dev command** = `pnpm tools-dev` (NIE `pnpm dev`!). Per upstream `AGENTS.md` line 53: "Use `pnpm tools-dev` as the only local development lifecycle entry point. Do not add or restore root lifecycle aliases: `pnpm dev`, `pnpm dev:all`, `pnpm daemon`, `pnpm preview`, or `pnpm start`."
+
+2. **Ports** są configurable via `--daemon-port` / `--web-port` flags, exported jako `OD_PORT` (daemon proxy target) / `OD_WEB_PORT` (web listener). **NIE hardcoded 8765** — actual defaults differ. NIE używaj `NEXT_PORT`.
+
+3. **Windows native = best-effort** per `AGENTS.md` § "Windows native":
+   - `corepack enable` fails z EPERM (cannot write shims to Program Files) — use `npm install -g pnpm@10.33.2`
+   - `better-sqlite3` no prebuilt binary dla win32/Node 24 — compiles from source via node-gyp (~2min), wymaga VS Build Tools 2022+
+   - Primary OS support: macOS / Linux / WSL2
+
+4. **`.cursor/` w gitignore upstream** (line 42). Nasze rules dodane PRZED .gitignore są tracked, ale future additions wpadną w ignored bez exception. **Fix**: dodano `!.cursor/rules/` + `!.cursor/rules/**` exception w `.gitignore`.
+
+5. **Upstream NIE jest single Next.js app** — to **monorepo** z 6 apps + 11+ packages + tools/* + e2e:
+   - `apps/web` (Next.js 16 + Turbopack), `apps/daemon` (od CLI + /api/*), `apps/desktop` (Electron), `apps/packaged` (packaged runtime), `apps/landing-page` (Astro 6), `apps/telemetry-worker`
+   - `packages/contracts` (pure TS web/daemon contract), `packages/host`, `packages/platform`, `packages/sidecar`, `packages/sidecar-proto`, `packages/plugin-runtime`, `packages/registry-protocol`, `packages/agui-adapter`, `packages/diagnostics`, `packages/download`
+
+6. **Capability dual-track rule** (`AGENTS.md` § "Capability exposure"): every user-facing capability must reach both web UI AND `od` CLI. Roduq additions w Phase 2-7 (skills + multi-variant + MCP) MUSZĄ follow ten pattern jeśli touch user-facing features.
+
+7. **App naming channel-distinct**: stable = "Open Design", beta = "Open Design Beta", preview = "Open Design Preview". Roduq distribution = own channel TBD (np. "Roduq Design Studio" jako stable equivalent). Nie ma sense forcować name swap w upstream-shared assets dopóki nie packagujemy własnej distribution.
+
+8. **CONTEXT.md upstream** zawiera domain glossary (Project / Normal Artifact / Live Artifact / etc.) — should respect terminology gdy piszemy Roduq additions interacting z upstream concepts.
+
+9. **AGENTS.md (root)** to canonical agent guide upstream — bardziej szczegółowy niż CLAUDE.md upstream stub (`@AGENTS.md`). Nasze CLAUDE.md (root) jest Roduq-specific; agent powinien czytać OBA gdy zaczyna pracę.
+
+10. **`@open-design/web`** ma już @anthropic-ai/sdk 0.32.1 + openai 6.38.0 dependencies — provider abstraction Roduq będzie reuse'ować te SDK installations zamiast re-installing.
 
 ### Phase 2 — Skills convention deep dive (~3h docs + ~6h implementation)
 

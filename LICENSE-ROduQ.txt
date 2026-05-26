@@ -1,0 +1,57 @@
+Roduq Additions License
+=======================
+
+Copyright (c) 2026 Roduq (rafal.stefaniszyn@roduq.com)
+All Rights Reserved.
+
+This license applies ONLY to "Roduq Additions" — defined as files added to the
+roduq-design-generator-studio repository on top of the upstream fork base
+(nexu-io/open-design Apache-2.0). All upstream code (everything inherited from
+nexu-io/open-design at fork point and subsequent upstream cherry-picks) remains
+licensed under the Apache License, Version 2.0 — see ./LICENSE.
+
+Roduq Additions include (non-exhaustive list):
+- skills/roduq-*               — Roduq custom Anthropic skills
+- design-systems/roduq-*       — Roduq custom brand-agnostic preset systems
+- design-systems/monolith-meadow, design-systems/warm-editorial, …
+  (any preset directory added by Roduq, not present in upstream)
+- skills/multi-variant         — Roduq multi-variant generator (3 designs parallel)
+- src/output/, src/export/, schemas/  — JSON Schema v1 file protocol implementation
+  (per .roduq/output/{client-id}/ contract documented in .docs/BRIDGE.md)
+- src/mcp-server.ts, src/mcp/  — MCP stdio bridge for Claude Code in client repos
+- .docs/                       — Roduq narrative documentation (ADRs, design specs, plans)
+- .cursor/rules/               — Roduq operational rules (Anthropic Skills convention,
+                                  file protocol policy, coding standards, etc.)
+- CLAUDE.md, LICENSE-ROduQ.txt — Roduq agent delegator + this license file
+- .env.example                 — Roduq multi-provider configuration template
+
+Permitted Use
+-------------
+Roduq Additions may be used internally by Roduq employees and contractors solely
+for the purposes of building, deploying, and maintaining client websites under
+the Roduq agency engagement model. Redistribution outside Roduq, sublicensing
+to third parties, or use in any non-Roduq product is prohibited without
+explicit written permission from Roduq.
+
+No Warranty
+-----------
+THE ROduQ ADDITIONS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL ROduQ
+BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ROduQ ADDITIONS OR THE USE OR OTHER DEALINGS IN THE ROduQ ADDITIONS.
+
+Upstream License (Apache-2.0)
+-----------------------------
+For the upstream code inherited from nexu-io/open-design, see ./LICENSE.
+That code carries the original Apache License, Version 2.0 and continues to be
+governed by its terms. Nothing in this Roduq Additions License modifies or
+overrides the upstream Apache-2.0 license; the two licenses coexist:
+  - Upstream files (anything not in the "Roduq Additions" list above) ─→ Apache-2.0
+  - Roduq Additions (per list above)                                  ─→ This file
+
+Contact
+-------
+Roduq Agency
+Rafał Stefaniszyn (rafal.stefaniszyn@roduq.com)

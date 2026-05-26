@@ -18,14 +18,36 @@ User wpisuje brief → AI generuje 3 design variants równolegle → user wybier
 
 **Czas**: brief → AI-designed website w **<5 min** (vs. 2-5 dni manual setup).
 
-## Stack
+## Stack (post-Phase-1, upstream nexu-io/open-design@v0.8.0 merged)
 
-- **Next.js 16** (upstream — UI w przeglądarce)
-- **SQLite** (upstream — local-first state)
-- **Anthropic skills** convention (SKILL.md format)
-- **MCP server** stdio dla Claude Code bridge
-- **TypeScript strict** + exactOptionalPropertyTypes
-- **LLM providers**: Anthropic Claude Sonnet 4.6+ (primary) / OpenAI GPT-5 / Google Gemini 2.5 Pro
+**Monorepo** — pnpm@10.33.2 + node ~24 + TypeScript 5.9.3. Workspace: `apps/*` + `packages/*` + `tools/*` + `e2e`.
+
+**Apps**:
+- `apps/web` — Next.js 16 App Router + React 18 (UI runtime, Turbopack dev)
+- `apps/daemon` — local privileged daemon + `od` CLI bin + `/api/*` + skills + design systems + artifacts + static serving
+- `apps/desktop` — Electron shell (discovers web URL via sidecar IPC)
+- `apps/packaged` — thin packaged Electron runtime entry
+- `apps/landing-page` — Astro 6 marketing site
+- `apps/telemetry-worker` — separate worker process
+
+**Packages** (`packages/*`): contracts (pure TS web/daemon DTOs) / host / platform (OS process primitives) / sidecar / sidecar-proto / plugin-runtime / registry-protocol / agui-adapter / diagnostics / download.
+
+**Content directories**: `skills/` (functional skills) + `design-systems/` (brand DESIGN.md files) + `design-templates/` (rendering catalogue) + `craft/` (universal craft rules) + `prompt-templates/` + `templates/`.
+
+**Local persistence**: Better-sqlite3 (SQLite) — `.od/app.sqlite` (gitignored) z project metadata + per-project artifacts.
+
+**Roduq additions** (per LICENSE-ROduQ.txt):
+- `skills/roduq-*` — 7 custom Anthropic skills
+- `design-systems/*` — 7 Roduq brand-agnostic presets (default, monolith-meadow, tech-modern, warm-editorial, brutalist, soft-pastel, dark-cinematic)
+- `skills/multi-variant` — 3 designs parallel generator
+- `src/output/`, `schemas/` — JSON Schema v1 file protocol
+- `src/mcp-server.ts` — Claude Code MCP bridge
+
+**Dev lifecycle**: `pnpm tools-dev` (NIE `pnpm dev` — patrz rule 005-coding-standards + AGENTS.md § "Local lifecycle"). Ports via `--daemon-port` / `--web-port` flags, exported jako `OD_PORT` / `OD_WEB_PORT`.
+
+**Windows native = best-effort** per upstream AGENTS.md. Wymaga VS Build Tools 2022+ dla `better-sqlite3` compile (~2min). `corepack enable` fails (EPERM) — use `npm install -g pnpm@10.33.2` directly.
+
+**LLM providers** (abstraction layer Roduq — patrz rule 007): Anthropic Claude Sonnet 4.6+ (primary) / OpenAI GPT-5 (alternative) / Google Gemini 2.5 Pro (alternative) / Mock (CI/dev).
 
 ## Sister repo
 
@@ -35,17 +57,17 @@ User wpisuje brief → AI generuje 3 design variants równolegle → user wybier
 
 ## Phase plan (7 fazy)
 
-| # | Goal | Scope |
-|---|------|-------|
-| 1 | Fork + setup | Rebrand, license, .env |
-| 2 | 7 Roduq skills | saas-landing / agency / restaurant / clinic / real-estate / product-launch / portfolio |
-| 3 | 7 DESIGN.md presets | default / monolith-meadow / tech-modern / warm-editorial / brutalist / soft-pastel / dark-cinematic |
-| 4 | Multi-variant skill | 3 designs parallel (Conservative / Modern / Bold) |
-| 5 | File export protocol | JSON Schema v1 ajv validation |
-| 6 | MCP server bridge | stdio + 3 tools |
-| 7 | Testing + polish | Unit + integration + visual regression |
+| # | Status | Goal | Scope |
+|---|---|------|-------|
+| 1 | ✅ done | Fork + setup | Merge upstream + Roduq rebrand + LICENSE-ROduQ.txt + .env.example |
+| 2 | ⏳ pending | 7 Roduq skills | saas-landing / agency / restaurant / clinic / real-estate / product-launch / portfolio |
+| 3 | ⏳ pending | 7 DESIGN.md presets | default / monolith-meadow / tech-modern / warm-editorial / brutalist / soft-pastel / dark-cinematic |
+| 4 | ⏳ pending | Multi-variant skill | 3 designs parallel (Conservative / Modern / Bold) |
+| 5 | ⏳ pending | File export protocol | JSON Schema v1 ajv validation |
+| 6 | ⏳ pending | MCP server bridge | stdio + 3 tools |
+| 7 | ⏳ pending | Testing + polish | Unit + integration + visual regression |
 
-Pełen plan: `.docs/IMPLEMENTATION.md`.
+Pełen plan + lessons learned per phase: `.docs/IMPLEMENTATION.md`.
 
 ## Non-negotiable rules (TL;DR)
 

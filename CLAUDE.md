@@ -4,9 +4,22 @@
 
 ## Co to za repo
 
-`roduq-design-generator-studio` = **AI-driven design generator** dla Roduq agency. Fork [nexu-io/open-design](https://github.com/nexu-io/open-design) (Next.js 16 + SQLite + Anthropic skills) z Roduq customizations.
+`roduq-design-generator-studio` = **AI-driven design generator** dla Roduq agency. Fork [nexu-io/open-design](https://github.com/nexu-io/open-design) (Apache-2.0) z Roduq customizations.
 
-**Status**: Pre-implementation. Repo zainicjowane jako empty git repo. Czeka na agent execution per `.docs/AGENT_PROMPT.md`.
+**Stack (post-Phase-1, upstream merged)**:
+- Monorepo `pnpm@10.33.2` + `node ~24` + TypeScript `5.9.3`
+- `apps/web` — Next.js 16 App Router + React 18 (UI runtime, Turbopack dev)
+- `apps/daemon` — local privileged daemon + `od` CLI bin + `/api/*` + skills + design systems + artifacts + static serving
+- `apps/desktop` — Electron shell (discovers web URL via sidecar IPC)
+- `apps/packaged` — packaged Electron runtime entry (release builds)
+- `apps/landing-page` — Astro 6 marketing site
+- `apps/telemetry-worker` — separate worker
+- `packages/*` — contracts / host / platform / sidecar / sidecar-proto / plugin-runtime / registry-protocol / agui-adapter / diagnostics / download
+- Top-level content dirs: `skills/`, `design-systems/`, `design-templates/`, `craft/`, `prompt-templates/`, `templates/`
+
+**Dev command**: `pnpm tools-dev` (NIE `pnpm dev` — per upstream `AGENTS.md`). Ports via `--daemon-port` / `--web-port` flags, exported as `OD_PORT` / `OD_WEB_PORT`. **Windows native = best-effort** (better-sqlite3 wymaga VS Build Tools 2022+, `corepack enable` fails — use `npm install -g pnpm@10.33.2`).
+
+**Status**: Phase 1 ✅ done (fork merged, Roduq rebrand applied). Phase 2-7 pending — czeka na agent execution per `.docs/AGENT_PROMPT.md`.
 
 ## Misja
 
@@ -83,15 +96,15 @@ Patrz [.cursor/rules/009-docs-sync.mdc](.cursor/rules/009-docs-sync.mdc) dla pe�
 
 7 faz definiowanych w `.docs/AGENT_PROMPT.md` § "Execution plan":
 
-| Phase | Goal | Estimated time |
-|---|---|---|
-| 1 | Fork + project setup (rebrand, license, .env) | ~4h |
-| 2 | 7 Roduq custom skills (saas-landing, agency, restaurant, clinic, real-estate, product-launch, portfolio) | ~6h |
-| 3 | 7 DESIGN.md preset systems | ~8h |
-| 4 | Multi-variant skill (KEY DIFFERENTIATOR — 3 parallel) | ~6h |
-| 5 | File export protocol + JSON Schema v1 validation | ~3h |
-| 6 | MCP server bridge (stdio + 3 tools) | ~4h |
-| 7 | Testing + production polish | ~6h |
+| Phase | Status | Goal | Estimated time |
+|---|---|---|---|
+| 1 | ✅ done | Fork + project setup (rebrand, license, .env) | ~4h |
+| 2 | ⏳ pending | 7 Roduq custom skills (saas-landing, agency, restaurant, clinic, real-estate, product-launch, portfolio) | ~6h |
+| 3 | ⏳ pending | 7 DESIGN.md preset systems | ~8h |
+| 4 | ⏳ pending | Multi-variant skill (KEY DIFFERENTIATOR — 3 parallel) | ~6h |
+| 5 | ⏳ pending | File export protocol + JSON Schema v1 validation | ~3h |
+| 6 | ⏳ pending | MCP server bridge (stdio + 3 tools) | ~4h |
+| 7 | ⏳ pending | Testing + production polish | ~6h |
 
 **Total**: ~37h Opus solo + ~$45-70 LLM tokens.
 
