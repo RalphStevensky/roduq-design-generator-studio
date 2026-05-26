@@ -1,0 +1,227 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "https://roduq.dev/schemas/v1/tokens.schema.json",
+  "title": "Roduq Design Tokens v1",
+  "description": "Validates tokens.json output produced by Roduq skills. Defines color/font/spacing/radii structure consumed by @roduq/cli in roduq-web-starter (injected as CSS variables in src/styles/client-theme.css).",
+  "type": "object",
+  "required": ["$schema", "version", "generatedAt", "tokens"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "const": "https://roduq.dev/schemas/v1/tokens.schema.json"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^1\\.[0-9]+\\.[0-9]+$",
+      "description": "Semver version of this schema. Major version locked at 1 — breaking changes increment to v2."
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "generatedBy": {
+      "type": "string",
+      "description": "Generator identification (e.g., 'roduq-design-generator-studio@1.0.0')"
+    },
+    "sourcePrompt": {
+      "type": "string",
+      "description": "Original user brief that triggered generation"
+    },
+    "selectedVariant": {
+      "type": "integer",
+      "enum": [1, 2, 3],
+      "description": "Variant number when produced via multi-variant skill"
+    },
+    "_meta": {
+      "type": "object",
+      "description": "Free-form metadata (preset name, category, generation context)",
+      "properties": {
+        "preset": { "type": "string", "pattern": "^roduq-" },
+        "category": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+    "tokens": {
+      "type": "object",
+      "required": ["color", "font", "spacing", "radii"],
+      "properties": {
+        "color": {
+          "type": "object",
+          "required": ["surface", "ink", "outline", "brand"],
+          "properties": {
+            "surface": {
+              "type": "object",
+              "required": ["default", "raised", "sunken"],
+              "properties": {
+                "default": { "$ref": "#/definitions/colorValue" },
+                "raised": { "$ref": "#/definitions/colorValue" },
+                "sunken": { "$ref": "#/definitions/colorValue" },
+                "muted": { "$ref": "#/definitions/colorValue" },
+                "elevated": { "$ref": "#/definitions/colorValue" }
+              }
+            },
+            "ink": {
+              "type": "object",
+              "required": ["primary", "secondary"],
+              "properties": {
+                "primary": { "$ref": "#/definitions/colorValue" },
+                "secondary": { "$ref": "#/definitions/colorValue" },
+                "muted": { "$ref": "#/definitions/colorValue" },
+                "inverse": { "$ref": "#/definitions/colorValue" }
+              }
+            },
+            "outline": {
+              "type": "object",
+              "required": ["default"],
+              "properties": {
+                "subtle": { "$ref": "#/definitions/colorValue" },
+                "default": { "$ref": "#/definitions/colorValue" },
+                "strong": { "$ref": "#/definitions/colorValue" }
+              }
+            },
+            "brand": {
+              "type": "object",
+              "required": ["primary"],
+              "properties": {
+                "primary": { "$ref": "#/definitions/colorValue" },
+                "secondary": { "$ref": "#/definitions/colorValue" },
+                "tertiary": { "$ref": "#/definitions/colorValue" }
+              }
+            },
+            "status": {
+              "type": "object",
+              "properties": {
+                "success": { "$ref": "#/definitions/colorValue" },
+                "warning": { "$ref": "#/definitions/colorValue" },
+                "danger": { "$ref": "#/definitions/colorValue" },
+                "info": { "$ref": "#/definitions/colorValue" }
+              }
+            },
+            "gradient": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string",
+                "pattern": "^(linear-gradient|radial-gradient|conic-gradient)\\("
+              }
+            },
+            "glow": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "pastel": {
+              "type": "object",
+              "description": "Optional pastel palette (used by roduq-soft-pastel preset)",
+              "additionalProperties": { "$ref": "#/definitions/colorValue" }
+            }
+          }
+        },
+        "font": {
+          "type": "object",
+          "required": ["display", "body"],
+          "properties": {
+            "display": { "type": "string", "minLength": 1 },
+            "body": { "type": "string", "minLength": 1 },
+            "mono": { "type": "string" }
+          }
+        },
+        "spacing": {
+          "type": "object",
+          "required": ["md"],
+          "properties": {
+            "3xs": { "$ref": "#/definitions/lengthValue" },
+            "2xs": { "$ref": "#/definitions/lengthValue" },
+            "xs": { "$ref": "#/definitions/lengthValue" },
+            "sm": { "$ref": "#/definitions/lengthValue" },
+            "md": { "$ref": "#/definitions/lengthValue" },
+            "lg": { "$ref": "#/definitions/lengthValue" },
+            "xl": { "$ref": "#/definitions/lengthValue" },
+            "2xl": { "$ref": "#/definitions/lengthValue" },
+            "3xl": { "$ref": "#/definitions/lengthValue" },
+            "4xl": { "$ref": "#/definitions/lengthValue" }
+          }
+        },
+        "radii": {
+          "type": "object",
+          "required": ["md"],
+          "properties": {
+            "sm": { "$ref": "#/definitions/lengthValue" },
+            "md": { "$ref": "#/definitions/lengthValue" },
+            "lg": { "$ref": "#/definitions/lengthValue" },
+            "xl": { "$ref": "#/definitions/lengthValue" },
+            "full": { "$ref": "#/definitions/lengthValue" }
+          }
+        },
+        "fontSize": {
+          "type": "object",
+          "properties": {
+            "xs": { "$ref": "#/definitions/lengthValue" },
+            "sm": { "$ref": "#/definitions/lengthValue" },
+            "base": { "$ref": "#/definitions/lengthValue" },
+            "lg": { "$ref": "#/definitions/lengthValue" },
+            "xl": { "$ref": "#/definitions/lengthValue" },
+            "2xl": { "$ref": "#/definitions/lengthValue" },
+            "3xl": { "$ref": "#/definitions/lengthValue" },
+            "4xl": { "$ref": "#/definitions/lengthValue" },
+            "5xl": { "$ref": "#/definitions/lengthValue" },
+            "6xl": { "$ref": "#/definitions/lengthValue" }
+          }
+        },
+        "lineHeight": {
+          "type": "object",
+          "additionalProperties": {
+            "oneOf": [
+              { "type": "number", "minimum": 1, "maximum": 3 },
+              { "type": "string", "pattern": "^[0-9.]+$" }
+            ]
+          }
+        },
+        "shadow": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "container": {
+          "type": "object",
+          "properties": {
+            "sm": { "$ref": "#/definitions/lengthValue" },
+            "md": { "$ref": "#/definitions/lengthValue" },
+            "lg": { "$ref": "#/definitions/lengthValue" }
+          }
+        },
+        "borderWidth": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/definitions/lengthValue" }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "colorValue": {
+      "type": "string",
+      "minLength": 1,
+      "description": "CSS color value — hex, rgb(a), hsl(a), color-mix, var(), oklab, oklch supported.",
+      "anyOf": [
+        { "pattern": "^#[0-9A-Fa-f]{3,8}$" },
+        { "pattern": "^rgba?\\(" },
+        { "pattern": "^hsla?\\(" },
+        { "pattern": "^oklab\\(" },
+        { "pattern": "^oklch\\(" },
+        { "pattern": "^color-mix\\(" },
+        { "pattern": "^var\\(--" },
+        { "enum": ["transparent", "currentColor", "inherit"] }
+      ]
+    },
+    "lengthValue": {
+      "type": "string",
+      "minLength": 1,
+      "description": "CSS length value — rem, em, px, %, ch, vh, vw, or unitless (line-height).",
+      "anyOf": [
+        { "pattern": "^[0-9.]+(rem|em|px|%|ch|vh|vw|vmin|vmax)?$" },
+        { "pattern": "^9999px$" },
+        { "enum": ["0", "auto", "100%"] }
+      ]
+    }
+  }
+}

@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "https://roduq.dev/schemas/v1/meta-multi-variant.schema.json",
+  "title": "Roduq Multi-Variant Meta v1",
+  "description": "Validates meta-multi-variant.json — tracks 3 parallel variant generations + user selection state. Produced by skills/multi-variant orchestrator.",
+  "type": "object",
+  "required": ["$schema", "version", "type", "clientId", "generatedAt", "industrySkill", "variants"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "const": "https://roduq.dev/schemas/v1/meta-multi-variant.schema.json"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^1\\.[0-9]+\\.[0-9]+$"
+    },
+    "type": {
+      "type": "string",
+      "const": "multi-variant"
+    },
+    "clientId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "industrySkill": {
+      "type": "string",
+      "pattern": "^roduq-",
+      "description": "Detected industry skill used dla all 3 variants (e.g., 'roduq-saas-landing')."
+    },
+    "skill": {
+      "type": "string",
+      "const": "multi-variant",
+      "description": "Always 'multi-variant' for this meta type."
+    },
+    "prompt": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Original user brief."
+    },
+    "executionTimeMs": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total wall-clock time for all 3 variants (parallel — should be roughly max(t1, t2, t3))."
+    },
+    "totalTokensUsed": {
+      "type": "object",
+      "properties": {
+        "input": { "type": "integer", "minimum": 0 },
+        "output": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "totalCostUsd": {
+      "type": "number",
+      "minimum": 0
+    },
+    "variants": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": { "$ref": "#/definitions/variant" }
+    },
+    "selectedVariant": {
+      "type": ["integer", "null"],
+      "enum": [1, 2, 3, null],
+      "default": null,
+      "description": "User's selected variant. null until user picks via UI or API."
+    },
+    "userPick": {
+      "type": ["integer", "null"],
+      "enum": [1, 2, 3, null],
+      "default": null,
+      "description": "Same as selectedVariant — kept for explicit history."
+    },
+    "userPickedAt": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "default": null
+    },
+    "regenerations": {
+      "type": "array",
+      "description": "Log of regenerations after initial 3-variant run (gdy user clicks Regeneruj for a specific variant).",
+      "items": {
+        "type": "object",
+        "required": ["variantId", "regeneratedAt", "hint"],
+        "properties": {
+          "variantId": { "type": "integer", "enum": [1, 2, 3] },
+          "regeneratedAt": { "type": "string", "format": "date-time" },
+          "hint": { "type": "string" },
+          "executionTimeMs": { "type": "integer", "minimum": 0 }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "variant": {
+      "type": "object",
+      "required": ["id", "label", "preset", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "integer", "enum": [1, 2, 3] },
+        "label": {
+          "type": "string",
+          "enum": ["Conservative", "Modern", "Bold"]
+        },
+        "preset": {
+          "type": "string",
+          "pattern": "^roduq-"
+        },
+        "presetSource": {
+          "type": "string",
+          "enum": ["matrix", "user-override"],
+          "default": "matrix",
+          "description": "Whether preset was selected from default 7×3 matrix or user-overridden."
+        },
+        "presetDefault": {
+          "type": "string",
+          "pattern": "^roduq-",
+          "description": "Matrix default preset (recorded when user overrides for transparency)."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["complete", "timeout", "error", "in-progress"]
+        },
+        "executionTimeMs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tokensUsed": {
+          "type": "object",
+          "properties": {
+            "input": { "type": "integer", "minimum": 0 },
+            "output": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "tokensCount": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of design tokens generated (for sanity checks)."
+        },
+        "sectionsCount": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of homepage blocks generated."
+        },
+        "contentKeys": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of draftCopy keys generated."
+        },
+        "error": {
+          "type": "object",
+          "required": ["code", "message"],
+          "properties": {
+            "code": { "type": "string" },
+            "message": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

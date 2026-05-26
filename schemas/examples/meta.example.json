@@ -1,0 +1,25 @@
+{
+  "$schema": "https://roduq.dev/schemas/v1/meta.schema.json",
+  "version": "1.0.0",
+  "type": "single",
+  "clientId": "acme-accounting",
+  "generatedAt": "2026-05-26T20:30:00Z",
+  "skill": "roduq-saas-landing",
+  "prompt": "SaaS dla freelancerów księgowych. Audience 30-40, profesjonalni ale przeładowani. Tone: konkretny, ciepły. USP: automatyczne faktury + prognozy cashflow.",
+  "variant": 1,
+  "variantLabel": "Conservative",
+  "preset": "roduq-tech-modern",
+  "llmProvider": "anthropic",
+  "model": "claude-sonnet-4-6",
+  "executionTimeMs": 18432,
+  "tokensUsed": {
+    "input": 12450,
+    "output": 9870
+  },
+  "estimatedCostUsd": 0.124,
+  "schemaVersions": {
+    "tokens": "1.0.0",
+    "sections": "1.0.0",
+    "content": "1.0.0"
+  }
+}

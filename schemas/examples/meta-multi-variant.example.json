@@ -1,0 +1,58 @@
+{
+  "$schema": "https://roduq.dev/schemas/v1/meta-multi-variant.schema.json",
+  "version": "1.0.0",
+  "type": "multi-variant",
+  "clientId": "acme-accounting",
+  "generatedAt": "2026-05-26T20:30:00Z",
+  "industrySkill": "roduq-saas-landing",
+  "skill": "multi-variant",
+  "prompt": "SaaS dla freelancerów księgowych. Audience 30-40, profesjonalni ale przeładowani. Tone: konkretny, ciepły. USP: automatyczne faktury + prognozy cashflow.",
+  "executionTimeMs": 24300,
+  "totalTokensUsed": {
+    "input": 37200,
+    "output": 28100
+  },
+  "totalCostUsd": 0.412,
+  "variants": [
+    {
+      "id": 1,
+      "label": "Conservative",
+      "preset": "roduq-tech-modern",
+      "presetSource": "matrix",
+      "status": "complete",
+      "executionTimeMs": 18432,
+      "tokensUsed": { "input": 12450, "output": 9870 },
+      "tokensCount": 47,
+      "sectionsCount": 7,
+      "contentKeys": 38
+    },
+    {
+      "id": 2,
+      "label": "Modern",
+      "preset": "roduq-dark-cinematic",
+      "presetSource": "matrix",
+      "status": "complete",
+      "executionTimeMs": 22150,
+      "tokensUsed": { "input": 12380, "output": 9420 },
+      "tokensCount": 51,
+      "sectionsCount": 7,
+      "contentKeys": 38
+    },
+    {
+      "id": 3,
+      "label": "Bold",
+      "preset": "roduq-brutalist",
+      "presetSource": "matrix",
+      "status": "complete",
+      "executionTimeMs": 24300,
+      "tokensUsed": { "input": 12370, "output": 8810 },
+      "tokensCount": 38,
+      "sectionsCount": 6,
+      "contentKeys": 32
+    }
+  ],
+  "selectedVariant": 1,
+  "userPick": 1,
+  "userPickedAt": "2026-05-26T20:34:12Z",
+  "regenerations": []
+}

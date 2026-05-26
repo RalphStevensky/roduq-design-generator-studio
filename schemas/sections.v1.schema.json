@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "https://roduq.dev/schemas/v1/sections.schema.json",
+  "title": "Roduq Sections v1 — Page block configurations",
+  "description": "Validates sections.json output produced by Roduq skills. Block types match marketing-starter blocks/types.ts in roduq-web-starter (canonical source). @roduq/cli reads this to seed Payload CMS blocks.",
+  "type": "object",
+  "required": ["$schema", "version", "homepage"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "const": "https://roduq.dev/schemas/v1/sections.schema.json"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^1\\.[0-9]+\\.[0-9]+$"
+    },
+    "homepage": {
+      "type": "object",
+      "required": ["blocks"],
+      "additionalProperties": false,
+      "properties": {
+        "blocks": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 20,
+          "items": { "$ref": "#/definitions/block" }
+        }
+      }
+    },
+    "pages": {
+      "type": "object",
+      "description": "Additional pages keyed by route (e.g., '/cennik', '/o-nas'). Polish routes preferred.",
+      "patternProperties": {
+        "^/[a-z0-9-/]+$": {
+          "type": "object",
+          "required": ["blocks"],
+          "additionalProperties": false,
+          "properties": {
+            "blocks": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/definitions/block" }
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "definitions": {
+    "block": {
+      "type": "object",
+      "required": ["blockType"],
+      "properties": {
+        "blockType": {
+          "type": "string",
+          "description": "Block type — MUST match apps/marketing-starter/src/blocks/types.ts in roduq-web-starter (canonical).",
+          "enum": [
+            "hero",
+            "social-proof",
+            "logos-grid",
+            "features",
+            "services",
+            "case-studies",
+            "stats",
+            "pricing",
+            "testimonials",
+            "faq",
+            "cta",
+            "menu-featured",
+            "menu-full",
+            "gallery",
+            "reservation",
+            "location",
+            "doctor-bio",
+            "booking",
+            "trust",
+            "listings-featured",
+            "neighborhoods",
+            "agents",
+            "market-insights",
+            "story",
+            "waitlist",
+            "work-grid",
+            "about",
+            "skills",
+            "contact",
+            "intro",
+            "process",
+            "team"
+          ]
+        },
+        "variant": {
+          "type": "string",
+          "description": "Block variant slug (e.g., 'centered', 'split-right', '3-col-icons'). Each block type defines own variants."
+        },
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "eyebrow": { "type": "string" },
+        "ctaPrimary": { "$ref": "#/definitions/cta" },
+        "ctaSecondary": { "$ref": "#/definitions/cta" },
+        "items": {
+          "type": "array",
+          "items": { "type": "object" }
+        },
+        "imageRef": {
+          "type": "string",
+          "description": "Reference to imagePrompts key in content.json"
+        }
+      },
+      "additionalProperties": true
+    },
+    "cta": {
+      "type": "object",
+      "required": ["label"],
+      "properties": {
+        "label": { "type": "string", "minLength": 1, "maxLength": 50 },
+        "href": { "type": "string" },
+        "variant": {
+          "type": "string",
+          "enum": ["primary", "secondary", "ghost", "destructive"]
+        }
+      }
+    }
+  }
+}

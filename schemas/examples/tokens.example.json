@@ -1,0 +1,93 @@
+{
+  "$schema": "https://roduq.dev/schemas/v1/tokens.schema.json",
+  "version": "1.0.0",
+  "generatedAt": "2026-05-26T20:30:00Z",
+  "generatedBy": "roduq-design-generator-studio@1.0.0",
+  "sourcePrompt": "SaaS dla freelancerów księgowych. Audience 30-40, profesjonalni ale przeładowani. Tone: konkretny, ciepły. USP: automatyczne faktury + prognozy cashflow.",
+  "selectedVariant": 1,
+  "_meta": {
+    "preset": "roduq-tech-modern",
+    "category": "developer-tools-saas",
+    "description": "Conservative variant — clean B2B + cobalt accent."
+  },
+  "tokens": {
+    "color": {
+      "surface": {
+        "default": "#FFFFFF",
+        "raised": "#FAFAFA",
+        "sunken": "#F5F5F5"
+      },
+      "ink": {
+        "primary": "#000000",
+        "secondary": "#52525B",
+        "muted": "#A1A1AA",
+        "inverse": "#FFFFFF"
+      },
+      "outline": {
+        "subtle": "rgba(0, 0, 0, 0.06)",
+        "default": "rgba(0, 0, 0, 0.12)",
+        "strong": "rgba(0, 0, 0, 0.2)"
+      },
+      "brand": {
+        "primary": "#5E5CE6",
+        "secondary": "#FF2EAB",
+        "tertiary": "#0EA5E9"
+      },
+      "gradient": {
+        "hero": "linear-gradient(135deg, #5E5CE6 0%, #FF2EAB 100%)"
+      },
+      "status": {
+        "success": "#10B981",
+        "warning": "#F59E0B",
+        "danger": "#EF4444"
+      }
+    },
+    "font": {
+      "display": "Geist, Inter Display, Inter Tight, -apple-system, system-ui, sans-serif",
+      "body": "Geist, Inter, -apple-system, system-ui, sans-serif",
+      "mono": "Geist Mono, JetBrains Mono, ui-monospace, monospace"
+    },
+    "spacing": {
+      "3xs": "0.125rem",
+      "2xs": "0.25rem",
+      "xs": "0.5rem",
+      "sm": "0.75rem",
+      "md": "1rem",
+      "lg": "1.5rem",
+      "xl": "2rem",
+      "2xl": "3rem",
+      "3xl": "4rem",
+      "4xl": "6rem"
+    },
+    "radii": {
+      "sm": "0.25rem",
+      "md": "0.5rem",
+      "lg": "0.75rem",
+      "xl": "1rem",
+      "full": "9999px"
+    },
+    "fontSize": {
+      "xs": "0.75rem",
+      "sm": "0.875rem",
+      "base": "1rem",
+      "lg": "1.125rem",
+      "xl": "1.25rem",
+      "2xl": "1.5rem",
+      "3xl": "1.875rem",
+      "4xl": "2.5rem",
+      "5xl": "3.5rem",
+      "6xl": "5rem"
+    },
+    "lineHeight": {
+      "tight": 1.05,
+      "snug": 1.2,
+      "normal": 1.5,
+      "relaxed": 1.625
+    },
+    "container": {
+      "sm": "48rem",
+      "md": "80rem",
+      "lg": "88rem"
+    }
+  }
+}

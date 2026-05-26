@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "https://roduq.dev/schemas/v1/content.schema.json",
+  "title": "Roduq Content v1 — Draft copy",
+  "description": "Validates content.json output produced by Roduq skills. Polish primary (required) + English drafts (optional). @roduq/cli seeds Payload CMS with these values.",
+  "type": "object",
+  "required": ["$schema", "version", "siteSettings", "draftCopy"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "const": "https://roduq.dev/schemas/v1/content.schema.json"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^1\\.[0-9]+\\.[0-9]+$"
+    },
+    "siteSettings": {
+      "type": "object",
+      "required": ["siteName", "tagline"],
+      "additionalProperties": false,
+      "properties": {
+        "siteName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "tagline": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "metaDescription": {
+          "type": "string",
+          "maxLength": 160,
+          "description": "SEO meta description, 140-160 chars optimal"
+        },
+        "language": {
+          "type": "string",
+          "enum": ["pl", "en", "pl-en"],
+          "default": "pl-en"
+        },
+        "footer": {
+          "type": "object",
+          "properties": {
+            "copyright": { "type": "string" },
+            "socialLinks": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["platform", "url"],
+                "properties": {
+                  "platform": {
+                    "type": "string",
+                    "enum": ["linkedin", "twitter", "github", "instagram", "facebook", "youtube", "tiktok", "behance", "dribbble", "other"]
+                  },
+                  "url": { "type": "string", "format": "uri" }
+                }
+              }
+            },
+            "address": { "type": "string" },
+            "nip": {
+              "type": "string",
+              "pattern": "^[0-9]{10}$",
+              "description": "Polish NIP — 10 digits"
+            },
+            "regon": {
+              "type": "string",
+              "pattern": "^[0-9]{9,14}$",
+              "description": "Polish REGON — 9 or 14 digits"
+            }
+          }
+        }
+      }
+    },
+    "draftCopy": {
+      "type": "object",
+      "description": "Keyed copy strings. Convention: '<page>-<section>-<element>' (e.g., 'homepage-hero-title'). Polish required, EN optional.",
+      "minProperties": 1,
+      "patternProperties": {
+        "^[a-z0-9-]+$": { "$ref": "#/definitions/bilingualString" }
+      },
+      "additionalProperties": false
+    },
+    "imagePrompts": {
+      "type": "object",
+      "description": "AI image generation prompts keyed by imageRef (referenced from sections.json blocks).",
+      "patternProperties": {
+        "^[a-z0-9-]+$": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 1000
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "definitions": {
+    "bilingualString": {
+      "type": "object",
+      "required": ["pl"],
+      "additionalProperties": false,
+      "properties": {
+        "pl": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Polish content — required. Must support Polish diacritics (ą/ć/ę/ł/ń/ó/ś/ź/ż)."
+        },
+        "en": {
+          "type": "string",
+          "description": "English draft — optional but recommended for international audience."
+        }
+      }
+    }
+  }
+}

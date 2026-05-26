@@ -1,0 +1,108 @@
+{
+  "$schema": "https://roduq.dev/schemas/v1/sections.schema.json",
+  "version": "1.0.0",
+  "homepage": {
+    "blocks": [
+      {
+        "blockType": "hero",
+        "variant": "centered",
+        "eyebrow": "homepage-hero-eyebrow",
+        "title": "homepage-hero-title",
+        "subtitle": "homepage-hero-subtitle",
+        "ctaPrimary": { "label": "homepage-hero-cta-primary", "href": "#signup", "variant": "primary" },
+        "ctaSecondary": { "label": "homepage-hero-cta-secondary", "href": "#demo", "variant": "secondary" },
+        "imageRef": "hero-1"
+      },
+      {
+        "blockType": "social-proof",
+        "variant": "logos-strip",
+        "items": [
+          { "name": "Acme Corp", "logoRef": "logo-acme" },
+          { "name": "Beta Inc", "logoRef": "logo-beta" },
+          { "name": "Gamma LLC", "logoRef": "logo-gamma" }
+        ]
+      },
+      {
+        "blockType": "features",
+        "variant": "3-col-icons",
+        "title": "features-section-title",
+        "subtitle": "features-section-subtitle",
+        "items": [
+          { "icon": "zap", "title": "feature-1-title", "description": "feature-1-description" },
+          { "icon": "trending-up", "title": "feature-2-title", "description": "feature-2-description" },
+          { "icon": "link", "title": "feature-3-title", "description": "feature-3-description" }
+        ]
+      },
+      {
+        "blockType": "pricing",
+        "variant": "3-tier",
+        "title": "pricing-section-title",
+        "subtitle": "pricing-section-subtitle",
+        "items": [
+          {
+            "name": "tier-1-name",
+            "price": "0 zł",
+            "period": "tier-1-period",
+            "cta": { "label": "tier-1-cta", "href": "#signup-free" },
+            "features": ["tier-1-feature-1", "tier-1-feature-2", "tier-1-feature-3"]
+          },
+          {
+            "name": "tier-2-name",
+            "price": "49 zł",
+            "period": "tier-2-period",
+            "highlighted": true,
+            "badge": "tier-2-badge",
+            "cta": { "label": "tier-2-cta", "href": "#signup-pro", "variant": "primary" },
+            "features": ["tier-2-feature-1", "tier-2-feature-2", "tier-2-feature-3", "tier-2-feature-4"]
+          },
+          {
+            "name": "tier-3-name",
+            "price": "199 zł",
+            "period": "tier-3-period",
+            "cta": { "label": "tier-3-cta", "href": "#contact-sales" },
+            "features": ["tier-3-feature-1", "tier-3-feature-2", "tier-3-feature-3"]
+          }
+        ]
+      },
+      {
+        "blockType": "testimonials",
+        "variant": "grid",
+        "items": [
+          { "quote": "testimonial-1-quote", "author": "testimonial-1-author", "role": "testimonial-1-role" },
+          { "quote": "testimonial-2-quote", "author": "testimonial-2-author", "role": "testimonial-2-role" }
+        ]
+      },
+      {
+        "blockType": "faq",
+        "variant": "accordion",
+        "items": [
+          { "question": "faq-1-question", "answer": "faq-1-answer" },
+          { "question": "faq-2-question", "answer": "faq-2-answer" },
+          { "question": "faq-3-question", "answer": "faq-3-answer" }
+        ]
+      },
+      {
+        "blockType": "cta",
+        "variant": "centered-gradient",
+        "title": "cta-section-title",
+        "subtitle": "cta-section-subtitle",
+        "ctaPrimary": { "label": "cta-primary-label", "href": "#signup-final", "variant": "primary" }
+      }
+    ]
+  },
+  "pages": {
+    "/cennik": {
+      "blocks": [
+        { "blockType": "hero", "variant": "centered", "title": "pricing-page-hero-title" },
+        { "blockType": "pricing", "variant": "3-tier-detailed" },
+        { "blockType": "faq", "variant": "accordion" }
+      ]
+    },
+    "/kontakt": {
+      "blocks": [
+        { "blockType": "hero", "variant": "centered", "title": "contact-hero-title" },
+        { "blockType": "contact", "variant": "form-inline" }
+      ]
+    }
+  }
+}

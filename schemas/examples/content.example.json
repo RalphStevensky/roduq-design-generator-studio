@@ -1,0 +1,133 @@
+{
+  "$schema": "https://roduq.dev/schemas/v1/content.schema.json",
+  "version": "1.0.0",
+  "siteSettings": {
+    "siteName": "Acme",
+    "tagline": "Księgowość bez nerwów. Dla freelancerów.",
+    "metaDescription": "Automatyczne faktury, prognozy cashflow, 12k+ freelancerów. Wypróbuj 14 dni za darmo. Bez karty kredytowej.",
+    "language": "pl-en",
+    "footer": {
+      "copyright": "© 2026 Acme. Wszelkie prawa zastrzeżone.",
+      "socialLinks": [
+        { "platform": "linkedin", "url": "https://linkedin.com/company/acme" },
+        { "platform": "twitter", "url": "https://twitter.com/acme" }
+      ],
+      "address": "ul. Floriańska 41, 31-019 Kraków",
+      "nip": "1234567890"
+    }
+  },
+  "draftCopy": {
+    "homepage-hero-eyebrow": {
+      "pl": "Nowość · luty 2026",
+      "en": "New · February 2026"
+    },
+    "homepage-hero-title": {
+      "pl": "Księgowość bez nerwów. Dla freelancerów.",
+      "en": "Stress-free accounting. For freelancers."
+    },
+    "homepage-hero-subtitle": {
+      "pl": "Automatyzacja faktur, prognozowanie cashflow, integracje z bankiem. Zaoszczędź 5h tygodniowo.",
+      "en": "Invoice automation, cashflow forecasting, bank integrations. Save 5h per week."
+    },
+    "homepage-hero-cta-primary": {
+      "pl": "Zacznij za darmo",
+      "en": "Get started free"
+    },
+    "homepage-hero-cta-secondary": {
+      "pl": "Zobacz demo (3 min)",
+      "en": "Watch demo (3 min)"
+    },
+    "features-section-title": {
+      "pl": "Co dostajesz",
+      "en": "What you get"
+    },
+    "features-section-subtitle": {
+      "pl": "Trzy filary które dadzą Ci kontrolę nad finansami bez tygodni nauki.",
+      "en": "Three pillars that give you financial control without weeks of learning."
+    },
+    "feature-1-title": {
+      "pl": "Automatyczne faktury",
+      "en": "Automatic invoices"
+    },
+    "feature-1-description": {
+      "pl": "Wystawiaj jednym kliknięciem. System sam wypełnia dane klienta z bazy.",
+      "en": "Issue invoices with one click. System auto-fills client data from your database."
+    },
+    "feature-2-title": {
+      "pl": "Prognozy cashflow",
+      "en": "Cashflow forecasting"
+    },
+    "feature-2-description": {
+      "pl": "Zobacz co czeka w portfelu za 30, 60, 90 dni. Bez Excela.",
+      "en": "See what's coming in your wallet in 30, 60, 90 days. Without Excel."
+    },
+    "feature-3-title": {
+      "pl": "Integracje 1-click",
+      "en": "1-click integrations"
+    },
+    "feature-3-description": {
+      "pl": "mBank, ING, Stripe, PayPal. Konfiguracja w 2 minuty.",
+      "en": "mBank, ING, Stripe, PayPal. Setup in 2 minutes."
+    },
+    "tier-1-name": { "pl": "Start", "en": "Start" },
+    "tier-1-period": { "pl": "zawsze", "en": "forever" },
+    "tier-1-cta": { "pl": "Zacznij za darmo", "en": "Get started free" },
+    "tier-1-feature-1": { "pl": "5 faktur miesięcznie", "en": "5 invoices per month" },
+    "tier-1-feature-2": { "pl": "Podstawowe raporty", "en": "Basic reports" },
+    "tier-1-feature-3": { "pl": "1 konto bankowe", "en": "1 bank account" },
+    "tier-2-name": { "pl": "Pro", "en": "Pro" },
+    "tier-2-badge": { "pl": "Najpopularniejszy", "en": "Most popular" },
+    "tier-2-period": { "pl": "/miesiąc", "en": "/month" },
+    "tier-2-cta": { "pl": "Wypróbuj 14 dni", "en": "Try 14 days free" },
+    "tier-2-feature-1": { "pl": "Nielimitowane faktury", "en": "Unlimited invoices" },
+    "tier-2-feature-2": { "pl": "Prognozy cashflow", "en": "Cashflow forecasting" },
+    "tier-2-feature-3": { "pl": "Wszystkie integracje", "en": "All integrations" },
+    "tier-2-feature-4": { "pl": "Priorytetowe wsparcie", "en": "Priority support" },
+    "tier-3-name": { "pl": "Business", "en": "Business" },
+    "tier-3-period": { "pl": "/miesiąc", "en": "/month" },
+    "tier-3-cta": { "pl": "Porozmawiajmy", "en": "Talk to us" },
+    "tier-3-feature-1": { "pl": "Wszystko z Pro", "en": "Everything from Pro" },
+    "tier-3-feature-2": { "pl": "Multi-user (do 5 osób)", "en": "Multi-user (up to 5)" },
+    "tier-3-feature-3": { "pl": "Dedicated account manager", "en": "Dedicated account manager" },
+    "cta-section-title": {
+      "pl": "Gotowy zaoszczędzić 5h tygodniowo?",
+      "en": "Ready to save 5h per week?"
+    },
+    "cta-section-subtitle": {
+      "pl": "Dołącz do 12 000+ freelancerów. Bezbolesna księgowość zaczyna się tu.",
+      "en": "Join 12,000+ freelancers. Stress-free accounting starts here."
+    },
+    "cta-primary-label": {
+      "pl": "Załóż konto za darmo",
+      "en": "Create free account"
+    },
+    "faq-1-question": {
+      "pl": "Czy są jakieś dodatkowe koszty?",
+      "en": "Are there any hidden fees?"
+    },
+    "faq-1-answer": {
+      "pl": "Nie. Cena na stronie jest pełna — bez ukrytych opłat. VAT 23% naliczany dodatkowo.",
+      "en": "No. The price on the page is complete — no hidden fees. VAT 23% applies."
+    },
+    "faq-2-question": {
+      "pl": "Jak długo trwa setup?",
+      "en": "How long does setup take?"
+    },
+    "faq-2-answer": {
+      "pl": "Średnio 4 minuty. Połączysz konto bankowe + zaimportujesz klientów z CSV.",
+      "en": "Average 4 minutes. Connect bank account + import clients from CSV."
+    },
+    "faq-3-question": {
+      "pl": "Czy mogę zrezygnować w każdej chwili?",
+      "en": "Can I cancel anytime?"
+    },
+    "faq-3-answer": {
+      "pl": "Tak. Bez okresu wypowiedzenia. Anulujesz jednym kliknięciem w ustawieniach.",
+      "en": "Yes. No notice period. Cancel with one click in settings."
+    }
+  },
+  "imagePrompts": {
+    "hero-1": "Modern accountant at standing desk z laptop, warm natural lighting through Scandinavian window, clean white desk, second monitor showing colorful charts, side angle camera, depth of field, photorealistic, 16:9 aspect ratio",
+    "feature-automation-1": "Abstract isometric illustration of workflow automation, indigo + magenta gradient palette, smooth 3D depth, business workflow nodes connecting, vector style, 1:1 aspect"
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "https://roduq.dev/schemas/v1/meta.schema.json",
+  "title": "Roduq Generation Meta v1",
+  "description": "Validates meta.json — generation metadata for a single Roduq design output. For multi-variant outputs, see meta-multi-variant.schema.json.",
+  "type": "object",
+  "required": ["$schema", "version", "type", "clientId", "generatedAt", "skill", "prompt"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "const": "https://roduq.dev/schemas/v1/meta.schema.json"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^1\\.[0-9]+\\.[0-9]+$"
+    },
+    "type": {
+      "type": "string",
+      "const": "single",
+      "description": "Single-variant generation. Multi-variant uses meta-multi-variant.json instead."
+    },
+    "clientId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$",
+      "minLength": 1,
+      "maxLength": 64,
+      "description": "kebab-case client slug — used as output directory name."
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "skill": {
+      "type": "string",
+      "pattern": "^(roduq-|multi-variant$)",
+      "description": "Skill name — roduq-* industry skill or 'multi-variant' orchestrator."
+    },
+    "prompt": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Original user brief."
+    },
+    "variant": {
+      "type": "integer",
+      "enum": [1, 2, 3],
+      "description": "Variant number when promoted from multi-variant run."
+    },
+    "variantLabel": {
+      "type": "string",
+      "enum": ["Conservative", "Modern", "Bold"]
+    },
+    "preset": {
+      "type": "string",
+      "pattern": "^roduq-",
+      "description": "Roduq preset used for this generation."
+    },
+    "llmProvider": {
+      "type": "string",
+      "enum": ["anthropic", "openai", "gemini", "mock"]
+    },
+    "model": {
+      "type": "string",
+      "description": "Specific model identifier (e.g., 'claude-sonnet-4-6', 'gpt-5', 'gemini-2.5-pro', 'mock-1')."
+    },
+    "executionTimeMs": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Wall-clock execution time in milliseconds."
+    },
+    "tokensUsed": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "input": { "type": "integer", "minimum": 0 },
+        "output": { "type": "integer", "minimum": 0 },
+        "cached": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "estimatedCostUsd": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Estimated cost in USD based on provider pricing."
+    },
+    "schemaVersions": {
+      "type": "object",
+      "description": "Versions of sibling schemas used (tokens.json/sections.json/content.json).",
+      "properties": {
+        "tokens": { "type": "string", "pattern": "^1\\." },
+        "sections": { "type": "string", "pattern": "^1\\." },
+        "content": { "type": "string", "pattern": "^1\\." }
+      }
+    }
+  }
+}
