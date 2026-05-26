@@ -1,0 +1,171 @@
+<!--
+  About template dla roduq-portfolio skill.
+  Block type: "about"
+  Story-led z split photo + text.
+-->
+
+<section class="about" data-block-type="about" data-variant="split-photo-text">
+  <div class="about__container">
+    <div class="about__photo">
+      <img src="{{about-photo}}" alt="{{creator-name}}" loading="lazy">
+    </div>
+    <div class="about__content">
+      <span class="about__eyebrow">{{about-eyebrow}}</span>
+      <!-- "O mnie" -->
+      <h2 class="about__title">{{about-title}}</h2>
+      <!-- "Jak tu trafiłem" / "Skąd jestem" -->
+
+      <div class="about__story">
+        <p>{{about-paragraph-1}}</p>
+        <!-- "Zaczynałem od grafiki w Photoshopie w 2014. Wtedy nie wiedziałem co to UX." -->
+
+        <p>{{about-paragraph-2}}</p>
+        <!-- "Po 3 latach w agencji reklamowej zrozumiałem że projektowanie to nie jest o 'ładnie wyglądać' — jest o tym żeby coś działało dla konkretnej osoby z konkretnym problemem." -->
+
+        <p>{{about-paragraph-3}}</p>
+        <!-- "Od 2019 robię tylko UX/UI. Specjalizuję się w SaaS B2B i fintech." -->
+
+        <p>{{about-paragraph-4}}</p>
+        <!-- "Mieszkam w Warszawie. Lubię typografię i historię urbanistyki. Dwa lata temu zacząłem trening biegania — okazało się że pomaga thinking." -->
+      </div>
+
+      <div class="about__stats">
+        <div class="about-stat">
+          <span class="about-stat__value">{{stat-1-value}}</span>
+          <span class="about-stat__label">{{stat-1-label}}</span>
+          <!-- "6" "lat doświadczenia" -->
+        </div>
+        <div class="about-stat">
+          <span class="about-stat__value">{{stat-2-value}}</span>
+          <span class="about-stat__label">{{stat-2-label}}</span>
+          <!-- "47" "ukończonych projektów" -->
+        </div>
+        <div class="about-stat">
+          <span class="about-stat__value">{{stat-3-value}}</span>
+          <span class="about-stat__label">{{stat-3-label}}</span>
+          <!-- "PL · EN C1" "języki" -->
+        </div>
+      </div>
+
+      <div class="about__cta">
+        <a class="about__cta-button" href="{{contact-href}}">
+          {{cta-label}}
+          <!-- "Pisz do mnie" -->
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    padding: var(--space-4xl, 6rem) var(--space-md, 1rem);
+    background: var(--color-surface-sunken);
+  }
+
+  .about__container {
+    max-width: var(--container-md, 72rem);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: var(--space-2xl, 3rem);
+    align-items: flex-start;
+  }
+
+  @media (max-width: 768px) {
+    .about__container {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .about__photo {
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius-lg, 0.75rem);
+    overflow: hidden;
+    position: sticky;
+    top: var(--space-xl, 2rem);
+  }
+
+  .about__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .about__eyebrow {
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: var(--text-sm, 0.875rem);
+    font-weight: 600;
+    color: var(--color-brand-primary);
+    margin-bottom: var(--space-md, 1rem);
+  }
+
+  .about__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.875rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0 0 var(--space-xl, 2rem);
+  }
+
+  .about__story p {
+    font-size: var(--text-lg, 1.125rem);
+    line-height: 1.7;
+    color: var(--color-ink-primary);
+    margin: 0 0 var(--space-md, 1rem);
+  }
+
+  .about__stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg, 1.5rem);
+    padding: var(--space-lg, 1.5rem) 0;
+    margin: var(--space-xl, 2rem) 0;
+    border-top: 1px solid var(--color-outline-subtle);
+    border-bottom: 1px solid var(--color-outline-subtle);
+  }
+
+  @media (max-width: 600px) {
+    .about__stats {
+      grid-template-columns: 1fr;
+      gap: var(--space-md, 1rem);
+    }
+  }
+
+  .about-stat {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .about-stat__value {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl, 1.875rem);
+    font-weight: 700;
+    color: var(--color-brand-primary);
+    line-height: 1;
+  }
+
+  .about-stat__label {
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-secondary);
+    margin-top: var(--space-2xs, 0.25rem);
+  }
+
+  .about__cta-button {
+    display: inline-flex;
+    padding: var(--space-md, 1rem) var(--space-xl, 2rem);
+    background: var(--color-ink-primary);
+    color: var(--color-surface-default);
+    border-radius: var(--radius-md, 0.5rem);
+    text-decoration: none;
+    font-weight: 500;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .about__cta-button:hover {
+    background: var(--color-brand-primary);
+  }
+</style>

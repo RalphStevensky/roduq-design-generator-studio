@@ -1,0 +1,231 @@
+<!--
+  Work grid templates dla roduq-portfolio skill.
+  Variants:
+  - uniform-grid   — 2-3 col equal aspects (designers / developers)
+  - masonry        — uneven aspects (photographers / illustrators)
+  - horizontal-scroll — <6 pieces (less common, distinctive)
+-->
+
+<section class="work" data-block-type="work-grid" data-variant="uniform-grid">
+  <div class="work__container">
+    <header class="work__header">
+      <h2 class="work__title">{{work-title}}</h2>
+      <!-- "Wybrane prace" -->
+      <p class="work__subtitle">{{work-subtitle}}</p>
+      <!-- "12 projektów z lat 2022-2025. Wybierz dowolny po szczegóły." -->
+      <div class="work__filters">
+        <button class="work__filter work__filter--active" data-filter="all">{{filter-all}}</button>
+        <button class="work__filter" data-filter="ux">{{filter-1}}</button>
+        <button class="work__filter" data-filter="branding">{{filter-2}}</button>
+        <button class="work__filter" data-filter="webdesign">{{filter-3}}</button>
+      </div>
+    </header>
+    <div class="work__grid">
+      <article class="work-piece" data-tags="ux">
+        <a href="{{piece-1-href}}" class="work-piece__link">
+          <div class="work-piece__cover">
+            <img src="{{piece-1-image}}" alt="{{piece-1-alt}}" loading="lazy">
+          </div>
+          <div class="work-piece__meta">
+            <span class="work-piece__year">{{piece-1-year}}</span>
+            <h3 class="work-piece__title">{{piece-1-title}}</h3>
+            <span class="work-piece__client">{{piece-1-client}}</span>
+            <div class="work-piece__tags">
+              <span>{{piece-1-tag-1}}</span>
+              <span>{{piece-1-tag-2}}</span>
+              <span>{{piece-1-tag-3}}</span>
+            </div>
+          </div>
+        </a>
+      </article>
+      <article class="work-piece" data-tags="branding">
+        <a href="{{piece-2-href}}" class="work-piece__link">
+          <div class="work-piece__cover">
+            <img src="{{piece-2-image}}" alt="{{piece-2-alt}}" loading="lazy">
+          </div>
+          <div class="work-piece__meta">
+            <span class="work-piece__year">{{piece-2-year}}</span>
+            <h3 class="work-piece__title">{{piece-2-title}}</h3>
+            <span class="work-piece__client">{{piece-2-client}}</span>
+            <div class="work-piece__tags">
+              <span>{{piece-2-tag-1}}</span>
+              <span>{{piece-2-tag-2}}</span>
+            </div>
+          </div>
+        </a>
+      </article>
+      <article class="work-piece" data-tags="webdesign">
+        <a href="{{piece-3-href}}" class="work-piece__link">
+          <div class="work-piece__cover">
+            <img src="{{piece-3-image}}" alt="{{piece-3-alt}}" loading="lazy">
+          </div>
+          <div class="work-piece__meta">
+            <span class="work-piece__year">{{piece-3-year}}</span>
+            <h3 class="work-piece__title">{{piece-3-title}}</h3>
+            <span class="work-piece__client">{{piece-3-client}}</span>
+            <div class="work-piece__tags">
+              <span>{{piece-3-tag-1}}</span>
+              <span>{{piece-3-tag-2}}</span>
+            </div>
+          </div>
+        </a>
+      </article>
+      <article class="work-piece" data-tags="ux">
+        <a href="{{piece-4-href}}" class="work-piece__link">
+          <div class="work-piece__cover">
+            <img src="{{piece-4-image}}" alt="{{piece-4-alt}}" loading="lazy">
+          </div>
+          <div class="work-piece__meta">
+            <span class="work-piece__year">{{piece-4-year}}</span>
+            <h3 class="work-piece__title">{{piece-4-title}}</h3>
+            <span class="work-piece__client">{{piece-4-client}}</span>
+            <div class="work-piece__tags">
+              <span>{{piece-4-tag-1}}</span>
+            </div>
+          </div>
+        </a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .work {
+    padding: var(--space-4xl, 6rem) var(--space-md, 1rem);
+    background: var(--color-surface-default);
+  }
+
+  .work__container {
+    max-width: var(--container-md, 72rem);
+    margin: 0 auto;
+  }
+
+  .work__header {
+    margin-bottom: var(--space-2xl, 3rem);
+  }
+
+  .work__title {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl, 2.25rem);
+    font-weight: 700;
+    margin: 0 0 var(--space-md, 1rem);
+  }
+
+  .work__subtitle {
+    font-size: var(--text-lg, 1.125rem);
+    color: var(--color-ink-secondary);
+    margin: 0 0 var(--space-md, 1rem);
+    max-width: 50ch;
+  }
+
+  .work__filters {
+    display: flex;
+    gap: var(--space-sm, 0.75rem);
+    flex-wrap: wrap;
+    margin-top: var(--space-md, 1rem);
+  }
+
+  .work__filter {
+    padding: var(--space-xs, 0.5rem) var(--space-md, 1rem);
+    background: var(--color-surface-raised);
+    color: var(--color-ink-secondary);
+    border: 1px solid var(--color-outline-subtle);
+    border-radius: var(--radius-full, 9999px);
+    font-size: var(--text-sm, 0.875rem);
+    cursor: pointer;
+  }
+
+  .work__filter--active {
+    background: var(--color-ink-primary);
+    color: var(--color-surface-default);
+    border-color: var(--color-ink-primary);
+  }
+
+  .work__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl, 2rem);
+  }
+
+  @media (max-width: 600px) {
+    .work__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .work-piece__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.25s ease;
+  }
+
+  .work-piece__link:hover {
+    transform: translateY(-4px);
+  }
+
+  .work-piece__cover {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-radius: var(--radius-lg, 0.75rem);
+    margin-bottom: var(--space-md, 1rem);
+  }
+
+  .work-piece__cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .work-piece__link:hover .work-piece__cover img {
+    transform: scale(1.03);
+  }
+
+  .work-piece__year {
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .work-piece__title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl, 1.25rem);
+    font-weight: 600;
+    margin: var(--space-xs, 0.5rem) 0 var(--space-2xs, 0.25rem);
+  }
+
+  .work-piece__client {
+    display: block;
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-secondary);
+    margin-bottom: var(--space-sm, 0.75rem);
+  }
+
+  .work-piece__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs, 0.5rem);
+  }
+
+  .work-piece__tags span {
+    padding: var(--space-3xs, 0.125rem) var(--space-sm, 0.75rem);
+    background: var(--color-surface-sunken);
+    border-radius: var(--radius-full, 9999px);
+    font-size: var(--text-xs, 0.75rem);
+    color: var(--color-ink-secondary);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .work-piece__link,
+    .work-piece__cover img {
+      transition: none;
+    }
+    .work-piece__link:hover {
+      transform: none;
+    }
+    .work-piece__link:hover .work-piece__cover img {
+      transform: none;
+    }
+  }
+</style>
