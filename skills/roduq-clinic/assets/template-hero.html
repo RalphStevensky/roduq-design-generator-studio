@@ -1,0 +1,236 @@
+<!--
+  Hero templates dla roduq-clinic skill.
+  Doctor photo first. Empathetic trust voice. Booking CTA prominent.
+-->
+
+<!-- ==================== Variant 1: doctor-photo-trust ==================== -->
+<section class="hero hero--doctor" data-block-type="hero" data-variant="doctor-photo-trust">
+  <div class="hero__container hero__container--grid">
+    <div class="hero__content">
+      <span class="hero__eyebrow">{{hero-eyebrow}}</span>
+      <!-- "Psycholog · Warszawa, Mokotów" -->
+      <h1 class="hero__title">{{hero-title}}</h1>
+      <!-- "Spokojny ton. Konkretne narzędzia. Pomoc psychologiczna dorosłym." -->
+      <p class="hero__subtitle">{{hero-subtitle}}</p>
+      <!-- "8 lat praktyki w nurcie CBT. Online lub stacjonarnie." -->
+      <div class="hero__credentials-strip">
+        <span class="cred">
+          <strong>{{cred-1-value}}</strong>
+          <span class="cred__label">{{cred-1-label}}</span>
+        </span>
+        <span class="cred">
+          <strong>{{cred-2-value}}</strong>
+          <span class="cred__label">{{cred-2-label}}</span>
+        </span>
+        <span class="cred">
+          <strong>{{cred-3-value}}</strong>
+          <span class="cred__label">{{cred-3-label}}</span>
+        </span>
+      </div>
+      <div class="hero__ctas">
+        <a class="hero__cta hero__cta--primary" href="{{booking-href}}">
+          {{cta-book-label}} <!-- "Umów wizytę" -->
+        </a>
+        <a class="hero__cta hero__cta--secondary" href="{{about-href}}">
+          {{cta-about-label}} <!-- "Poznaj mnie" -->
+        </a>
+      </div>
+    </div>
+    <div class="hero__photo">
+      <img src="{{doctor-photo}}" alt="{{doctor-name}}" loading="eager">
+      <div class="hero__photo-caption">
+        <strong>{{doctor-title-name}}</strong>
+        <span>{{doctor-specialty}}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== Variant 2: split-with-credentials ==================== -->
+<section class="hero hero--credentials" data-block-type="hero" data-variant="split-with-credentials">
+  <div class="hero__container">
+    <span class="hero__eyebrow">{{hero-eyebrow}}</span>
+    <h1 class="hero__title hero__title--statement">{{hero-title}}</h1>
+    <p class="hero__subtitle">{{hero-subtitle}}</p>
+    <div class="hero__ctas">
+      <a class="hero__cta hero__cta--primary" href="{{booking-href}}">
+        {{cta-book-label}}
+      </a>
+      <a class="hero__cta hero__cta--secondary" href="tel:{{phone-tel}}">
+        ☎ {{phone-display}}
+      </a>
+    </div>
+    <div class="hero__trust-row">
+      <span>{{trust-1}}</span> <!-- "Pełna poufność" -->
+      <span>{{trust-2}}</span> <!-- "Bezkosztowe odwołanie do 24h" -->
+      <span>{{trust-3}}</span> <!-- "Online lub stacjonarnie" -->
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: var(--space-4xl, 6rem) var(--space-md, 1rem);
+    background: var(--color-surface-default);
+    color: var(--color-ink-primary);
+  }
+
+  .hero__container {
+    max-width: var(--container-md, 72rem);
+    margin: 0 auto;
+  }
+
+  .hero__container--grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--space-2xl, 3rem);
+    align-items: center;
+  }
+
+  @media (max-width: 768px) {
+    .hero__container--grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .hero__eyebrow {
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: var(--text-sm, 0.875rem);
+    font-weight: 600;
+    color: var(--color-brand-primary);
+    margin-bottom: var(--space-md, 1rem);
+  }
+
+  .hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 var(--space-md, 1rem);
+    letter-spacing: -0.02em;
+  }
+
+  .hero__title--statement {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.05;
+  }
+
+  .hero__subtitle {
+    font-size: var(--text-xl, 1.25rem);
+    line-height: 1.55;
+    color: var(--color-ink-secondary);
+    margin: 0 0 var(--space-lg, 1.5rem);
+    max-width: 40ch;
+  }
+
+  .hero__credentials-strip {
+    display: flex;
+    gap: var(--space-xl, 2rem);
+    margin-bottom: var(--space-xl, 2rem);
+    flex-wrap: wrap;
+  }
+
+  .cred {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cred strong {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl, 1.5rem);
+    font-weight: 700;
+    color: var(--color-brand-primary);
+    line-height: 1;
+  }
+
+  .cred__label {
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-secondary);
+    margin-top: var(--space-2xs, 0.25rem);
+  }
+
+  .hero__ctas {
+    display: flex;
+    gap: var(--space-md, 1rem);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-md, 1rem);
+  }
+
+  .hero__cta {
+    padding: var(--space-md, 1rem) var(--space-xl, 2rem);
+    border-radius: var(--radius-md, 0.5rem);
+    text-decoration: none;
+    font-weight: 500;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .hero__cta--primary {
+    background: var(--color-brand-primary);
+    color: var(--color-ink-inverse, #fff);
+  }
+
+  .hero__cta--secondary {
+    background: transparent;
+    color: var(--color-ink-primary);
+    border: 1px solid var(--color-outline-default);
+  }
+
+  .hero__cta:focus-visible {
+    outline: 2px solid var(--color-brand-primary);
+    outline-offset: 2px;
+  }
+
+  .hero__trust-row {
+    display: flex;
+    gap: var(--space-xl, 2rem);
+    margin-top: var(--space-md, 1rem);
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-muted);
+    flex-wrap: wrap;
+  }
+
+  .hero__trust-row span::before {
+    content: "✓ ";
+    color: var(--color-brand-primary);
+    font-weight: 700;
+  }
+
+  .hero__photo {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius-lg, 0.75rem);
+    overflow: hidden;
+  }
+
+  .hero__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero__photo-caption {
+    position: absolute;
+    bottom: var(--space-md, 1rem);
+    left: var(--space-md, 1rem);
+    padding: var(--space-sm, 0.75rem) var(--space-md, 1rem);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-radius: var(--radius-md, 0.5rem);
+    color: var(--color-ink-primary);
+  }
+
+  .hero__photo-caption strong {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  .hero__photo-caption span {
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-secondary);
+  }
+</style>

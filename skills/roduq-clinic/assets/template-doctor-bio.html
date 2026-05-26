@@ -1,0 +1,201 @@
+<!--
+  Doctor bio template dla roduq-clinic skill.
+  Block type: "doctor-bio"
+  Extended bio: education timeline + philosophy + memberships + personal note.
+-->
+
+<section class="doctor-bio" data-block-type="doctor-bio" data-variant="extended-bio">
+  <div class="doctor-bio__container">
+    <div class="doctor-bio__photo">
+      <img src="{{doctor-photo}}" alt="{{doctor-name}}" loading="lazy">
+    </div>
+    <div class="doctor-bio__content">
+      <h2 class="doctor-bio__name">{{doctor-title-name}}</h2>
+      <!-- "mgr Anna Kowalska" -->
+      <p class="doctor-bio__role">{{doctor-role}}</p>
+      <!-- "Psycholog, psychoterapeuta CBT · 8 lat praktyki" -->
+
+      <section class="bio-section">
+        <h3 class="bio-section__title">{{bio-section-1-title}}</h3>
+        <!-- "Wykształcenie" -->
+        <ul class="education-list">
+          <li class="education-item">
+            <span class="education-item__year">{{edu-1-year}}</span>
+            <div class="education-item__detail">
+              <strong>{{edu-1-degree}}</strong>
+              <span>{{edu-1-institution}}</span>
+            </div>
+          </li>
+          <li class="education-item">
+            <span class="education-item__year">{{edu-2-year}}</span>
+            <div class="education-item__detail">
+              <strong>{{edu-2-degree}}</strong>
+              <span>{{edu-2-institution}}</span>
+            </div>
+          </li>
+          <li class="education-item">
+            <span class="education-item__year">{{edu-3-year}}</span>
+            <div class="education-item__detail">
+              <strong>{{edu-3-degree}}</strong>
+              <span>{{edu-3-institution}}</span>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section class="bio-section">
+        <h3 class="bio-section__title">{{bio-section-2-title}}</h3>
+        <!-- "Moje podejście" -->
+        <p class="bio-section__text">{{philosophy-text}}</p>
+        <!-- "Pracuję w nurcie poznawczo-behawioralnym. Wierzę w terapię opartą na dowodach naukowych. Wspólnie z pacjentem znajduję konkretne narzędzia, które działają w jego życiu." -->
+      </section>
+
+      <section class="bio-section">
+        <h3 class="bio-section__title">{{bio-section-3-title}}</h3>
+        <!-- "Przynależności" -->
+        <ul class="memberships">
+          <li>{{membership-1}}</li>
+          <!-- "Polskie Towarzystwo Psychoterapii Poznawczej i Behawioralnej" -->
+          <li>{{membership-2}}</li>
+          <li>{{membership-3}}</li>
+        </ul>
+      </section>
+
+      <section class="bio-section bio-section--personal">
+        <h3 class="bio-section__title">{{bio-section-4-title}}</h3>
+        <!-- "Poza pracą" -->
+        <p class="bio-section__text">{{personal-note}}</p>
+        <!-- "Wspinaczka, książki Olgi Tokarczuk, długie spacery z psem." -->
+      </section>
+    </div>
+  </div>
+</section>
+
+<style>
+  .doctor-bio {
+    padding: var(--space-4xl, 6rem) var(--space-md, 1rem);
+    background: var(--color-surface-default);
+  }
+
+  .doctor-bio__container {
+    max-width: var(--container-md, 72rem);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: var(--space-2xl, 3rem);
+    align-items: flex-start;
+  }
+
+  @media (max-width: 768px) {
+    .doctor-bio__container {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .doctor-bio__photo {
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius-lg, 0.75rem);
+    overflow: hidden;
+    position: sticky;
+    top: var(--space-xl, 2rem);
+  }
+
+  .doctor-bio__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .doctor-bio__name {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl, 1.875rem);
+    font-weight: 700;
+    margin: 0 0 var(--space-xs, 0.5rem);
+  }
+
+  .doctor-bio__role {
+    font-size: var(--text-lg, 1.125rem);
+    color: var(--color-ink-secondary);
+    margin: 0 0 var(--space-xl, 2rem);
+  }
+
+  .bio-section {
+    margin-bottom: var(--space-xl, 2rem);
+  }
+
+  .bio-section__title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl, 1.25rem);
+    font-weight: 600;
+    margin: 0 0 var(--space-md, 1rem);
+  }
+
+  .bio-section__text {
+    font-size: var(--text-base, 1rem);
+    line-height: 1.6;
+    color: var(--color-ink-secondary);
+    margin: 0;
+  }
+
+  .education-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .education-item {
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+    gap: var(--space-md, 1rem);
+    padding: var(--space-sm, 0.75rem) 0;
+    border-bottom: 1px solid var(--color-outline-subtle);
+  }
+
+  .education-item:last-child {
+    border-bottom: none;
+  }
+
+  .education-item__year {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--color-brand-primary);
+  }
+
+  .education-item__detail strong {
+    display: block;
+    font-weight: 500;
+  }
+
+  .education-item__detail span {
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-muted);
+  }
+
+  .memberships {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .memberships li {
+    padding: var(--space-xs, 0.5rem) 0;
+    padding-left: var(--space-lg, 1.5rem);
+    position: relative;
+    color: var(--color-ink-secondary);
+  }
+
+  .memberships li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--color-brand-primary);
+    font-weight: 700;
+  }
+
+  .bio-section--personal {
+    padding: var(--space-md, 1rem);
+    background: var(--color-surface-raised);
+    border-radius: var(--radius-md, 0.5rem);
+    border-left: 3px solid var(--color-brand-primary);
+  }
+</style>

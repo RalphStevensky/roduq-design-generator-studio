@@ -1,0 +1,342 @@
+<!--
+  Booking templates dla roduq-clinic skill.
+  Block type: "booking"
+  RODO-compliant. Reduces first-visit anxiety. Cancellation policy clear.
+-->
+
+<section class="booking booking--form" data-block-type="booking" data-variant="form-inline">
+  <div class="booking__container">
+    <div class="booking__intro">
+      <h2 class="booking__title">{{booking-title}}</h2>
+      <!-- "Umów pierwszą wizytę" -->
+      <p class="booking__subtitle">{{booking-subtitle}}</p>
+      <!-- "Pierwsza wizyta to spotkanie diagnostyczne. Wspólnie ustalamy cele i plan." -->
+
+      <div class="booking__what-to-expect">
+        <h3 class="booking__expect-title">{{expect-title}}</h3>
+        <!-- "Co Cię czeka" -->
+        <ul class="booking__expect-list">
+          <li>
+            <strong>{{expect-1-label}}</strong>
+            <span>{{expect-1-text}}</span>
+            <!-- "50 minut · rozmowa diagnostyczna" -->
+          </li>
+          <li>
+            <strong>{{expect-2-label}}</strong>
+            <span>{{expect-2-text}}</span>
+            <!-- "250 zł · płatność po wizycie (BLIK / przelew)" -->
+          </li>
+          <li>
+            <strong>{{expect-3-label}}</strong>
+            <span>{{expect-3-text}}</span>
+            <!-- "Online (Zoom) lub stacjonarnie (Mokotów)" -->
+          </li>
+          <li>
+            <strong>{{expect-4-label}}</strong>
+            <span>{{expect-4-text}}</span>
+            <!-- "Bezkosztowe odwołanie do 24h przed terminem" -->
+          </li>
+        </ul>
+      </div>
+
+      <div class="booking__confidentiality">
+        <p>
+          <strong>{{confidentiality-label}}</strong>
+          {{confidentiality-text}}
+          <!-- "Pełna poufność. Dane medyczne zgodne z RODO." -->
+        </p>
+      </div>
+    </div>
+
+    <form class="booking__form" action="{{booking-form-action}}" method="post">
+      <fieldset class="form-section">
+        <legend>{{form-section-1-label}}</legend>
+        <!-- "Kontakt" -->
+        <div class="form-row">
+          <div class="form-field">
+            <label for="book-name">{{name-label}} *</label>
+            <input type="text" id="book-name" name="name" required autocomplete="name">
+          </div>
+          <div class="form-field">
+            <label for="book-phone">{{phone-label}} *</label>
+            <input type="tel" id="book-phone" name="phone" required autocomplete="tel" placeholder="+48 ___ ___ ___">
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="book-email">{{email-label}} *</label>
+          <input type="email" id="book-email" name="email" required autocomplete="email">
+        </div>
+      </fieldset>
+
+      <fieldset class="form-section">
+        <legend>{{form-section-2-label}}</legend>
+        <!-- "Preferencje" -->
+        <div class="form-field">
+          <label for="book-format">{{format-label}}</label>
+          <select id="book-format" name="format">
+            <option value="online">{{format-online}}</option>
+            <option value="in-person">{{format-in-person}}</option>
+            <option value="either">{{format-either}}</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="book-date-preferred">{{date-preferred-label}}</label>
+            <input type="date" id="book-date-preferred" name="date_preferred">
+          </div>
+          <div class="form-field">
+            <label for="book-time-preferred">{{time-preferred-label}}</label>
+            <select id="book-time-preferred" name="time_preferred">
+              <option value="morning">{{time-morning}}</option>
+              <option value="afternoon">{{time-afternoon}}</option>
+              <option value="evening">{{time-evening}}</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-section">
+        <legend>{{form-section-3-label}}</legend>
+        <!-- "W kilku słowach" -->
+        <div class="form-field">
+          <label for="book-notes">{{notes-label}}</label>
+          <textarea id="book-notes" name="notes" rows="4" placeholder="{{notes-placeholder}}"></textarea>
+          <!-- "Co Cię tu sprowadziło? Nie musisz pisać dużo — wystarczy kilka słów." -->
+          <span class="form-field__hint">{{notes-hint}}</span>
+          <!-- "Te informacje są poufne i widoczne tylko dla mnie." -->
+        </div>
+      </fieldset>
+
+      <fieldset class="form-section form-section--consent">
+        <div class="form-field form-field--checkbox">
+          <input type="checkbox" id="book-consent-rodo" name="consent_rodo" required>
+          <label for="book-consent-rodo">
+            {{consent-rodo-label}} *
+            <!-- "Zgadzam się na przetwarzanie danych medycznych zgodnie z RODO (art. 9 ust. 2 lit. h)." -->
+            <a href="/rodo" target="_blank">{{rodo-link-label}}</a>
+            <!-- "Polityka prywatności" -->
+          </label>
+        </div>
+        <div class="form-field form-field--checkbox">
+          <input type="checkbox" id="book-consent-contact" name="consent_contact" required>
+          <label for="book-consent-contact">
+            {{consent-contact-label}} *
+            <!-- "Zgadzam się na kontakt telefoniczny / mailowy w sprawie wizyty." -->
+          </label>
+        </div>
+      </fieldset>
+
+      <button type="submit" class="booking__submit">{{submit-label}}</button>
+      <p class="booking__trust">{{form-trust}}</p>
+      <!-- "Odezwę się w ciągu 24h żeby potwierdzić termin." -->
+    </form>
+  </div>
+</section>
+
+<style>
+  .booking {
+    padding: var(--space-4xl, 6rem) var(--space-md, 1rem);
+    background: var(--color-surface-sunken);
+  }
+
+  .booking__container {
+    max-width: var(--container-md, 72rem);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl, 3rem);
+  }
+
+  @media (max-width: 768px) {
+    .booking__container {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .booking__title {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl, 1.875rem);
+    font-weight: 700;
+    margin: 0 0 var(--space-md, 1rem);
+  }
+
+  .booking__subtitle {
+    font-size: var(--text-lg, 1.125rem);
+    color: var(--color-ink-secondary);
+    margin: 0 0 var(--space-xl, 2rem);
+  }
+
+  .booking__what-to-expect {
+    background: var(--color-surface-default);
+    padding: var(--space-lg, 1.5rem);
+    border-radius: var(--radius-lg, 0.75rem);
+    margin-bottom: var(--space-md, 1rem);
+  }
+
+  .booking__expect-title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg, 1.125rem);
+    font-weight: 600;
+    margin: 0 0 var(--space-md, 1rem);
+  }
+
+  .booking__expect-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .booking__expect-list li {
+    padding: var(--space-sm, 0.75rem) 0;
+    border-bottom: 1px solid var(--color-outline-subtle);
+  }
+
+  .booking__expect-list li:last-child {
+    border-bottom: none;
+  }
+
+  .booking__expect-list strong {
+    display: block;
+    font-weight: 500;
+    margin-bottom: var(--space-3xs, 0.125rem);
+  }
+
+  .booking__expect-list span {
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-secondary);
+  }
+
+  .booking__confidentiality {
+    padding: var(--space-md, 1rem);
+    background: color-mix(in srgb, var(--color-brand-primary) 8%, transparent);
+    border-radius: var(--radius-md, 0.5rem);
+    border-left: 3px solid var(--color-brand-primary);
+  }
+
+  .booking__confidentiality p {
+    margin: 0;
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-primary);
+  }
+
+  .booking__form {
+    background: var(--color-surface-default);
+    padding: var(--space-xl, 2rem);
+    border-radius: var(--radius-lg, 0.75rem);
+  }
+
+  .form-section {
+    border: none;
+    padding: 0;
+    margin: 0 0 var(--space-xl, 2rem);
+  }
+
+  .form-section legend {
+    font-family: var(--font-display);
+    font-size: var(--text-base, 1rem);
+    font-weight: 600;
+    margin-bottom: var(--space-md, 1rem);
+    padding: 0;
+  }
+
+  .form-section--consent {
+    padding-top: var(--space-md, 1rem);
+    border-top: 1px solid var(--color-outline-subtle);
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md, 1rem);
+    margin-bottom: var(--space-md, 1rem);
+  }
+
+  @media (max-width: 600px) {
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .form-field {
+    margin-bottom: var(--space-md, 1rem);
+  }
+
+  .form-field label {
+    display: block;
+    font-size: var(--text-sm, 0.875rem);
+    font-weight: 500;
+    margin-bottom: var(--space-xs, 0.5rem);
+  }
+
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    width: 100%;
+    padding: var(--space-md, 0.75rem);
+    border: 1px solid var(--color-outline-default);
+    border-radius: var(--radius-md, 0.5rem);
+    font-size: var(--text-base, 1rem);
+    background: var(--color-surface-default);
+    color: var(--color-ink-primary);
+    min-height: 44px;
+  }
+
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus {
+    outline: 2px solid var(--color-brand-primary);
+    outline-offset: -1px;
+    border-color: var(--color-brand-primary);
+  }
+
+  .form-field__hint {
+    display: block;
+    font-size: var(--text-xs, 0.75rem);
+    color: var(--color-ink-muted);
+    margin-top: var(--space-xs, 0.5rem);
+  }
+
+  .form-field--checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm, 0.75rem);
+    margin-bottom: var(--space-sm, 0.75rem);
+  }
+
+  .form-field--checkbox input {
+    width: auto;
+    min-height: auto;
+    margin-top: 0.25rem;
+  }
+
+  .form-field--checkbox label {
+    margin-bottom: 0;
+    font-weight: 400;
+    color: var(--color-ink-secondary);
+    font-size: var(--text-sm, 0.875rem);
+  }
+
+  .form-field--checkbox a {
+    color: var(--color-brand-primary);
+  }
+
+  .booking__submit {
+    width: 100%;
+    padding: var(--space-md, 1rem);
+    background: var(--color-brand-primary);
+    color: var(--color-ink-inverse, #fff);
+    border: none;
+    border-radius: var(--radius-md, 0.5rem);
+    font-weight: 600;
+    font-size: var(--text-base, 1rem);
+    cursor: pointer;
+    min-height: 48px;
+  }
+
+  .booking__trust {
+    text-align: center;
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-muted);
+    margin: var(--space-md, 1rem) 0 0;
+  }
+</style>
