@@ -318,9 +318,54 @@ Każdy preset to katalog `design-systems/<name>/` z:
 6. `soft-pastel` — Notion/Linear soft (rounded + dusty pastels + low contrast)
 7. `dark-cinematic` — premium SaaS dark (Inter Display + jet black + neon accents)
 
-### Phase 4 — Multi-variant skill (KEY DIFFERENTIATOR, ~6h)
+### Phase 4 — Multi-variant skill (KEY DIFFERENTIATOR, ~6h) ✅ done
 
 **Goal**: skill który generuje **3 warianty równolegle** różnymi kierunkami → user wybiera.
+
+**Deliverables (executed 2026-05-26)**:
+- ✅ `skills/multi-variant/` — 6 plików ~1800 LOC:
+  - `SKILL.md` (~350 lines) — frontmatter (10 triggers, od.roduq.variant_count + parallel_execution + target_execution_time_ms) + variant taxonomy + 7×3 preset matrix + execution flow + 3 examples + performance budget + LLM cost analysis
+  - `references/variant-strategy.md` (~210 lines) — Conservative/Modern/Bold philosophy + per-industry trade-offs
+  - `references/preset-mapping.md` (~190 lines) — 21-cell matrix rationale + edge cases
+  - `references/parallel-execution.md` (~350 lines) — Promise.all + timeout + error recovery + token budget
+  - `assets/preview-side-by-side.html` (~440 lines) — 3-col iframe layout + fullscreen modal + pick/regenerate API
+  - `assets/variant-picker.html` (~250 lines) — compact sidebar picker
+
+**Lessons learned (post-Phase-4)**:
+
+1. **Orchestrator pattern via Anthropic skills convention** — multi-variant SKILL.md instructions describe calling 7 industry skills (roduq-*) as sub-tasks. Agent recursion natural w Claude — no TypeScript "skill runner" needed dla Phase 4 (Phase 7 implements code wiring).
+
+2. **7×3 preset selection matrix** — 100% utilization across 7 Roduq presets, each used w 2-5 cells:
+   - saas-landing: tech-modern / dark-cinematic / brutalist
+   - agency: default / tech-modern / brutalist
+   - restaurant: monolith-meadow / warm-editorial / dark-cinematic
+   - clinic: soft-pastel / default / warm-editorial
+   - real-estate: default / dark-cinematic / warm-editorial
+   - product-launch: default / dark-cinematic / brutalist
+   - portfolio: default / dark-cinematic / brutalist
+
+3. **Variant philosophy** — Conservative/Modern/Bold framed as TRADE-OFFS na risk-reward curve, NIE quality hierarchy. Conservative wymaga REAL design thinking (Linear/Vercel są conservative AND excellent).
+
+4. **Promise.all over sequential** — 2-3× wall-clock savings (15-25s vs 30-60s). Identical LLM cost. Per-variant timeout 45s, total timeout 60s hard ceiling.
+
+5. **meta-multi-variant.json extends file protocol** (rule 004): status per variant (complete/timeout/error), token usage, selection state (selectedVariant: number | null), userPick + timestamps.
+
+6. **Output structure extends** — `variants/{1-conservative, 2-modern, 3-bold}/` subdirectories during generation; promotion to root after user picks. Unselected variants stay w variants/ dla future reference.
+
+7. **Token budget realistic** (Anthropic Claude Sonnet 4.6+):
+   - Per variant: ~$0.10-0.17 (10-20k input + 8-15k output)
+   - Per multi-variant run: ~$0.30-0.51
+   - Roduq agency typical (100 runs/month): ~$30-50/month
+
+8. **Cost optimization opportunities** dla Phase 7: prompt caching (Anthropic ~20% input reduction), Haiku dla Conservative (~80% cost), response cache dla regeneration, OpenAI fallback gdy rate-limited.
+
+9. **iframe preview UX pattern** — 3-col scaled 0.4× thumbnails z transform-origin top-left, pointer-events none on iframe + overlay button dla fullscreen, Escape key + close button.
+
+10. **Edge cases documented** w preset-mapping.md: ambiguous industry detection (prompt), brand color overrides (palette locked across variants), bilingual default, restricted preset list (e.g., government client = light theme only), regeneration (move existing to variants-archive-{timestamp}/).
+
+11. **Rate limiting strategy** — in-process queue max 6 concurrent variants (2 multi-variant runs), Mock fallback gdy primary provider down (rule 007).
+
+12. **Phase 7 implementation notes** w parallel-execution.md: use existing `@open-design/web` SDKs, add `ajv`, implement w `apps/daemon` (NOT apps/web — daemon owns skill execution per upstream AGENTS.md), `yaml` library dla frontmatter parsing.
 
 **`skills/multi-variant/SKILL.md`**:
 

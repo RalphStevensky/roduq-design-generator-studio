@@ -4,14 +4,14 @@
 
 ## Status
 
-🟢 **Phase 3 done** — 7 Roduq brand-agnostic preset systems shipped.
+🟢 **Phase 4 done** — multi-variant orchestrator skill shipped (KEY DIFFERENTIATOR).
 
 | Phase | Status | Scope |
 |-------|--------|-------|
 | 1 | ✅ done | Fork + Roduq rebrand + LICENSE-ROduQ.txt + .env.example |
 | 2 | ✅ done | 7 Roduq skills (saas-landing / agency / restaurant / clinic / real-estate / product-launch / portfolio) |
 | 3 | ✅ done | 7 Roduq presets (roduq-default / roduq-monolith-meadow / roduq-tech-modern / roduq-warm-editorial / roduq-brutalist / roduq-soft-pastel / roduq-dark-cinematic) |
-| 4 | ⏳ pending | Multi-variant skill (3 designs parallel — KEY differentiator) |
+| 4 | ✅ done | Multi-variant skill (3 designs parallel — KEY differentiator) |
 | 5 | ⏳ pending | File export protocol + JSON Schema v1 ajv validation |
 | 6 | ⏳ pending | MCP stdio server (3 tools dla Claude Code bridge) |
 | 7 | ⏳ pending | Vitest + Playwright + production polish |
