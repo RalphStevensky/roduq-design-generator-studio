@@ -177,9 +177,28 @@ const VERSION_HANDLERS: Record<string, (data: unknown) => InternalState> = {
 };
 ```
 
-## Po Phase 5 ukończony
+## Po Phase 5 ukończony ✅
 
-Update `.docs/IMPLEMENTATION.md § Phase 5` z final schema specs + ajv setup notes. Patrz `.cursor/rules/009-docs-sync.mdc`.
+5 JSON Schemas + 5 example fixtures + docs shipped w `schemas/` directory:
+
+| File | Schema URI |
+|------|-----------|
+| `schemas/tokens.v1.schema.json` | `https://roduq.dev/schemas/v1/tokens.schema.json` |
+| `schemas/sections.v1.schema.json` | `https://roduq.dev/schemas/v1/sections.schema.json` |
+| `schemas/content.v1.schema.json` | `https://roduq.dev/schemas/v1/content.schema.json` |
+| `schemas/meta.v1.schema.json` | `https://roduq.dev/schemas/v1/meta.schema.json` |
+| `schemas/meta-multi-variant.v1.schema.json` | `https://roduq.dev/schemas/v1/meta-multi-variant.schema.json` |
+
+ajv usage pattern + atomic write protocol + forward compatibility strategy documented w [`schemas/README.md`](../../schemas/README.md).
+
+Agent-facing guide w [`schemas/AGENTS.md`](../../schemas/AGENTS.md).
+
+Phase 5 lessons captured w `.docs/IMPLEMENTATION.md § Phase 5`:
+- 31-value blockType enum (union across 7 industry skills)
+- bilingualString definition (pl required, en optional)
+- Forward compat via removeAdditional: false (6-12 month migration windows)
+- Multi-variant atomic write z promote flow (variants/N-label/ → root + .complete LAST)
+- Phase 7 ajv integration notes
 
 ## Powiązane
 
