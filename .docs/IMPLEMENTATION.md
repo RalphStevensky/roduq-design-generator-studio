@@ -81,9 +81,90 @@ $ roduq new acme-corp --with-design-generator
 
 10. **`@open-design/web`** ma już @anthropic-ai/sdk 0.32.1 + openai 6.38.0 dependencies — provider abstraction Roduq będzie reuse'ować te SDK installations zamiast re-installing.
 
-### Phase 2 — Skills convention deep dive (~3h docs + ~6h implementation)
+### Phase 2 — Skills convention deep dive (~3h docs + ~6h implementation) ✅ done
 
 **Goal**: Roduq custom skills following Anthropic skills standard.
+
+**Deliverables (executed 2026-05-26)**:
+- ✅ 7 Roduq skills shipped — commit per skill (rule 006):
+  - `skills/roduq-saas-landing/` — canonical depth (SKILL.md + 3 references + 4 templates ~1860 LOC)
+  - `skills/roduq-agency/` — creative/marketing/design agencies (1001 LOC)
+  - `skills/roduq-restaurant/` — restauracja/café/bistro (1200 LOC)
+  - `skills/roduq-clinic/` — medical/wellness practice z RODO-strict (1295+ LOC)
+  - `skills/roduq-real-estate/` — biuro nieruchomości (multi-LOC)
+  - `skills/roduq-product-launch/` — single product / waitlist (1295 LOC)
+  - `skills/roduq-portfolio/` — freelancer / artist / solo creator (1230 LOC)
+- Total: ~9000 LOC new w Phase 2 across 49 files (7 SKILL.md + 21 references + 21 templates)
+
+**Lessons learned (post-Phase-2 — sync z `.cursor/rules/002-skills-convention.mdc`)**:
+
+1. **Frontmatter field name: `triggers`** NIE `when_to_use`! Upstream nexu-io/open-design uses `triggers:` w SKILL.md frontmatter (per `skills/AGENTS.md` line 26 + per actual skill examples like `skills/design-md/SKILL.md`). Nasze docs pierwotnie zakładały `when_to_use` — corrected w all 7 Roduq skills.
+
+2. **`od.*` namespace dla upstream metadata**:
+   - `od.mode`: enum — observed values: `utility`, `design-system`, `prototype`. Nasze 7 skills used `design-system` (output = design system + content + sections).
+   - `od.category`: free-text. Common values: `marketing-creative`, `design-systems`, `web-artifacts`, `image-generation`, etc. Nasze used `marketing-creative` dla all 7.
+   - `od.upstream`: URL — used przez upstream stubs. NIE używamy w Roduq skills (they're not stubs).
+
+3. **Roduq-specific extensions via `od.roduq.*` namespace**:
+   ```yaml
+   od:
+     mode: design-system
+     category: marketing-creative
+     roduq:
+       industry: saas         # saas | agency | restaurant | clinic | real-estate | product-launch | portfolio
+       target_repo: roduq-web-starter
+       output_protocol: "https://roduq.dev/schemas/v1/"
+       model_hint: anthropic   # provider preference
+       polish_first: true
+       rodo_strict: true      # only dla clinic (medical data sensitivity)
+   ```
+   Coexists cleanly z upstream `od.*` schema — Anthropic skills convention is open dla extension.
+
+4. **Most upstream skills są stubs** (curated catalogue pointing at external repos: Google Labs, Anthropic skills, VoltAgent, ComposioHQ). Nasze 7 Roduq skills są PIERWSZĄ group z actual `assets/` + `references/` content w main upstream repo (gdy follow standard format). To NIE jest problem — upstream `AGENTS.md` line 4-5 explicitly mentions "any side files (`assets/`, `references/`, scripts, …) the workflow needs."
+
+5. **Skills are markdown-only definitions** — NIE mają `index.ts` lub executable code (per upstream skills format). Execution flow: daemon parses SKILL.md → agent reads instructions + assets/templates → invokes LLM (via provider abstraction Phase 7) → produces output files (Phase 5 ajv validation). Nasze Phase 2 deliverable = definitions only; execution wiring w Phase 5-7.
+
+6. **Block types embedded w HTML templates** via `data-block-type` attribute (e.g., `<section class="hero" data-block-type="hero" data-variant="centered">`). Machine-readable, validates against canonical list w `apps/marketing-starter/src/blocks/types.ts` (sister repo). Polish per industry — common core (hero, cta) + industry-specific (menu dla restaurant, doctor-bio dla clinic, listings-featured dla real-estate, work-grid dla portfolio).
+
+7. **Per-industry voice deeply contextual** — Phase 2 confirmed seven distinct voice profiles required:
+   | Skill | Voice principle | Polish honorifics |
+   |---|---|---|
+   | saas-landing | Concrete benefits + numeric proof | "Ty" default |
+   | agency | Confident bez arrogance + work-led | Neutral "Ty/wy" |
+   | restaurant | Sensory + place-as-character | "Ty" casual / "Państwo" fine dining |
+   | clinic | Empathetic + honest about uncertainty | "Pan/Pani" medical default |
+   | real-estate | Neighborhood expertise + realistic > hype | "Państwo" formal |
+   | product-launch | Anticipation > availability + story-driven | "Ty" startup energy |
+   | portfolio | First-person + personality + authenticity | "Ty" peer-to-peer |
+
+8. **Bilingual PL/EN strategy varies by industry**:
+   - Tourist-facing (restaurant w Kraków, agency international clients, portfolio z foreign clients): PL primary + EN at `/en/` subdirectory
+   - Local-only (clinic Polish patients, restaurant non-tourist, real-estate Polish market): PL only OK
+   - Always: menu items, dish names z bilingual format `PL / EN` inline (restaurant convention)
+
+9. **Mobile-first reality per industry** (recorded w target-audience.md per skill):
+   - Restaurant: ~80% mobile bookings → tap-to-call critical
+   - Clinic mental health: ~70% mobile → single-action booking
+   - Real estate: ~65% mobile browsing → simplified search filters
+   - SaaS-landing / agency / portfolio: ~50% mobile (more desktop dla B2B)
+
+10. **HTML templates standards (used across all 7 skills)**:
+    - Framework-agnostic (no React, no JSX) — target = Astro consumer w roduq-web-starter
+    - CSS variables for tokens (`var(--color-brand-primary)`, etc.) — Phase 5 file protocol injects these
+    - `{{key}}` placeholders dla content.json injection
+    - `prefers-reduced-motion` respected w hover transforms + animations
+    - WCAG AA: focus-visible outlines, touch targets ≥44-48px, color NIE jest sole indicator
+    - `data-block-type` + `data-variant` attributes dla machine readability
+    - Inline `<style>` blocks (per template) — scoped, no global CSS conflicts
+
+11. **Reference files structure consistency** — 3 files per skill:
+    - `inspiration.md` — gold standard examples z industry + Polish-market specifics + layout patterns + anti-patterns
+    - `content-patterns.md` — voice principles + per-section templates z PL examples + Polish-specific (honorifics, currency, dates) + length constraints
+    - `target-audience.md` — 4-5 personas + signal detection w brief + per-persona content emphasis matrix
+
+12. **Saas-landing as canonical depth** (1860 LOC) — first skill set "canonical depth" pattern (full instructions + 2 examples + 4 templates). Other 6 skills lighter (~1000-1300 LOC) — reference saas-landing pattern dla shared concepts, focused on industry-specific differentiation.
+
+13. **better-sqlite3 install failure** (Phase 1 lesson — confirmed Phase 2): Upstream `pnpm install` failed na Windows native due do brak VS Build Tools 2022+. NIE blocks skill creation (skills are markdown only). User może uruchomić install w WSL/macOS lub install VS Build Tools dla Windows native runtime.
 
 **Anthropic Skills Convention (canonical)**:
 ```

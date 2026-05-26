@@ -23,17 +23,30 @@ skills/<skill-name>/                  # kebab-case
 
 ## SKILL.md frontmatter (REQUIRED)
 
+⚠ **Upstream convention (confirmed Phase 2)**: field name to **`triggers`** (NIE `when_to_use` jak pierwotne docs zakładały). Per `skills/AGENTS.md` upstream + verified w `skills/design-md/SKILL.md`, `skills/web-artifacts-builder/SKILL.md`, etc.
+
 ```yaml
 ---
 name: roduq-saas-landing          # kebab-case, matches folder name
 description: |
   Generate SaaS landing page z hero + features + pricing + CTA + testimonials + FAQ.
   Use when user wants conversion-focused page dla software product.
-when_to_use: |
-  - User mentions "SaaS landing", "product page", "software website"
-  - Brief includes pricing tiers, feature comparisons
-  - Target audience = decision-makers (CTOs, founders, ops)
-model_hint: "anthropic"             # preferred provider gdy multiple available
+triggers:                           # upstream convention — list of trigger phrases
+  - "saas landing"
+  - "saas landing page"
+  - "software product page"
+  - "landing dla saas"
+  - "strona dla saas"
+od:                                 # upstream namespace dla skill metadata
+  mode: design-system               # utility | design-system | prototype (observed values)
+  category: marketing-creative      # free-text — used dla Settings → Skills filter
+  roduq:                            # Roduq-specific extensions (clean coexistence z `od.*`)
+    industry: saas                  # saas | agency | restaurant | clinic | real-estate | product-launch | portfolio
+    target_repo: roduq-web-starter
+    output_protocol: "https://roduq.dev/schemas/v1/"
+    model_hint: anthropic           # preferred LLM provider
+    polish_first: true
+    rodo_strict: true               # only dla clinic (medical data sensitivity)
 ---
 ```
 
@@ -114,9 +127,18 @@ const ALLOWED_BLOCKS = ["hero", "features", "cta", "testimonials", "pricing", "f
 }
 ```
 
-## Po Phase 2 ukończony
+## Po Phase 2 ukończony ✅
 
-Update `.docs/IMPLEMENTATION.md § Phase 2` z lessons learned + extend tę rule jeśli new patterns discovered. Patrz `.cursor/rules/009-docs-sync.mdc`.
+Wszystkie 7 Roduq skills shipped. Phase 2 lessons learned captured w `.docs/IMPLEMENTATION.md § Phase 2`:
+- Frontmatter field name to `triggers` (NIE `when_to_use`) — corrected w all 7 skills
+- `od.roduq.*` namespace dla Roduq-specific extensions (industry / target_repo / output_protocol / model_hint / polish_first / rodo_strict)
+- Most upstream skills są STUBS (catalogue pointing at external repos) — nasze 7 są pierwszą group z actual content
+- Skills = markdown-only definitions; execution via daemon + LLM provider abstraction (Phase 5-7)
+- Block types embedded via `data-block-type` HTML attribute (machine-readable, validates vs marketing-starter blocks/types.ts canonical)
+- Saas-landing established canonical depth (1860 LOC), other 6 skills ~1000-1300 LOC each
+- HTML templates: framework-agnostic, CSS variables tokens, {{key}} placeholders, WCAG AA, prefers-reduced-motion
+- Reference files structure: inspiration.md + content-patterns.md + target-audience.md (3 per skill)
+- Per-industry voice + Polish honorifics deeply contextual — see implementation table
 
 ## Powiązane
 

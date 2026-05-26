@@ -4,12 +4,12 @@
 
 ## Status
 
-🟢 **Phase 1 done** — upstream nexu-io/open-design@v0.8.0 merged, Roduq minimal rebrand applied.
+🟢 **Phase 2 done** — 7 Roduq custom skills shipped per Anthropic SKILL.md convention.
 
 | Phase | Status | Scope |
 |-------|--------|-------|
 | 1 | ✅ done | Fork + Roduq rebrand + LICENSE-ROduQ.txt + .env.example |
-| 2 | ⏳ pending | 7 Roduq skills (saas-landing / agency / restaurant / clinic / real-estate / product-launch / portfolio) |
+| 2 | ✅ done | 7 Roduq skills (saas-landing / agency / restaurant / clinic / real-estate / product-launch / portfolio) |
 | 3 | ⏳ pending | 7 DESIGN.md presets (default / monolith-meadow / tech-modern / warm-editorial / brutalist / soft-pastel / dark-cinematic) |
 | 4 | ⏳ pending | Multi-variant skill (3 designs parallel — KEY differentiator) |
 | 5 | ⏳ pending | File export protocol + JSON Schema v1 ajv validation |
