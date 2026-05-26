@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roduq Dark Cinematic — Sample</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0A0A; --surface: #141414; --surface-elevated: #1F1F1F;
+    --fg: #FAFAFA; --fg-2: #E5E5E5; --muted: #A1A1AA; --meta: #71717A;
+    --border: rgba(255,255,255,0.12); --border-soft: rgba(255,255,255,0.06);
+    --accent: #7C5CFC; --accent-on: #FFFFFF; --cyan: #22D3EE;
+    --gradient-hero: linear-gradient(135deg, #7C5CFC 0%, #22D3EE 100%);
+    --font-display: "Inter Tight", -apple-system, system-ui, sans-serif;
+    --font-body: "Inter", -apple-system, system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { font-family: var(--font-body); color: var(--fg); background: var(--bg); }
+  body { margin: 0; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  section { padding: 6rem 1.5rem; }
+  .container { max-width: 76rem; margin: 0 auto; }
+  h1, h2, h3 { font-family: var(--font-display); margin: 0; letter-spacing: -0.03em; line-height: 1.05; font-weight: 700; }
+  a { color: inherit; }
+
+  .nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 70%, transparent); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-soft); padding: 1rem 0; }
+  .nav__inner { display: flex; justify-content: space-between; align-items: center; max-width: 76rem; margin: 0 auto; padding: 0 1.5rem; }
+  .nav__brand { font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; letter-spacing: -0.02em; display: flex; align-items: center; gap: 0.5rem; }
+  .nav__brand-dot { width: 0.5rem; height: 0.5rem; border-radius: 9999px; background: var(--gradient-hero); }
+  .nav__links { display: flex; gap: 2rem; align-items: center; }
+  .nav__links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; }
+  .nav__links a:hover { color: var(--fg); }
+  .nav__cta { padding: 0.5rem 1rem; background: var(--surface-elevated); color: var(--fg); border: 1px solid var(--border); border-radius: 0.625rem; text-decoration: none; font-size: 0.875rem; font-weight: 500; }
+
+  /* Hero z mesh glow */
+  .hero { position: relative; padding: 8rem 1.5rem 6rem; overflow: hidden; isolation: isolate; text-align: center; }
+  .hero__glows { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+  .hero__glow { position: absolute; width: 30rem; height: 30rem; border-radius: 9999px; filter: blur(100px); opacity: 0.4; }
+  .hero__glow--purple { background: #7C5CFC; top: -10rem; left: 10%; }
+  .hero__glow--cyan { background: #22D3EE; bottom: -10rem; right: 10%; opacity: 0.3; }
+  .hero__badge { display: inline-flex; gap: 0.5rem; padding: 0.375rem 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 9999px; font-size: 0.8125rem; color: var(--muted); margin-bottom: 1.5rem; align-items: center; }
+  .hero__badge-dot { width: 0.5rem; height: 0.5rem; border-radius: 9999px; background: #10B981; box-shadow: 0 0 8px #10B981; animation: pulse 2s ease infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  @media (prefers-reduced-motion: reduce) { .hero__badge-dot { animation: none; } }
+  .hero__title { font-size: clamp(3rem, 7vw, 4.5rem); font-weight: 800; margin-bottom: 1.5rem; max-width: 22ch; margin-inline: auto; line-height: 1.0; }
+  .hero__title span { background: var(--gradient-hero); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero__subtitle { font-size: 1.25rem; color: var(--muted); max-width: 42ch; margin: 0 auto 2.5rem; line-height: 1.55; }
+  .hero__ctas { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
+  .btn { display: inline-flex; align-items: center; padding: 0.875rem 1.5rem; border-radius: 0.625rem; font-weight: 500; text-decoration: none; min-height: 44px; font-size: 0.9375rem; font-family: var(--font-body); }
+  .btn--primary { background: var(--fg); color: var(--bg); }
+  .btn--primary:hover { background: var(--accent); color: var(--accent-on); }
+  .btn--secondary { background: var(--surface); color: var(--fg); border: 1px solid var(--border); }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .hero__stats { display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap; padding-top: 2rem; border-top: 1px solid var(--border-soft); }
+  .hero__stat { display: flex; flex-direction: column; }
+  .hero__stat-value { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--fg); font-variant-numeric: tabular-nums; }
+  .hero__stat-label { font-size: 0.8125rem; color: var(--meta); margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* Features */
+  .features__header { text-align: center; margin-bottom: 4rem; }
+  .features__eyebrow { display: inline-block; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.75rem; color: var(--accent); margin-bottom: 1rem; }
+  .features__title { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem; max-width: 28ch; margin-inline: auto; }
+  .features__subtitle { font-size: 1.125rem; color: var(--muted); max-width: 50ch; margin: 0 auto; }
+  .features__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  @media (max-width: 768px) { .features__grid { grid-template-columns: 1fr; } }
+  .feature { padding: 2rem; background: var(--surface); border: 1px solid var(--border-soft); border-radius: 0.875rem; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+  .feature:hover { border-color: var(--border); box-shadow: 0 0 0 1px var(--accent), 0 20px 40px rgba(124, 92, 252, 0.15); }
+  .feature__icon { display: inline-flex; width: 2.5rem; height: 2.5rem; align-items: center; justify-content: center; background: color-mix(in srgb, var(--accent) 18%, transparent); color: var(--accent); border-radius: 0.625rem; margin-bottom: 1.25rem; font-size: 1.25rem; }
+  .feature__title { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .feature__desc { color: var(--muted); font-size: 0.9375rem; line-height: 1.6; }
+
+  /* Code block / dashboard preview */
+  .preview { background: var(--bg); border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft); padding: 6rem 1.5rem; }
+  .preview__inner { max-width: 64rem; margin: 0 auto; }
+  .preview__header { text-align: center; margin-bottom: 3rem; }
+  .preview__title { font-size: clamp(2rem, 4vw, 2.5rem); margin-bottom: 1rem; }
+  .preview__code { background: #050505; border: 1px solid var(--border-soft); border-radius: 0.875rem; padding: 1.5rem; font-family: var(--font-mono); font-size: 0.875rem; line-height: 1.7; overflow-x: auto; max-width: 60rem; margin: 0 auto; box-shadow: 0 24px 48px rgba(124, 92, 252, 0.15); }
+  .preview__code .comment { color: var(--meta); }
+  .preview__code .keyword { color: #c4b5fd; }
+  .preview__code .string { color: #6ee7b7; }
+  .preview__code .number { color: #fcd34d; }
+
+  /* CTA */
+  .cta { background: var(--bg); text-align: center; position: relative; overflow: hidden; isolation: isolate; }
+  .cta__glow { position: absolute; inset: 0; background: radial-gradient(at 50% 50%, var(--accent) 0%, transparent 50%); opacity: 0.2; z-index: -1; filter: blur(60px); }
+  .cta__title { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem; max-width: 24ch; margin-inline: auto; line-height: 1.05; }
+  .cta__subtitle { color: var(--muted); margin: 0 auto 2rem; max-width: 50ch; font-size: 1.125rem; }
+  .cta .btn--primary { background: var(--gradient-hero); color: var(--accent-on); }
+  .cta__trust { font-size: 0.875rem; color: var(--meta); margin-top: 1rem; }
+
+  .footer { padding: 2rem 1.5rem; text-align: center; color: var(--meta); font-size: 0.875rem; border-top: 1px solid var(--border-soft); background: var(--bg); }
+</style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav__inner">
+      <div class="nav__brand"><span class="nav__brand-dot"></span> Praxis</div>
+      <div class="nav__links">
+        <a href="#features">Features</a>
+        <a href="#preview">Demo</a>
+        <a href="#docs">Docs</a>
+        <a class="nav__cta" href="#cta">Sign in</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero__glows" aria-hidden="true">
+      <div class="hero__glow hero__glow--purple"></div>
+      <div class="hero__glow hero__glow--cyan"></div>
+    </div>
+    <div class="container">
+      <div class="hero__badge"><span class="hero__badge-dot"></span> Now in private beta · join 847 teams</div>
+      <h1 class="hero__title">Trading infrastructure dla <span>kolejnej generacji</span> funduszy.</h1>
+      <p class="hero__subtitle">Realtime portfolio risk · execution algos · audit-ready reporting. Built for hedge funds &amp; family offices managing $50M-$5B AUM.</p>
+      <div class="hero__ctas">
+        <a class="btn btn--primary" href="#cta">Request access</a>
+        <a class="btn btn--secondary" href="#preview">View demo →</a>
+      </div>
+      <div class="hero__stats">
+        <div class="hero__stat">
+          <span class="hero__stat-value">$8.4B</span>
+          <span class="hero__stat-label">AUM on platform</span>
+        </div>
+        <div class="hero__stat">
+          <span class="hero__stat-value">99.99%</span>
+          <span class="hero__stat-label">Uptime SLA</span>
+        </div>
+        <div class="hero__stat">
+          <span class="hero__stat-value">&lt;50ms</span>
+          <span class="hero__stat-label">P99 execution</span>
+        </div>
+        <div class="hero__stat">
+          <span class="hero__stat-value">SOC 2</span>
+          <span class="hero__stat-label">Type II certified</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="container">
+      <header class="features__header">
+        <span class="features__eyebrow">// PLATFORM</span>
+        <h2 class="features__title">Modular infrastructure dla institutional trading.</h2>
+        <p class="features__subtitle">Three building blocks. Composable APIs. Bring your own brokers, custodians, data vendors.</p>
+      </header>
+      <div class="features__grid">
+        <article class="feature">
+          <div class="feature__icon">⚡</div>
+          <h3 class="feature__title">Realtime portfolio risk</h3>
+          <p class="feature__desc">VaR, scenario stress, factor exposures. Refreshed sub-second across asset classes.</p>
+        </article>
+        <article class="feature">
+          <div class="feature__icon">⚙</div>
+          <h3 class="feature__title">Execution algos</h3>
+          <p class="feature__desc">TWAP, VWAP, POV, implementation shortfall. Customizable through declarative API.</p>
+        </article>
+        <article class="feature">
+          <div class="feature__icon">🛡</div>
+          <h3 class="feature__title">Audit-ready reporting</h3>
+          <p class="feature__desc">Immutable journal, ISO 20022, SEC Form ADV exports. Built for compliance from day one.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="preview" id="preview">
+    <div class="preview__inner">
+      <header class="preview__header">
+        <h2 class="preview__title">REST + WebSocket API. Strongly typed.</h2>
+      </header>
+<pre class="preview__code"><span class="comment">// Initialize Praxis SDK</span>
+<span class="keyword">import</span> { Praxis } <span class="keyword">from</span> <span class="string">"@praxis/sdk"</span>;
+
+<span class="keyword">const</span> client = <span class="keyword">new</span> Praxis({
+  apiKey: process.env.PRAXIS_KEY,
+  region: <span class="string">"eu-frankfurt"</span>,        <span class="comment">// EU data residency</span>
+});
+
+<span class="comment">// Subscribe to portfolio risk updates</span>
+client.risk.subscribe(<span class="string">"portfolio_id_001"</span>, (event) => {
+  console.log(<span class="string">`VaR 95%: $${event.var95.toLocaleString()}`</span>);
+  console.log(<span class="string">`Beta: ${event.beta.toFixed(<span class="number">3</span>)}`</span>);
+});
+
+<span class="comment">// Place TWAP order</span>
+<span class="keyword">const</span> order = <span class="keyword">await</span> client.execute({
+  symbol: <span class="string">"AAPL"</span>,
+  side: <span class="string">"buy"</span>,
+  quantity: <span class="number">10000</span>,
+  strategy: <span class="string">"twap"</span>,
+  window: <span class="string">"30min"</span>,
+});</pre>
+    </div>
+  </section>
+
+  <section class="cta" id="cta">
+    <div class="cta__glow" aria-hidden="true"></div>
+    <div class="container">
+      <h2 class="cta__title">Ready to upgrade your stack?</h2>
+      <p class="cta__subtitle">Currently onboarding 5 hedge funds per month. White-glove implementation. 30-day pilot.</p>
+      <a class="btn btn--primary" href="#">Request access</a>
+      <p class="cta__trust">Founder-led calls · No SDR funnel · SOC 2 + GDPR + ISO 27001 certified</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    © 2026 Praxis Trading · EU-incorporated · <a href="#" style="color:inherit">Privacy</a> · <a href="#" style="color:inherit">Terms</a> · <a href="#" style="color:inherit">SOC 2 Report</a>
+  </footer>
+</body>
+</html>
