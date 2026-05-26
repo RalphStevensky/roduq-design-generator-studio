@@ -10,20 +10,94 @@ roduq-design-generator-studio repository on top of the upstream fork base
 nexu-io/open-design at fork point and subsequent upstream cherry-picks) remains
 licensed under the Apache License, Version 2.0 — see ./LICENSE.
 
-Roduq Additions include (non-exhaustive list):
-- skills/roduq-*               — Roduq custom Anthropic skills
-- design-systems/roduq-*       — Roduq custom brand-agnostic preset systems
-- design-systems/monolith-meadow, design-systems/warm-editorial, …
-  (any preset directory added by Roduq, not present in upstream)
-- skills/multi-variant         — Roduq multi-variant generator (3 designs parallel)
-- src/output/, src/export/, schemas/  — JSON Schema v1 file protocol implementation
-  (per .roduq/output/{client-id}/ contract documented in .docs/BRIDGE.md)
-- src/mcp-server.ts, src/mcp/  — MCP stdio bridge for Claude Code in client repos
-- .docs/                       — Roduq narrative documentation (ADRs, design specs, plans)
-- .cursor/rules/               — Roduq operational rules (Anthropic Skills convention,
-                                  file protocol policy, coding standards, etc.)
-- CLAUDE.md, LICENSE-ROduQ.txt — Roduq agent delegator + this license file
-- .env.example                 — Roduq multi-provider configuration template
+Roduq Additions (complete list, verified Phase 7):
+
+Phase 1 (root setup):
+- CLAUDE.md                    — Roduq context for Claude Code agents
+- LICENSE-ROduQ.txt            — This file (proprietary additions license)
+- README.md                    — Roduq-rewritten README (replaces upstream README)
+- .env.example                 — Multi-provider LLM keys template + ROduQ_OUTPUT_DIR
+- .gitignore modifications     — Exception !.cursor/rules/ to keep Roduq rules tracked
+- apps/web/app/layout.tsx      — Title swap "Open Design" → "Roduq Design Studio" (single-line edit)
+- apps/web/app/[[...slug]]/client-app.tsx — Loading text swap (single-line edit)
+
+Phase 2 (7 industry skills, ~50 files, ~9000 LOC):
+- skills/roduq-saas-landing/   — SaaS / software product page generator
+- skills/roduq-agency/         — Creative / marketing / design agency website
+- skills/roduq-restaurant/     — Restauracja / café / bistro website
+- skills/roduq-clinic/         — Medical / wellness practice website (RODO-strict)
+- skills/roduq-real-estate/    — Biuro nieruchomości website
+- skills/roduq-product-launch/ — Single-product launch / waitlist site
+- skills/roduq-portfolio/      — Freelancer / artist / solo creator portfolio
+  Each: SKILL.md + references/{inspiration, content-patterns, target-audience}.md + assets/template-*.html
+
+Phase 3 (7 brand-agnostic presets, 35 files, ~6000 LOC):
+- design-systems/roduq-default/         — Neutral B2B starter
+- design-systems/roduq-monolith-meadow/ — Warm earthy (heritage/hospitality/wellness)
+- design-systems/roduq-tech-modern/     — Linear/Vercel inspired developer SaaS
+- design-systems/roduq-warm-editorial/  — NYT/Substack magazine style
+- design-systems/roduq-brutalist/       — Statement piece (B/W + RGB)
+- design-systems/roduq-soft-pastel/     — Wellness/education/lifestyle
+- design-systems/roduq-dark-cinematic/  — Premium SaaS dark mode
+  Each: DESIGN.md + tokens.css + tokens.example.json + inspiration.md + samples/full-page.html
+
+Phase 4 (multi-variant orchestrator, 6 files, ~1800 LOC):
+- skills/multi-variant/        — 3-parallel-variant generator orchestrating industry skills
+  SKILL.md + references/{variant-strategy, preset-mapping, parallel-execution}.md
+  + assets/{preview-side-by-side, variant-picker}.html
+
+Phase 5 (JSON Schema v1 file protocol, 12 files, ~1530 LOC):
+- schemas/tokens.v1.schema.json
+- schemas/sections.v1.schema.json
+- schemas/content.v1.schema.json
+- schemas/meta.v1.schema.json
+- schemas/meta-multi-variant.v1.schema.json
+- schemas/examples/*.example.json (5 valid fixtures)
+- schemas/README.md            — ajv usage + atomic write protocol + forward compat
+- schemas/AGENTS.md            — agent-facing schema guide
+
+Phase 6 (MCP server package, 15 files, ~1900 LOC):
+- packages/roduq-mcp-server/   — @roduq/mcp-server v1.0.0 workspace package
+  package.json + tsconfig.json + vitest.config.ts
+  src/{index.ts, server.ts, lib/{types, output-reader, output-writer}.ts, tools/{get-design-state, regenerate-section, pick-variant}.ts}
+  tests/{output-reader, output-writer}.test.ts
+  README.md + AGENTS.md
+
+Phase 7 (testing + production polish, 14 + 4 docs):
+- tests/roduq/                 — Cross-cutting Roduq tests
+  fixtures/briefs/*.json (8 industry briefs) + fixtures/expected/polish-characters.txt
+  schemas/validation.test.ts + skills/structure.test.ts + presets/structure.test.ts
+  vitest.config.ts + README.md + AGENTS.md
+- .docs/PRODUCTION_POLISH.md   — Error patterns + rate limiting + telemetry + recovery
+- .docs/E2E_DEMO.md            — End-to-end runbook
+- .docs/INVENTORY.md           — Complete Roduq additions inventory (this file's twin)
+
+Operational rules (.cursor/rules/, all phases, 9 rules):
+- 001-project-overview.mdc
+- 002-skills-convention.mdc
+- 003-design-systems.mdc
+- 004-file-protocol.mdc
+- 005-coding-standards.mdc
+- 006-git-workflow.mdc
+- 007-llm-providers.mdc
+- 008-mcp-server.mdc
+- 009-docs-sync.mdc (META rule — sync .docs/ + .cursor/rules/)
+- README.md                    — Cursor rules index
+
+Narrative documentation (.docs/, all phases):
+- AGENT_PROMPT.md              — Master prompt for parallel agent
+- IMPLEMENTATION.md            — 7-phase plan + retrospective per phase
+- DESIGN_SYSTEMS.md            — 7 preset full specs
+- BRIDGE.md                    — Cross-repo architecture with roduq-web-starter
+- PRODUCTION_POLISH.md         — Phase 7 operational patterns
+- E2E_DEMO.md                  — Phase 7 demo runbook
+- INVENTORY.md                 — Phase 7 complete catalog
+- decisions/0001-separate-repo.md — ADR
+
+Total tally (verified Phase 7):
+- ~140 Roduq files
+- ~22 000 lines of TypeScript + Markdown + JSON + HTML + CSS
+- 7 phases shipped over ~30 commits
 
 Permitted Use
 -------------

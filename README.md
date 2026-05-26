@@ -4,7 +4,7 @@
 
 ## Status
 
-🟢 **Phase 6 done** — @roduq/mcp-server stdio bridge shipped (3 tools — Tool 2 interface only).
+🎉 **All 7 phases done — Roduq Design Generator Studio v1.0 architecture + definitions complete.**
 
 | Phase | Status | Scope |
 |-------|--------|-------|
@@ -14,7 +14,7 @@
 | 4 | ✅ done | Multi-variant skill (3 designs parallel — KEY differentiator) |
 | 5 | ✅ done | File export protocol + JSON Schema v1 ajv validation |
 | 6 | ✅ done | MCP stdio server (3 tools dla Claude Code bridge) |
-| 7 | ⏳ pending | Vitest + Playwright + production polish |
+| 7 | ✅ done | Test scaffolds + production polish docs + E2E runbook + INVENTORY + final retrospective |
 
 Pełny phase plan: [`.docs/AGENT_PROMPT.md`](.docs/AGENT_PROMPT.md) i [`.docs/IMPLEMENTATION.md`](.docs/IMPLEMENTATION.md).
 
