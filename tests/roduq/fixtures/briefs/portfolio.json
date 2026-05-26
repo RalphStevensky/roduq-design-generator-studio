@@ -1,0 +1,24 @@
+{
+  "_meta": {
+    "skill": "roduq-portfolio",
+    "expectedMatrix": {
+      "conservative": "roduq-default",
+      "modern": "roduq-dark-cinematic",
+      "bold": "roduq-brutalist"
+    }
+  },
+  "clientId": "anna-nowak-ux",
+  "brief": "UX/UI designer freelancer z Warszawy, 6 lat doświadczenia. Pracuję z SaaS B2B i fintech. Portfolio: 12 projektów. Pricing: request quote. Languages: PL + EN. Tone: konkretny, minimalist, profesjonalny.",
+  "audience": "B2B SaaS / fintech CMOs + product leaders szukający UX freelancer",
+  "toneAdjectives": ["konkretny", "minimalist", "profesjonalny"],
+  "brandColors": null,
+  "industryHints": {
+    "role": "UX/UI Designer",
+    "yearsExperience": 6,
+    "workTypes": ["UX research", "UI design", "design system"],
+    "workSampleCount": 12,
+    "availability": "limited",
+    "pricing": "request-quote",
+    "languages": ["PL", "EN"]
+  }
+}

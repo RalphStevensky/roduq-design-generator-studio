@@ -1,0 +1,20 @@
+{
+  "_meta": {
+    "skill": "roduq-agency",
+    "expectedMatrix": {
+      "conservative": "roduq-default",
+      "modern": "roduq-tech-modern",
+      "bold": "roduq-brutalist"
+    }
+  },
+  "clientId": "studio-bardzo-krakow",
+  "brief": "Boutique branding studio w Krakowie, 12 osób. Specjalizujemy się w rebrand heritage marek konsumenckich (FMCG, retail). Klienci: 50-500 employees firms. 8 lat na rynku. Tone: konkretny, ciepły, dumny z rzemiosła.",
+  "audience": "Mid-market CMOs i Brand Managers w polskich firmach FMCG / retail",
+  "toneAdjectives": ["konkretny", "ciepły", "rzemieślniczy"],
+  "brandColors": null,
+  "industryHints": {
+    "services": ["branding", "rebranding", "design system", "packaging"],
+    "caseStudyCount": 4,
+    "teamSize": "boutique"
+  }
+}

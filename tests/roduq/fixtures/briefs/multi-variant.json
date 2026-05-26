@@ -1,0 +1,21 @@
+{
+  "_meta": {
+    "skill": "multi-variant",
+    "detectedIndustry": "roduq-saas-landing",
+    "expectedVariants": [
+      { "id": 1, "label": "Conservative", "preset": "roduq-tech-modern" },
+      { "id": 2, "label": "Modern", "preset": "roduq-dark-cinematic" },
+      { "id": 3, "label": "Bold", "preset": "roduq-brutalist" }
+    ],
+    "performanceTarget": {
+      "totalExecutionTimeMs": 30000,
+      "perVariantTimeoutMs": 45000
+    }
+  },
+  "clientId": "acme-multi-variant-demo",
+  "brief": "SaaS dla freelancerów księgowych. Audience 30-40 lat, profesjonalni ale przeładowani roboczo. Tone: konkretny, ciepły. USP: automatyczne faktury + prognozy cashflow.",
+  "audience": "Polish freelancers aged 30-40 doing accounting / bookkeeping",
+  "toneAdjectives": ["konkretny", "ciepły", "profesjonalny"],
+  "brandColors": null,
+  "preferredVariants": null
+}

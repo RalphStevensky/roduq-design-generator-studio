@@ -1,0 +1,23 @@
+{
+  "_meta": {
+    "skill": "roduq-real-estate",
+    "expectedMatrix": {
+      "conservative": "roduq-default",
+      "modern": "roduq-dark-cinematic",
+      "bold": "roduq-warm-editorial"
+    }
+  },
+  "clientId": "reidopl-premium",
+  "brief": "Boutique agencja nieruchomości w Warszawie, 8 agentów, segment premium (1.5M-15M PLN). Specjalizacja: Mokotów, Powiśle, Stare Miasto. 12 lat na rynku. Tone: profesjonalny, dyskretny, lokalna wiedza.",
+  "audience": "Affluent buyers + sellers aged 35-65 w premium Warsaw districts",
+  "toneAdjectives": ["profesjonalny", "dyskretny", "kompetentny"],
+  "brandColors": null,
+  "industryHints": {
+    "agencyType": "boutique",
+    "agentCount": 8,
+    "neighborhoods": ["Mokotów", "Powiśle", "Stare Miasto"],
+    "primarySegment": "premium",
+    "yearEstablished": 2013,
+    "averageListingPrice": { "sale": 5000000, "rent": 12000 }
+  }
+}

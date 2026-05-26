@@ -1,0 +1,20 @@
+{
+  "_meta": {
+    "skill": "roduq-saas-landing",
+    "expectedMatrix": {
+      "conservative": "roduq-tech-modern",
+      "modern": "roduq-dark-cinematic",
+      "bold": "roduq-brutalist"
+    }
+  },
+  "clientId": "acme-accounting",
+  "brief": "SaaS dla freelancerów księgowych. Audience 30-40 lat, profesjonalni ale przeładowani roboczo. Tone: konkretny, ciepły. USP: automatyczne faktury + prognozy cashflow + integracje z bankami (mBank, ING, Stripe).",
+  "audience": "Polish freelancers aged 30-40 doing accounting / bookkeeping",
+  "toneAdjectives": ["konkretny", "ciepły", "profesjonalny"],
+  "brandColors": null,
+  "industryHints": {
+    "competitors": ["FreshBooks", "Stripe", "iFirma"],
+    "pricingModel": "freemium",
+    "uniqueValueProp": "Automatyczne faktury + prognozy cashflow w jednej apce. 5h oszczędności tygodniowo."
+  }
+}

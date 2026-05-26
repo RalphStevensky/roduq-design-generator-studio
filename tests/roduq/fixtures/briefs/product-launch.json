@@ -1,0 +1,23 @@
+{
+  "_meta": {
+    "skill": "roduq-product-launch",
+    "expectedMatrix": {
+      "conservative": "roduq-default",
+      "modern": "roduq-dark-cinematic",
+      "bold": "roduq-brutalist"
+    }
+  },
+  "clientId": "aria-smart-home",
+  "brief": "Aria — smart home hub bez wifi-dependence. Lokalna sieć Zigbee + Z-Wave + Thread. Polski startup, premiera 15.06.2026. Pre-order open, 30% off pierwsi 500. Tone: ambitious, technical-but-accessible, anti-cloud.",
+  "audience": "Polish smart-home enthusiasts aged 28-50, privacy-conscious, DIY-friendly",
+  "toneAdjectives": ["ambitious", "technical", "anti-cloud"],
+  "brandColors": null,
+  "industryHints": {
+    "category": "hardware",
+    "launchType": "pre-order",
+    "launchDate": "2026-06-15",
+    "earlyAccessIncentive": "Pierwsi 500 zapisanych — 30% off cenę premierową",
+    "productImagery": "hero-shot",
+    "estimatedPrice": 499
+  }
+}

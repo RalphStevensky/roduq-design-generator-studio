@@ -1,0 +1,24 @@
+{
+  "_meta": {
+    "skill": "roduq-clinic",
+    "expectedMatrix": {
+      "conservative": "roduq-soft-pastel",
+      "modern": "roduq-default",
+      "bold": "roduq-warm-editorial"
+    }
+  },
+  "clientId": "anna-kowalska-cbt",
+  "brief": "Psycholog z Warszawy (Mokotów), specjalizacja CBT dla dorosłych z lękiem i depresją. 8 lat doświadczenia. PTPB członek. Online + stacjonarnie. 250 zł/sesja initial / 230 zł follow-up. Calendly booking. Tone: spokojny, profesjonalny, empatyczny.",
+  "audience": "Adults aged 22-45 considering therapy dla anxiety lub depression",
+  "toneAdjectives": ["spokojny", "profesjonalny", "empatyczny"],
+  "brandColors": null,
+  "industryHints": {
+    "specialty": "psychoterapia poznawczo-behawioralna",
+    "yearsExperience": 8,
+    "certifications": ["PTPB", "PTP"],
+    "bookingSystem": "calendly",
+    "consultationFormat": "both",
+    "pricePerVisit": 250,
+    "rodoStrict": true
+  }
+}

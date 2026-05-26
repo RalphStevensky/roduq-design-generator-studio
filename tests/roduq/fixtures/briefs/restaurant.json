@@ -1,0 +1,26 @@
+{
+  "_meta": {
+    "skill": "roduq-restaurant",
+    "expectedMatrix": {
+      "conservative": "roduq-monolith-meadow",
+      "modern": "roduq-warm-editorial",
+      "bold": "roduq-dark-cinematic"
+    }
+  },
+  "clientId": "atelier-wilanow",
+  "brief": "Bistro w Warszawie na Wilanowie, 32 miejsca, kuchnia polska modernistyczna. Chef trenowany w restauracji 3-gwiazdkowej w Berlinie. Lokalni dostawcy: pasterz z Mazowsza, pszczelarz spod Warszawy. Price range $$, lunch 12-15 / kolacja 18-23. Reservation via form. Tone: ciepły, professional, dumny z lokalnych składników.",
+  "audience": "Local diners aged 30-55 + tourists visiting Wilanów",
+  "toneAdjectives": ["ciepły", "professional", "lokalny"],
+  "brandColors": null,
+  "industryHints": {
+    "cuisine": "Polish modern",
+    "priceRange": "$$",
+    "capacity": 32,
+    "reservationSystem": "internal-form",
+    "openingHours": {
+      "mon-fri": "12:00-23:00",
+      "sat": "12:00-24:00",
+      "sun": "12:00-22:00"
+    }
+  }
+}

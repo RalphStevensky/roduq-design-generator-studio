@@ -1,0 +1,23 @@
+Łódź żółw pięć słów
+
+Wszystkie polskie znaki diakrytyczne — używane w testach renderingu (skills templates, presets samples, generated content):
+- ą Ą — np. "Wąchock"
+- ć Ć — np. "Ćwiartka"
+- ę Ę — np. "Ślęża"
+- ł Ł — np. "Łódź"
+- ń Ń — np. "Gdańsk"
+- ó Ó — np. "Kraków"
+- ś Ś — np. "Śląsk"
+- ź Ź — np. "Źródło"
+- ż Ż — np. "Żywiec"
+
+Test phrase complete: "Łódź żółw pięć słów" — exhaustive coverage diakrytyków rzadziej spotykanych.
+
+Long-form test passage:
+"Pięknie żyje się w Polsce. Łódź, Wrocław, Gdańsk, Kraków, Poznań — każde miasto ma własną duszę. Smutno, że niektóre fonty psują polskie znaki. Sprawdź swój: ą ć ę ł ń ó ś ź ż."
+
+Compound diacritics test:
+"źdźbło" (5 chars, 3 diacritic)
+"żuraw" (5 chars, 1 diacritic)
+"pszczoła" (8 chars, 1 diacritic)
+"różczka" (7 chars, 2 diacritics)
