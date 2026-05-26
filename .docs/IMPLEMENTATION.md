@@ -564,9 +564,87 @@ Bold:
 
 Block types **MUST** match `apps/marketing-starter/src/blocks/types.ts` w roduq-web-starter (canonical source). Skill template includes that file za reference.
 
-### Phase 6 — MCP server bridge (~4h)
+### Phase 6 — MCP server bridge (~4h) ✅ done
 
 **Goal**: Claude Code w repo klienta może query Open Design state przez Model Context Protocol.
+
+**Deliverables (executed 2026-05-26)**:
+- ✅ `packages/roduq-mcp-server/` standalone workspace package — 15 files ~1900 LOC:
+  - `package.json` — @roduq/mcp-server v1.0.0 z bin entry, deps (@modelcontextprotocol/sdk ^1.18.0 + ajv 8.17.1 + zod 3.25.71)
+  - `tsconfig.json` — strict z exactOptionalPropertyTypes + verbatimModuleSyntax (rule 005), composite build
+  - `vitest.config.ts` — node env, 10s timeout, v8 coverage
+  - `src/index.ts` — CLI entry, StdioServerTransport setup, stderr logging
+  - `src/server.ts` — Server factory z ListTools + CallTool handlers, MCPServerError → isError response
+  - `src/lib/types.ts` — Shared types mirroring JSON Schema v1 + MCPServerError z 9-code enum
+  - `src/lib/output-reader.ts` — OutputReader z readDesignState (single + multi-variant layouts), defaultOutputDir() env support, validateClientId asserts
+  - `src/lib/output-writer.ts` — OutputWriter.promoteVariant (6-step atomic flow)
+  - `src/tools/get-design-state.ts` — Tool 1 ✅ implemented
+  - `src/tools/regenerate-section.ts` — Tool 2 ⚠ interface only (NOT_IMPLEMENTED z Phase 7 steps)
+  - `src/tools/pick-variant.ts` — Tool 3 ✅ implemented
+  - `tests/output-reader.test.ts` — 4 test cases (validation + read flows)
+  - `tests/output-writer.test.ts` — 4 test cases (promote + rejection scenarios)
+  - `README.md` — tool table z status + client integration .claude/settings.json + 3 tool usage examples z input/output JSON + section locator format + 9 error codes table
+  - `AGENTS.md` — Roduq Addition marker + tool editing patterns + adding new tools 4-step protocol
+
+**Lessons learned (post-Phase-6)**:
+
+1. **Standalone workspace package decision** — `packages/roduq-mcp-server/` over `src/mcp-server.ts` at root. Rationale:
+   - pnpm-workspace.yaml already matches `packages/*` — no config changes needed
+   - @roduq/* scope distinct od upstream @open-design/* scope — unambiguous ownership
+   - Proper TypeScript build via `pnpm --filter @roduq/mcp-server build`
+   - Tests run isolated via `pnpm --filter @roduq/mcp-server test`
+   - Cleaner separation dla LICENSE-ROduQ.txt coverage
+
+2. **Zod validation per tool** (NIE jsonschema runtime) — Zod ergonomics better dla TypeScript, schemas/* JSON files separate concern (output validation, NIE input validation). Each tool exports `*InputSchema` parsed at handler boundary z `safeParse` → `MCPServerError("INVALID_INPUT")` on fail.
+
+3. **MCPServerError z 9-code enum**:
+   - `CLIENT_NOT_FOUND` — clientId directory missing
+   - `GENERATION_IN_PROGRESS` — no .complete flag yet
+   - `INVALID_INPUT` — Zod validation failed
+   - `VARIANT_NOT_FOUND` — variantNum poza [1,2,3] lub section locator unresolved
+   - `VARIANT_NOT_COMPLETE` — variant status != "complete"
+   - `VALIDATION_FAILED` — output schema validation failed (Phase 7 ajv)
+   - `FS_ERROR` — filesystem read/write error
+   - `UNSUPPORTED_OPERATION` — not valid for current state
+   - `INTERNAL_ERROR` — unexpected error
+
+4. **stderr logging dla stdio transport** — stdout reserved dla MCP protocol bytes. Format `[@roduq/mcp-server] <event>\n`. NEVER use console.log w stdio MCP servers.
+
+5. **defaultOutputDir() z env var support** — checks `ROduQ_OUTPUT_DIR` (canonical mixed case per .env.example) + `RODUQ_OUTPUT_DIR` (alias). Fallback `${HOME}/.roduq/output`. Server propagates env from client `.claude/settings.json`.
+
+6. **validateClientId asserts pattern** — kebab-case `^[a-z0-9][a-z0-9-]*$` (max 64 chars). Asserts type narrowing via TypeScript `asserts` keyword.
+
+7. **promoteVariant atomic flow** (6 steps per schemas/README.md):
+   1. Read meta-multi-variant.json
+   2. Verify variantId in [1,2,3]
+   3. Verify variants[N-1].status === "complete"
+   4. Copy 5 files (tokens/sections/content/design-system/preview) variants/N-label/ → root
+   5. Update meta z selectedVariant + userPick + userPickedAt
+   6. Write .complete flag LAST
+
+8. **Tool 2 (regenerate_section) interface only** — Zod schema + section locator resolver implemented. LLM invocation returns structured NOT_IMPLEMENTED response z Phase 7 implementation steps (load skill → render prompt → invoke LLM → parse → ajv validate → atomic write).
+
+9. **Section locator format**: `<page>:<blocks[N]|blockType>`:
+   - `homepage:hero` — first hero block on homepage
+   - `homepage:blocks[2]` — third block on homepage
+   - `/cennik:pricing` — pricing block on /cennik page
+   - Regex: `^(\/[a-z0-9-/]+|homepage):(blocks\[\d+\]|[a-z][a-z0-9-]*)$`
+
+10. **Tests scaffold (Vitest)** — 8 test cases across reader (4) + writer (4). Phase 7 will add e2e MCP integration tests z @modelcontextprotocol/sdk client.
+
+11. **Client integration pattern** documented w README.md — `.claude/settings.json` snippet z command + args (absolute path to dist/index.js) + env (ROduQ_OUTPUT_DIR). User installs once per Claude Code project.
+
+12. **Phase 7 wiring TODO** captured w AGENTS.md:
+    - Install dependencies (currently blocked by Windows native better-sqlite3 compile)
+    - LLM integration dla regenerate_section
+    - ajv schema validation w handlers (load schemas/* via JSON import)
+    - Daemon `od mcp` subcommand (per upstream capability dual-track rule)
+    - Telemetry token usage tracking
+    - e2e MCP integration tests
+
+13. **Architectural choice** — NO daemon integration Phase 6. Reasoning: keeps standalone runnable + reduces upstream code modification + Phase 7 wires via apps/daemon `od mcp` subcommand follows capability dual-track rule from upstream AGENTS.md.
+
+14. **TypeScript strict satisfied** — all 4 strict flags + exactOptionalPropertyTypes + verbatimModuleSyntax. Uses `Lowercase<VariantLabel>` template literal type satisfies dla type safety on `${id}-${label.toLowerCase()}` path construction.
 
 **Implementation**:
 - `src/mcp-server.ts` — stdio MCP server

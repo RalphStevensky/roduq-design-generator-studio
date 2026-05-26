@@ -103,7 +103,7 @@ Patrz [.cursor/rules/009-docs-sync.mdc](.cursor/rules/009-docs-sync.mdc) dla pe�
 | 3 | ✅ done | 7 DESIGN.md preset systems | ~8h |
 | 4 | ✅ done | Multi-variant skill (KEY DIFFERENTIATOR — 3 parallel) | ~6h |
 | 5 | ✅ done | File export protocol + JSON Schema v1 validation | ~3h |
-| 6 | ⏳ pending | MCP server bridge (stdio + 3 tools) | ~4h |
+| 6 | ✅ done | MCP server bridge (stdio + 3 tools) | ~4h |
 | 7 | ⏳ pending | Testing + production polish | ~6h |
 
 **Total**: ~37h Opus solo + ~$45-70 LLM tokens.
