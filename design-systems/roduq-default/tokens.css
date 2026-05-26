@@ -1,0 +1,117 @@
+/* ─────────────────────────────────────────────────────────────────────────
+ * design-systems/roduq-default/tokens.css
+ *
+ * Roduq Default — Neutral Starter. Machine-readable form of DESIGN.md.
+ *
+ * Token strategy: dual-layer
+ *   1. Upstream contract (--bg, --fg, --accent, etc.) — per craft/color.md.
+ *      Lint-enforced. ALWAYS define these on :root.
+ *   2. Roduq extensions (--color-brand-primary, --space-*, --text-*, --radius-*)
+ *      — aliases to upstream where applicable, additional scale tokens otherwise.
+ *      Used przez Roduq skills templates (skills/roduq-*/assets/template-*.html).
+ *
+ * Agents are expected to paste the :root { … } block verbatim into the first
+ * <style> of every artifact, then reference tokens via var(--name).
+ * ─────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* ═══ Upstream contract (craft/color.md, lint-enforced) ═══════════ */
+
+  /* Neutrals (70-90% of pixels) */
+  --bg: #FAFAFA;             /* page canvas — never pure #FFF */
+  --surface: #FFFFFF;        /* raised cards/modals */
+  --surface-warm: var(--surface);  /* alias — default has no warm tier */
+  --fg: #0F0F0F;             /* primary text — never pure #000 */
+  --fg-2: var(--fg);         /* alias — default has no secondary tier */
+  --muted: #525252;          /* secondary text */
+  --meta: #737373;           /* tertiary text */
+  --border: #E5E5E5;
+  --border-soft: rgba(15, 15, 15, 0.06);
+
+  /* Accent (5-10% of pixels, max 2 visible uses per screen) */
+  --accent: #2563EB;
+  --accent-on: #FFFFFF;
+  --accent-hover: color-mix(in oklab, var(--accent), black 8%);
+  --accent-active: color-mix(in oklab, var(--accent), black 14%);
+
+  /* Semantic (0-5% of pixels — reserved for state, not decoration) */
+  --success: #10B981;
+  --warn: #F59E0B;
+  --danger: #EF4444;
+
+  /* Typography */
+  --font-display: "Inter Tight", "Inter", -apple-system, system-ui, sans-serif;
+  --font-body: "Inter", -apple-system, system-ui, sans-serif;
+  --font-mono: ui-monospace, "JetBrains Mono", monospace;
+
+  /* ═══ Roduq extensions (skills templates compatibility) ═══════════ */
+
+  /* Color aliases — used przez skills/roduq-*/assets/template-*.html */
+  --color-surface-default: var(--surface);
+  --color-surface-raised: var(--bg);
+  --color-surface-sunken: #F5F5F5;
+  --color-ink-primary: var(--fg);
+  --color-ink-secondary: var(--muted);
+  --color-ink-muted: var(--meta);
+  --color-ink-inverse: var(--surface);
+  --color-outline-default: var(--border);
+  --color-outline-subtle: var(--border-soft);
+  --color-outline-strong: rgba(15, 15, 15, 0.2);
+  --color-brand-primary: var(--accent);
+  --color-brand-secondary: #0EA5E9;  /* cyan support — used sparingly */
+
+  /* Spacing scale */
+  --space-3xs: 0.125rem;
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 6rem;
+
+  /* Radii */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* Type scale */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+
+  /* Container widths */
+  --container-sm: 48rem;     /* 768px */
+  --container-md: 72rem;     /* 1152px */
+  --container-lg: 80rem;     /* 1280px */
+}
+
+/* ═══ Dark mode (optional override) ════════════════════════════════ */
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="auto"] {
+    --bg: #0F0F0F;
+    --surface: #1A1A1A;
+    --fg: #FAFAFA;
+    --muted: #A3A3A3;
+    --meta: #737373;
+    --border: rgba(255, 255, 255, 0.12);
+    --border-soft: rgba(255, 255, 255, 0.06);
+    --accent-hover: color-mix(in oklab, var(--accent), white 12%);
+    --accent-active: color-mix(in oklab, var(--accent), white 6%);
+
+    --color-surface-sunken: #0A0A0A;
+    --color-ink-inverse: var(--bg);
+    --color-outline-strong: rgba(255, 255, 255, 0.24);
+  }
+}

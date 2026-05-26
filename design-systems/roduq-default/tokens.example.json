@@ -1,0 +1,95 @@
+{
+  "$schema": "https://roduq.dev/schemas/v1/tokens.schema.json",
+  "version": "1.0.0",
+  "_meta": {
+    "preset": "roduq-default",
+    "category": "starter",
+    "tagline": "Bezpieczny start dla każdego projektu. Można refine później.",
+    "description": "Clean, product-oriented default. Calm, functional, quietly confident."
+  },
+  "tokens": {
+    "color": {
+      "surface": {
+        "default": "#FFFFFF",
+        "raised": "#FAFAFA",
+        "sunken": "#F5F5F5",
+        "muted": "#F0F0F0"
+      },
+      "ink": {
+        "primary": "#0F0F0F",
+        "secondary": "#525252",
+        "muted": "#737373",
+        "inverse": "#FFFFFF"
+      },
+      "outline": {
+        "subtle": "rgba(15, 15, 15, 0.06)",
+        "default": "rgba(15, 15, 15, 0.12)",
+        "strong": "rgba(15, 15, 15, 0.2)"
+      },
+      "brand": {
+        "primary": "#2563EB",
+        "secondary": "#0EA5E9"
+      },
+      "status": {
+        "success": "#10B981",
+        "warning": "#F59E0B",
+        "danger": "#EF4444",
+        "info": "#3B82F6"
+      }
+    },
+    "font": {
+      "display": "Inter Tight, Inter, -apple-system, system-ui, sans-serif",
+      "body": "Inter, -apple-system, system-ui, sans-serif",
+      "mono": "ui-monospace, JetBrains Mono, monospace"
+    },
+    "spacing": {
+      "3xs": "0.125rem",
+      "2xs": "0.25rem",
+      "xs": "0.5rem",
+      "sm": "0.75rem",
+      "md": "1rem",
+      "lg": "1.5rem",
+      "xl": "2rem",
+      "2xl": "3rem",
+      "3xl": "4rem",
+      "4xl": "6rem"
+    },
+    "radii": {
+      "sm": "0.25rem",
+      "md": "0.5rem",
+      "lg": "0.75rem",
+      "xl": "1rem",
+      "full": "9999px"
+    },
+    "fontSize": {
+      "xs": "0.75rem",
+      "sm": "0.875rem",
+      "base": "1rem",
+      "lg": "1.125rem",
+      "xl": "1.25rem",
+      "2xl": "1.5rem",
+      "3xl": "1.875rem",
+      "4xl": "2.25rem",
+      "5xl": "3rem",
+      "6xl": "3.75rem"
+    },
+    "lineHeight": {
+      "tight": 1.25,
+      "snug": 1.375,
+      "normal": 1.5,
+      "relaxed": 1.625,
+      "loose": 2
+    },
+    "shadow": {
+      "sm": "0 1px 2px rgba(15, 15, 15, 0.04)",
+      "md": "0 4px 6px rgba(15, 15, 15, 0.04), 0 1px 3px rgba(15, 15, 15, 0.06)",
+      "lg": "0 10px 30px rgba(15, 15, 15, 0.08)",
+      "xl": "0 20px 50px rgba(15, 15, 15, 0.12)"
+    },
+    "container": {
+      "sm": "48rem",
+      "md": "72rem",
+      "lg": "80rem"
+    }
+  }
+}
