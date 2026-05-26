@@ -1,0 +1,158 @@
+<!--
+  Services section templates dla roduq-agency skill.
+  Block type: "services"
+  Variants:
+  - grid-3-col       — 3-6 service offerings, clean cards
+  - cards-with-icons — service cards z larger icons + descriptions
+-->
+
+<section class="services services--grid" data-block-type="services" data-variant="grid-3-col">
+  <div class="services__container">
+    <header class="services__header">
+      <h2 class="services__title">{{services-title}}</h2>
+      <!-- e.g. "Co robimy" / "What we do" -->
+      <p class="services__subtitle">{{services-subtitle}}</p>
+    </header>
+    <div class="services__grid">
+      <!-- Per service card (typically 3-6) -->
+      <article class="service">
+        <div class="service__icon">
+          <!-- Lucide icon: paintbrush, palette, type, etc. -->
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </div>
+        <h3 class="service__title">{{service-1-title}}</h3>
+        <!-- "Branding" -->
+        <p class="service__description">{{service-1-description}}</p>
+        <!-- "Strategia, identyfikacja wizualna, guideline." -->
+        <p class="service__outcome">{{service-1-outcome}}</p>
+        <!-- "Spójność na każdym touchpoint." -->
+        <a href="{{service-1-href}}" class="service__link">
+          {{service-1-link-label}} → <!-- "Zobacz więcej" -->
+        </a>
+      </article>
+      <article class="service">
+        <div class="service__icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <path d="M8 21h8M12 17v4"/>
+          </svg>
+        </div>
+        <h3 class="service__title">{{service-2-title}}</h3>
+        <p class="service__description">{{service-2-description}}</p>
+        <p class="service__outcome">{{service-2-outcome}}</p>
+        <a href="{{service-2-href}}" class="service__link">{{service-2-link-label}} →</a>
+      </article>
+      <article class="service">
+        <div class="service__icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M4 7h16M4 12h16M4 17h10"/>
+          </svg>
+        </div>
+        <h3 class="service__title">{{service-3-title}}</h3>
+        <p class="service__description">{{service-3-description}}</p>
+        <p class="service__outcome">{{service-3-outcome}}</p>
+        <a href="{{service-3-href}}" class="service__link">{{service-3-link-label}} →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .services {
+    padding: var(--space-4xl, 6rem) var(--space-md, 1rem);
+    background: var(--color-surface-sunken);
+  }
+
+  .services__container {
+    max-width: var(--container-md, 72rem);
+    margin: 0 auto;
+  }
+
+  .services__header {
+    text-align: center;
+    margin-bottom: var(--space-2xl, 3rem);
+  }
+
+  .services__title {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl, 2.25rem);
+    font-weight: 700;
+    margin: 0 0 var(--space-md, 1rem);
+  }
+
+  .services__subtitle {
+    font-size: var(--text-lg, 1.125rem);
+    color: var(--color-ink-secondary);
+    max-width: 50ch;
+    margin: 0 auto;
+  }
+
+  .services__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl, 2rem);
+  }
+
+  @media (max-width: 768px) {
+    .services__grid { grid-template-columns: 1fr; }
+  }
+
+  .service {
+    padding: var(--space-xl, 2rem);
+    background: var(--color-surface-default);
+    border: 1px solid var(--color-outline-subtle);
+    border-radius: var(--radius-lg, 0.75rem);
+    transition: border-color 0.2s ease;
+  }
+
+  .service:hover {
+    border-color: var(--color-outline-default);
+  }
+
+  .service__icon {
+    display: inline-flex;
+    width: 4rem;
+    height: 4rem;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--color-brand-primary) 8%, transparent);
+    color: var(--color-brand-primary);
+    border-radius: var(--radius-md, 0.5rem);
+    margin-bottom: var(--space-md, 1rem);
+  }
+
+  .service__title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl, 1.25rem);
+    font-weight: 600;
+    margin: 0 0 var(--space-sm, 0.75rem);
+  }
+
+  .service__description {
+    font-size: var(--text-base, 1rem);
+    line-height: 1.5;
+    color: var(--color-ink-secondary);
+    margin: 0 0 var(--space-xs, 0.5rem);
+  }
+
+  .service__outcome {
+    font-size: var(--text-base, 1rem);
+    font-weight: 500;
+    color: var(--color-ink-primary);
+    margin: 0 0 var(--space-md, 1rem);
+  }
+
+  .service__link {
+    color: var(--color-brand-primary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: var(--text-sm, 0.875rem);
+  }
+
+  .service__link:hover {
+    text-decoration: underline;
+  }
+</style>

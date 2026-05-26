@@ -1,0 +1,173 @@
+<!--
+  Hero templates dla roduq-agency skill.
+  Agency variants emphasize work — statement hero z positioning, lub split z latest case study.
+-->
+
+<!-- ==================== Variant 1: statement-text ==================== -->
+<section class="hero hero--statement" data-block-type="hero" data-variant="statement-text">
+  <div class="hero__container">
+    <span class="hero__eyebrow">{{homepage-hero-eyebrow}}</span>
+    <!-- e.g. "Studio brandingowe · Kraków · od 2014" -->
+    <h1 class="hero__title hero__title--statement">{{homepage-hero-title}}</h1>
+    <!-- e.g. "Brandy które rosną przez 10 lat. Nie 10 miesięcy." -->
+    <p class="hero__subtitle">{{homepage-hero-subtitle}}</p>
+    <div class="hero__ctas">
+      <a class="hero__cta hero__cta--primary" href="{{homepage-hero-cta-primary-href}}">
+        {{homepage-hero-cta-primary-label}} <!-- "Zobacz nasze prace" -->
+      </a>
+      <a class="hero__cta hero__cta--secondary" href="{{homepage-hero-cta-secondary-href}}">
+        {{homepage-hero-cta-secondary-label}} <!-- "Porozmawiajmy o projekcie" -->
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== Variant 2: split-with-work ==================== -->
+<section class="hero hero--split-work" data-block-type="hero" data-variant="split-with-work">
+  <div class="hero__container hero__container--grid">
+    <div class="hero__content">
+      <span class="hero__eyebrow">{{homepage-hero-eyebrow}}</span>
+      <h1 class="hero__title">{{homepage-hero-title}}</h1>
+      <p class="hero__subtitle">{{homepage-hero-subtitle}}</p>
+      <a class="hero__cta hero__cta--primary" href="{{homepage-hero-cta-primary-href}}">
+        {{homepage-hero-cta-primary-label}}
+      </a>
+    </div>
+    <div class="hero__work-tile">
+      <a href="{{latest-case-study-href}}" class="work-tile">
+        <div class="work-tile__image">
+          <img src="{{latest-case-study-image}}" alt="{{latest-case-study-alt}}" loading="eager">
+        </div>
+        <div class="work-tile__caption">
+          <span class="work-tile__meta">{{latest-case-study-meta}}</span>
+          <!-- "Acme Foods · 2025 · Rebrand" -->
+          <span class="work-tile__metric">{{latest-case-study-metric}}</span>
+          <!-- "+47% organic traffic w 6mc" -->
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: var(--space-4xl, 6rem) var(--space-md, 1rem);
+    background: var(--color-surface-default);
+    color: var(--color-ink-primary);
+  }
+
+  .hero__container {
+    max-width: var(--container-md, 72rem);
+    margin: 0 auto;
+  }
+
+  .hero__container--grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl, 3rem);
+    align-items: center;
+  }
+
+  @media (max-width: 768px) {
+    .hero__container--grid { grid-template-columns: 1fr; }
+  }
+
+  .hero__eyebrow {
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: var(--text-sm, 0.875rem);
+    font-weight: 600;
+    color: var(--color-brand-primary);
+    margin-bottom: var(--space-md, 1rem);
+  }
+
+  .hero__title {
+    font-family: var(--font-display);
+    font-size: var(--text-5xl, 3rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0 0 var(--space-lg, 1.5rem);
+  }
+
+  .hero__title--statement {
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    line-height: 1.0;
+  }
+
+  .hero__subtitle {
+    font-family: var(--font-body);
+    font-size: var(--text-xl, 1.25rem);
+    line-height: 1.5;
+    color: var(--color-ink-secondary);
+    margin: 0 0 var(--space-2xl, 3rem);
+    max-width: 50ch;
+  }
+
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md, 1rem);
+  }
+
+  .hero__cta {
+    display: inline-flex;
+    padding: var(--space-md, 1rem) var(--space-xl, 2rem);
+    border-radius: var(--radius-md, 0.5rem);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .hero__cta--primary {
+    background: var(--color-ink-primary);
+    color: var(--color-surface-default);
+  }
+
+  .hero__cta--secondary {
+    background: transparent;
+    color: var(--color-ink-primary);
+    border: 1px solid var(--color-outline-default);
+  }
+
+  .work-tile {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease;
+  }
+
+  .work-tile:hover {
+    transform: translateY(-4px);
+  }
+
+  .work-tile__image {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: var(--radius-lg, 0.75rem);
+    margin-bottom: var(--space-md, 1rem);
+  }
+
+  .work-tile__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .work-tile__caption {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs, 0.25rem);
+  }
+
+  .work-tile__meta {
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-muted);
+  }
+
+  .work-tile__metric {
+    font-family: var(--font-display);
+    font-size: var(--text-lg, 1.125rem);
+    font-weight: 600;
+  }
+</style>
