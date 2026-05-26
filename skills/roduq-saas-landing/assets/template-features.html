@@ -1,0 +1,296 @@
+<!--
+  Features section templates dla roduq-saas-landing skill.
+  Variants:
+  - features-3-col-icons    — 3 columns, icon + headline + description, dla feature triads
+  - features-alternating    — alternating rows z visual+text, dla 4-6 features
+  - features-bento          — bento grid (Vercel-style), dla 5+ features w mixed sizes
+
+  Block type: "features"
+-->
+
+<!-- ==================== Variant 1: 3-col-icons ==================== -->
+<section class="features features--3-col" data-block-type="features" data-variant="3-col-icons">
+  <div class="features__container">
+    <header class="features__header">
+      <h2 class="features__title">{{features-section-title}}</h2>
+      <p class="features__subtitle">{{features-section-subtitle}}</p>
+    </header>
+    <div class="features__grid features__grid--3">
+      <!-- Repeat per feature (typically 3 items) -->
+      <article class="feature">
+        <div class="feature__icon">
+          <!-- Lucide icon (recommended) lub custom SVG -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Replace z appropriate icon path per feature -->
+            <circle cx="12" cy="12" r="10"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+        <h3 class="feature__title">{{feature-1-title}}</h3>
+        <p class="feature__description">{{feature-1-description}}</p>
+      </article>
+      <article class="feature">
+        <div class="feature__icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>
+        </div>
+        <h3 class="feature__title">{{feature-2-title}}</h3>
+        <p class="feature__description">{{feature-2-description}}</p>
+      </article>
+      <article class="feature">
+        <div class="feature__icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+        </div>
+        <h3 class="feature__title">{{feature-3-title}}</h3>
+        <p class="feature__description">{{feature-3-description}}</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== Variant 2: alternating-rows ==================== -->
+<section class="features features--alternating" data-block-type="features" data-variant="alternating-rows">
+  <div class="features__container">
+    <!-- Repeat per feature row, alternating image-left / image-right -->
+    <article class="feature-row feature-row--image-right">
+      <div class="feature-row__content">
+        <span class="feature-row__eyebrow">{{feature-1-eyebrow}}</span>
+        <h3 class="feature-row__title">{{feature-1-title}}</h3>
+        <p class="feature-row__description">{{feature-1-description}}</p>
+        <ul class="feature-row__bullets">
+          <li>{{feature-1-benefit-1}}</li>
+          <li>{{feature-1-benefit-2}}</li>
+          <li>{{feature-1-benefit-3}}</li>
+        </ul>
+        <a class="feature-row__link" href="{{feature-1-link-href}}">
+          {{feature-1-link-label}} →
+        </a>
+      </div>
+      <div class="feature-row__visual">
+        <img src="{{feature-1-image}}" alt="{{feature-1-image-alt}}" loading="lazy">
+      </div>
+    </article>
+    <article class="feature-row feature-row--image-left">
+      <div class="feature-row__visual">
+        <img src="{{feature-2-image}}" alt="{{feature-2-image-alt}}" loading="lazy">
+      </div>
+      <div class="feature-row__content">
+        <span class="feature-row__eyebrow">{{feature-2-eyebrow}}</span>
+        <h3 class="feature-row__title">{{feature-2-title}}</h3>
+        <p class="feature-row__description">{{feature-2-description}}</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ==================== Variant 3: bento ==================== -->
+<section class="features features--bento" data-block-type="features" data-variant="bento">
+  <div class="features__container">
+    <header class="features__header">
+      <h2 class="features__title">{{features-section-title}}</h2>
+    </header>
+    <div class="bento-grid">
+      <article class="bento-cell bento-cell--large">
+        <h3>{{feature-bento-1-title}}</h3>
+        <p>{{feature-bento-1-description}}</p>
+        <div class="bento-cell__visual">{{feature-bento-1-visual}}</div>
+      </article>
+      <article class="bento-cell">
+        <h3>{{feature-bento-2-title}}</h3>
+        <p>{{feature-bento-2-description}}</p>
+      </article>
+      <article class="bento-cell">
+        <h3>{{feature-bento-3-title}}</h3>
+        <p>{{feature-bento-3-description}}</p>
+      </article>
+      <article class="bento-cell bento-cell--wide">
+        <h3>{{feature-bento-4-title}}</h3>
+        <p>{{feature-bento-4-description}}</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .features {
+    padding: var(--space-4xl, 6rem) var(--space-md, 1rem);
+    background: var(--color-surface-default);
+  }
+
+  .features__container {
+    max-width: var(--container-md, 72rem);
+    margin: 0 auto;
+  }
+
+  .features__header {
+    text-align: center;
+    margin-bottom: var(--space-2xl, 3rem);
+  }
+
+  .features__title {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl, 2.25rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 var(--space-md, 1rem);
+  }
+
+  .features__subtitle {
+    font-size: var(--text-lg, 1.125rem);
+    color: var(--color-ink-secondary);
+    max-width: 60ch;
+    margin: 0 auto;
+  }
+
+  .features__grid--3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl, 2rem);
+  }
+
+  @media (max-width: 768px) {
+    .features__grid--3 {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .feature {
+    padding: var(--space-lg, 1.5rem);
+  }
+
+  .feature__icon {
+    display: inline-flex;
+    width: 3rem;
+    height: 3rem;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--color-brand-primary) 10%, transparent);
+    color: var(--color-brand-primary);
+    border-radius: var(--radius-md, 0.5rem);
+    margin-bottom: var(--space-md, 1rem);
+  }
+
+  .feature__title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl, 1.25rem);
+    font-weight: 600;
+    margin: 0 0 var(--space-xs, 0.5rem);
+  }
+
+  .feature__description {
+    font-size: var(--text-base, 1rem);
+    line-height: 1.5;
+    color: var(--color-ink-secondary);
+    margin: 0;
+  }
+
+  /* Alternating rows */
+  .feature-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl, 3rem);
+    align-items: center;
+    padding: var(--space-2xl, 3rem) 0;
+  }
+
+  @media (max-width: 768px) {
+    .feature-row {
+      grid-template-columns: 1fr;
+    }
+    .feature-row--image-left .feature-row__visual { order: -1; }
+  }
+
+  .feature-row__eyebrow {
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: var(--text-xs, 0.75rem);
+    font-weight: 600;
+    color: var(--color-brand-primary);
+    margin-bottom: var(--space-sm, 0.75rem);
+  }
+
+  .feature-row__title {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl, 1.875rem);
+    font-weight: 700;
+    margin: 0 0 var(--space-md, 1rem);
+  }
+
+  .feature-row__description {
+    font-size: var(--text-lg, 1.125rem);
+    color: var(--color-ink-secondary);
+    margin: 0 0 var(--space-md, 1rem);
+  }
+
+  .feature-row__bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-md, 1rem);
+  }
+
+  .feature-row__bullets li {
+    padding-left: var(--space-lg, 1.5rem);
+    position: relative;
+    margin-bottom: var(--space-xs, 0.5rem);
+  }
+
+  .feature-row__bullets li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--color-brand-primary);
+    font-weight: 700;
+  }
+
+  .feature-row__link {
+    color: var(--color-brand-primary);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .feature-row__link:hover {
+    text-decoration: underline;
+  }
+
+  .feature-row__visual img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg, 0.75rem);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Bento grid */
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(200px, auto);
+    gap: var(--space-md, 1rem);
+  }
+
+  .bento-cell {
+    padding: var(--space-xl, 2rem);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-outline-subtle);
+    border-radius: var(--radius-lg, 0.75rem);
+  }
+
+  .bento-cell--large {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .bento-cell--wide {
+    grid-column: span 2;
+  }
+
+  @media (max-width: 768px) {
+    .bento-grid {
+      grid-template-columns: 1fr;
+    }
+    .bento-cell--large,
+    .bento-cell--wide {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+  }
+</style>

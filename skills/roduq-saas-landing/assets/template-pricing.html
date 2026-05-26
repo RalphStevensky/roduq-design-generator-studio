@@ -1,0 +1,305 @@
+<!--
+  Pricing section templates dla roduq-saas-landing skill.
+  Variants:
+  - pricing-3-tier    — Free / Pro (highlighted) / Business
+  - pricing-2-tier    — Free / Paid
+  - pricing-usage     — Usage-based z calculator (dla DevTools / API products)
+
+  Block type: "pricing"
+-->
+
+<!-- ==================== Variant 1: 3-tier ==================== -->
+<section class="pricing pricing--3-tier" data-block-type="pricing" data-variant="3-tier">
+  <div class="pricing__container">
+    <header class="pricing__header">
+      <h2 class="pricing__title">{{pricing-section-title}}</h2>
+      <p class="pricing__subtitle">{{pricing-section-subtitle}}</p>
+      <div class="pricing__toggle" role="group" aria-label="Billing period">
+        <button class="pricing__toggle-btn pricing__toggle-btn--active" data-period="monthly">
+          {{pricing-toggle-monthly}} <!-- "Miesięcznie" / "Monthly" -->
+        </button>
+        <button class="pricing__toggle-btn" data-period="annual">
+          {{pricing-toggle-annual}} <!-- "Rocznie (-20%)" / "Annual (-20%)" -->
+        </button>
+      </div>
+    </header>
+    <div class="pricing__tiers">
+      <article class="tier">
+        <header class="tier__header">
+          <h3 class="tier__name">{{tier-1-name}}</h3> <!-- "Start" / "Free" -->
+          <p class="tier__tagline">{{tier-1-tagline}}</p>
+          <div class="tier__price">
+            <span class="tier__price-amount">{{tier-1-price}}</span> <!-- "0 zł" / "$0" -->
+            <span class="tier__price-period">{{tier-1-period}}</span> <!-- "zawsze" / "forever" -->
+          </div>
+          <a class="tier__cta" href="{{tier-1-cta-href}}">{{tier-1-cta-label}}</a>
+        </header>
+        <ul class="tier__features">
+          <li>{{tier-1-feature-1}}</li>
+          <li>{{tier-1-feature-2}}</li>
+          <li>{{tier-1-feature-3}}</li>
+          <li>{{tier-1-feature-4}}</li>
+        </ul>
+      </article>
+      <article class="tier tier--highlighted">
+        <span class="tier__badge">{{tier-2-badge}}</span> <!-- "Najpopularniejszy" / "Most popular" -->
+        <header class="tier__header">
+          <h3 class="tier__name">{{tier-2-name}}</h3> <!-- "Pro" -->
+          <p class="tier__tagline">{{tier-2-tagline}}</p>
+          <div class="tier__price">
+            <span class="tier__price-amount">{{tier-2-price}}</span> <!-- "49 zł" / "$12" -->
+            <span class="tier__price-period">{{tier-2-period}}</span> <!-- "/miesiąc" / "/month" -->
+          </div>
+          <a class="tier__cta tier__cta--primary" href="{{tier-2-cta-href}}">{{tier-2-cta-label}}</a>
+        </header>
+        <ul class="tier__features">
+          <li>{{tier-2-feature-1}}</li>
+          <li>{{tier-2-feature-2}}</li>
+          <li>{{tier-2-feature-3}}</li>
+          <li>{{tier-2-feature-4}}</li>
+          <li>{{tier-2-feature-5}}</li>
+        </ul>
+      </article>
+      <article class="tier">
+        <header class="tier__header">
+          <h3 class="tier__name">{{tier-3-name}}</h3> <!-- "Business" / "Team" -->
+          <p class="tier__tagline">{{tier-3-tagline}}</p>
+          <div class="tier__price">
+            <span class="tier__price-amount">{{tier-3-price}}</span> <!-- "199 zł" lub "Indywidualnie" -->
+            <span class="tier__price-period">{{tier-3-period}}</span>
+          </div>
+          <a class="tier__cta" href="{{tier-3-cta-href}}">{{tier-3-cta-label}}</a>
+        </header>
+        <ul class="tier__features">
+          <li>{{tier-3-feature-1}}</li>
+          <li>{{tier-3-feature-2}}</li>
+          <li>{{tier-3-feature-3}}</li>
+          <li>{{tier-3-feature-4}}</li>
+        </ul>
+      </article>
+    </div>
+    <p class="pricing__footnote">{{pricing-footnote}}</p>
+    <!-- e.g. "Wszystkie ceny netto. VAT 23%." / "All prices net of VAT. Sales tax may apply." -->
+  </div>
+</section>
+
+<!-- ==================== Variant 2: 2-tier ==================== -->
+<section class="pricing pricing--2-tier" data-block-type="pricing" data-variant="2-tier">
+  <div class="pricing__container">
+    <header class="pricing__header">
+      <h2 class="pricing__title">{{pricing-section-title}}</h2>
+    </header>
+    <div class="pricing__tiers pricing__tiers--2">
+      <article class="tier">
+        <header class="tier__header">
+          <h3 class="tier__name">{{tier-1-name}}</h3>
+          <div class="tier__price">
+            <span class="tier__price-amount">{{tier-1-price}}</span>
+          </div>
+          <a class="tier__cta" href="{{tier-1-cta-href}}">{{tier-1-cta-label}}</a>
+        </header>
+        <ul class="tier__features">
+          <li>{{tier-1-feature-1}}</li>
+          <li>{{tier-1-feature-2}}</li>
+        </ul>
+      </article>
+      <article class="tier tier--highlighted">
+        <header class="tier__header">
+          <h3 class="tier__name">{{tier-2-name}}</h3>
+          <div class="tier__price">
+            <span class="tier__price-amount">{{tier-2-price}}</span>
+          </div>
+          <a class="tier__cta tier__cta--primary" href="{{tier-2-cta-href}}">{{tier-2-cta-label}}</a>
+        </header>
+        <ul class="tier__features">
+          <li>{{tier-2-feature-1}}</li>
+          <li>{{tier-2-feature-2}}</li>
+          <li>{{tier-2-feature-3}}</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pricing {
+    padding: var(--space-4xl, 6rem) var(--space-md, 1rem);
+    background: var(--color-surface-sunken);
+  }
+
+  .pricing__container {
+    max-width: var(--container-md, 72rem);
+    margin: 0 auto;
+  }
+
+  .pricing__header {
+    text-align: center;
+    margin-bottom: var(--space-2xl, 3rem);
+  }
+
+  .pricing__title {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl, 2.25rem);
+    font-weight: 700;
+    margin: 0 0 var(--space-md, 1rem);
+  }
+
+  .pricing__subtitle {
+    font-size: var(--text-lg, 1.125rem);
+    color: var(--color-ink-secondary);
+    margin: 0 0 var(--space-lg, 1.5rem);
+  }
+
+  .pricing__toggle {
+    display: inline-flex;
+    padding: var(--space-3xs, 0.125rem);
+    background: var(--color-surface-default);
+    border: 1px solid var(--color-outline-subtle);
+    border-radius: var(--radius-full, 9999px);
+  }
+
+  .pricing__toggle-btn {
+    padding: var(--space-xs, 0.5rem) var(--space-md, 1rem);
+    border: none;
+    background: transparent;
+    color: var(--color-ink-secondary);
+    font-size: var(--text-sm, 0.875rem);
+    font-weight: 500;
+    border-radius: var(--radius-full, 9999px);
+    cursor: pointer;
+  }
+
+  .pricing__toggle-btn--active {
+    background: var(--color-brand-primary);
+    color: var(--color-ink-inverse, #fff);
+  }
+
+  .pricing__tiers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg, 1.5rem);
+  }
+
+  .pricing__tiers--2 {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 48rem;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    .pricing__tiers,
+    .pricing__tiers--2 {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .tier {
+    position: relative;
+    padding: var(--space-xl, 2rem);
+    background: var(--color-surface-default);
+    border: 1px solid var(--color-outline-subtle);
+    border-radius: var(--radius-lg, 0.75rem);
+  }
+
+  .tier--highlighted {
+    border-color: var(--color-brand-primary);
+    box-shadow: 0 8px 30px color-mix(in srgb, var(--color-brand-primary) 15%, transparent);
+    transform: translateY(-4px);
+  }
+
+  .tier__badge {
+    position: absolute;
+    top: -0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: var(--space-2xs, 0.25rem) var(--space-md, 1rem);
+    background: var(--color-brand-primary);
+    color: var(--color-ink-inverse, #fff);
+    border-radius: var(--radius-full, 9999px);
+    font-size: var(--text-xs, 0.75rem);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .tier__header {
+    text-align: center;
+    margin-bottom: var(--space-lg, 1.5rem);
+  }
+
+  .tier__name {
+    font-family: var(--font-display);
+    font-size: var(--text-xl, 1.25rem);
+    font-weight: 600;
+    margin: 0 0 var(--space-xs, 0.5rem);
+  }
+
+  .tier__tagline {
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-secondary);
+    margin: 0 0 var(--space-md, 1rem);
+  }
+
+  .tier__price {
+    margin-bottom: var(--space-md, 1rem);
+  }
+
+  .tier__price-amount {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl, 2.25rem);
+    font-weight: 700;
+    color: var(--color-ink-primary);
+  }
+
+  .tier__price-period {
+    font-size: var(--text-base, 1rem);
+    color: var(--color-ink-secondary);
+    margin-left: var(--space-2xs, 0.25rem);
+  }
+
+  .tier__cta {
+    display: block;
+    padding: var(--space-md, 1rem);
+    text-align: center;
+    border-radius: var(--radius-md, 0.5rem);
+    background: var(--color-surface-raised);
+    color: var(--color-ink-primary);
+    border: 1px solid var(--color-outline-default);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .tier__cta--primary {
+    background: var(--color-brand-primary);
+    color: var(--color-ink-inverse, #fff);
+    border-color: var(--color-brand-primary);
+  }
+
+  .tier__features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .tier__features li {
+    padding: var(--space-xs, 0.5rem) 0;
+    padding-left: var(--space-lg, 1.5rem);
+    position: relative;
+    font-size: var(--text-sm, 0.875rem);
+  }
+
+  .tier__features li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--color-brand-primary);
+    font-weight: 700;
+  }
+
+  .pricing__footnote {
+    text-align: center;
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-ink-muted);
+    margin-top: var(--space-xl, 2rem);
+  }
+</style>
