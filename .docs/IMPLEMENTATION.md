@@ -414,9 +414,75 @@ Bold:
 - Unusual color combinations z palette
 ```
 
-### Phase 5 — File export protocol (~3h)
+### Phase 5 — File export protocol (~3h) ✅ done
 
 **Goal**: deterministic, schema-validated artifacts w `.roduq/output/{client-id}/`.
+
+**Deliverables (executed 2026-05-26)**:
+- ✅ `schemas/` directory shipped — 12 files ~1530 LOC:
+  - `tokens.v1.schema.json` (~225 lines) — color (surface/ink/outline/brand z status/gradient/glow/pastel) + font + spacing + radii + fontSize + lineHeight + shadow + container + colorValue + lengthValue definitions
+  - `sections.v1.schema.json` (~125 lines) — 31-value blockType enum (union across all 7 industry skills), CTA + block definitions, /[a-z0-9-/]+ page route pattern
+  - `content.v1.schema.json` (~115 lines) — bilingualString definition (pl required, en optional), Polish nip/regon patterns, social platform enum
+  - `meta.v1.schema.json` (~95 lines) — single-variant z roduq-* skill pattern, LLM provider enum, tokensUsed + estimatedCostUsd
+  - `meta-multi-variant.v1.schema.json` (~165 lines) — exactly 3 variants, status enum, presetSource (matrix/user-override), regenerations log
+  - `examples/{tokens,sections,content,meta,meta-multi-variant}.example.json` — Acme accounting persona valid fixtures
+  - `schemas/README.md` (~310 lines) — schema URI table + atomic write protocol z TypeScript code (single + multi-variant + promote) + forward compat strategy + Phase 7 testing
+  - `schemas/AGENTS.md` (~95 lines) — agent-facing always/never rules + extension protocol + consumer reading pattern
+
+**Lessons learned (post-Phase-5)**:
+
+1. **JSON Schema Draft 7 selected** (per rule 004 + ajv mature support). Newer drafts (2019-09, 2020-12) have less ajv tooling stability. Draft 7 covers all Roduq needs.
+
+2. **Schema $id URLs canonical**: `https://roduq.dev/schemas/v1/<name>.schema.json` — referenced via `$schema` field w output JSON. Local copy w `schemas/` + production CDN host TBD post-Phase-7 deploy.
+
+3. **Block type enum unified across 7 industry skills** — 31 unique blockType values w sections.v1.schema.json:
+   ```
+   hero, social-proof, logos-grid, features, services, case-studies, stats,
+   pricing, testimonials, faq, cta, menu-featured, menu-full, gallery,
+   reservation, location, doctor-bio, booking, trust, listings-featured,
+   neighborhoods, agents, market-insights, story, waitlist, work-grid,
+   about, skills, contact, intro, process, team
+   ```
+   Each industry skill uses subset. multi-variant inherits union.
+
+4. **bilingualString definition** — `pl` required, `en` optional. Polish-first per all Roduq skills. Schema enforces single contract dla all draftCopy values.
+
+5. **Forward compatibility via `removeAdditional: false`** — preserves unknown properties on parse. Enables 6-12 month migration windows where v1 consumers ignore new optional fields, v2 consumers pick them up.
+
+6. **Atomic write protocol** documented w schemas/README.md:
+   - Validate ajv all payloads BEFORE write
+   - Write to tmp dir `{clientId}.tmp-{timestamp}/`
+   - Remove existing finalDir gdy present (idempotent re-run)
+   - Atomic rename tmp → final
+   - Write `.complete` flag LAST (signals CLI consumer ready)
+
+7. **Multi-variant atomic write** extends pattern:
+   - Variants written do `{clientId}.tmp/variants/{N-label}/` w parallel
+   - meta-multi-variant.json AT ROOT of tmp dir
+   - NO `.complete` flag at multi-variant stage (would prematurely trigger CLI consumer)
+   - `.complete` written AFTER user picks variant via `promotePickedVariant()`
+
+8. **Promote variant flow** — when user picks variant N:
+   - Copy 5 files (tokens/sections/content/design-system/preview) from `variants/N-label/` → root
+   - Update meta-multi-variant.json z selectedVariant + userPick + userPickedAt
+   - Write `.complete` LAST
+   - Unselected variants stay w `variants/` dla future reference
+
+9. **ajv compilation strategy** — compile validators once at daemon startup, reuse compiled validators (each variant write uses same compiled function). Avoids repeated JSON Schema parsing per write.
+
+10. **Example fixtures double as smoke tests** — `examples/*.example.json` will be loaded w Phase 7 Vitest suite to verify schemas accept canonical valid input. Acme accounting persona consistent z roduq-saas-landing skill canonical example.
+
+11. **Cross-repo contract** — schemas/ mirrors `roduq-web-starter/packages/cli/schemas/`. Breaking changes (v1 → v2) require coordinated PR across both repos + 6-12 month deprecation window.
+
+12. **Polish character handling** — schemas allow full UTF-8. Test phrase **"Łódź żółw pięć słów"** used dla downstream verification (Payload CMS, browser preview, exported HTML).
+
+13. **Phase 7 implementation notes** captured w schemas/README.md:
+    - Use `pnpm --filter @open-design/daemon add ajv ajv-formats` (NOT root-level dependency per upstream root command boundary rule)
+    - Compile validators at module load (one-time cost)
+    - Reuse compiled validators per write (avoid recompile)
+    - Surface validation errors via structured Error class z all errors (NIE first-fail)
+
+14. **schemas/AGENTS.md positioning** — per upstream convention (each top-level dir has AGENTS.md), Roduq schemas/ provides agent-facing guide explicitly labeled "Roduq Additions directory (per LICENSE-ROduQ.txt)" so future upstream cherry-picks NIE accidentally merge schemas into open-design proper.
 
 **Files generated**:
 - `tokens.json` — design tokens (validated z JSON Schema v7)
