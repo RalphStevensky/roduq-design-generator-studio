@@ -1,0 +1,71 @@
+/* design-systems/roduq-tech-modern/tokens.css
+ * Roduq Tech Modern — Linear/Vercel inspired. Indigo accent + magenta gradient. */
+
+:root {
+  /* Upstream contract */
+  --bg: #FFFFFF;
+  --surface: #FAFAFA;
+  --surface-warm: var(--surface);
+  --fg: #000000;          /* high-contrast for Tech Modern (vs default's #0F0F0F) */
+  --fg-2: #18181B;
+  --muted: #52525B;
+  --meta: #A1A1AA;
+  --border: rgba(0, 0, 0, 0.12);
+  --border-soft: rgba(0, 0, 0, 0.06);
+
+  --accent: #5E5CE6;            /* indigo */
+  --accent-on: #FFFFFF;
+  --accent-hover: color-mix(in oklab, var(--accent), black 8%);
+  --accent-active: color-mix(in oklab, var(--accent), black 14%);
+
+  --success: #10B981;
+  --warn: #F59E0B;
+  --danger: #EF4444;
+
+  --font-display: "Geist", "Inter Display", "Inter Tight", -apple-system, system-ui, sans-serif;
+  --font-body: "Geist", "Inter", -apple-system, system-ui, sans-serif;
+  --font-mono: "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
+
+  /* Roduq extensions */
+  --color-surface-default: var(--bg);
+  --color-surface-raised: var(--surface);
+  --color-surface-sunken: #F5F5F5;
+  --color-ink-primary: var(--fg);
+  --color-ink-secondary: var(--muted);
+  --color-ink-muted: var(--meta);
+  --color-ink-inverse: var(--bg);
+  --color-outline-default: var(--border);
+  --color-outline-subtle: var(--border-soft);
+  --color-outline-strong: rgba(0, 0, 0, 0.2);
+  --color-brand-primary: var(--accent);
+  --color-brand-secondary: #FF2EAB;        /* magenta — for gradient only, not standalone */
+  --color-brand-tertiary: #0EA5E9;         /* cyan — accent gradient stop */
+
+  --gradient-hero: linear-gradient(135deg, #5E5CE6 0%, #FF2EAB 100%);
+  --gradient-accent: linear-gradient(90deg, #5E5CE6 0%, #0EA5E9 100%);
+
+  --space-3xs: 0.125rem; --space-2xs: 0.25rem;
+  --space-xs: 0.5rem; --space-sm: 0.75rem; --space-md: 1rem;
+  --space-lg: 1.5rem; --space-xl: 2rem; --space-2xl: 3rem;
+  --space-3xl: 4rem; --space-4xl: 6rem;
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  --text-xs: 0.75rem; --text-sm: 0.875rem; --text-base: 1rem;
+  --text-lg: 1.125rem; --text-xl: 1.25rem; --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem; --text-4xl: 2.5rem; --text-5xl: 3.5rem;
+  --text-6xl: 5rem;             /* larger hero for Tech Modern */
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.06);
+  --shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.12);
+
+  --container-sm: 48rem;
+  --container-md: 80rem;         /* wider for tech */
+  --container-lg: 88rem;
+}
