@@ -183,9 +183,42 @@ const result = await client.callTool({ name: "get_design_state", arguments: { cl
 expect(result.content[0].text).toContain("tokens");
 ```
 
-## Po Phase 6 ukończony
+## Po Phase 6 ukończony ✅
 
-Update `.docs/IMPLEMENTATION.md § Phase 6` z final tools list + testing notes. Verify w sample roduq-web-starter client repo że Claude Code może callować tools.
+`packages/roduq-mcp-server/` standalone workspace package shipped (15 files, ~1900 LOC).
+
+Architecture decisions implemented:
+- **Standalone workspace package** (`packages/roduq-mcp-server/`) z `@roduq/*` scope (distinct od upstream `@open-design/*`)
+- **Zod input validation** per tool (NIE jsonschema runtime — schemas/* JSON files separate output concern)
+- **MCPServerError** z 9-code enum dla structured error responses
+- **stderr logging** dla stdio transport (stdout reserved dla MCP protocol)
+- **No daemon integration** w Phase 6 — Phase 7 wires via `apps/daemon` `od mcp` subcommand
+
+Tool implementation status:
+- `get_design_state(clientId)` — ✅ fully implemented (file-system read only)
+- `pick_variant(clientId, variantNum)` — ✅ fully implemented (atomic promote flow z .complete LAST)
+- `regenerate_section(clientId, sectionId, hint?)` — ⚠ interface only (returns NOT_IMPLEMENTED z Phase 7 steps; LLM wiring deferred)
+
+Section locator format: `<page>:<blocks[N]|blockType>` (e.g., `"homepage:hero"`, `"homepage:blocks[2]"`, `"/cennik:pricing"`).
+
+Client integration via `.claude/settings.json`:
+```jsonc
+{
+  "mcpServers": {
+    "roduq-design": {
+      "command": "node",
+      "args": ["<repo>/packages/roduq-mcp-server/dist/index.js"],
+      "env": { "ROduQ_OUTPUT_DIR": "<HOME>/.roduq/output" }
+    }
+  }
+}
+```
+
+Tests: 8 Vitest cases (4 reader + 4 writer) covering validation + read flows + promote success + 3 rejection scenarios.
+
+Phase 7 will add e2e MCP integration tests z `@modelcontextprotocol/sdk` client + LLM wiring dla regenerate_section.
+
+Lessons learned w `.docs/IMPLEMENTATION.md § Phase 6` (14 items).
 
 ## Powiązane
 
