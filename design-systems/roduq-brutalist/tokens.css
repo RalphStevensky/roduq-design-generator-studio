@@ -1,0 +1,64 @@
+/* design-systems/roduq-brutalist/tokens.css
+ * Roduq Brutalist — B/W + pure RGB accent. Helvetica Bold. Radius 0. 4px borders. */
+
+:root {
+  --bg: #FFFFFF;            /* exception to anti-vibration — brutalism wants harsh */
+  --surface: #FFFFFF;
+  --surface-warm: var(--surface);
+  --fg: #000000;            /* same exception */
+  --fg-2: var(--fg);
+  --muted: #1A1A1A;
+  --meta: var(--muted);
+  --border: #000000;        /* solid black border */
+  --border-soft: #000000;   /* same — no soft tier */
+
+  --accent: #FF0000;        /* pure red */
+  --accent-on: #FFFFFF;
+  --accent-hover: var(--accent);   /* no shift — brutalist hover via invert */
+  --accent-active: var(--accent);
+
+  --success: #00CC00;       /* pure green */
+  --warn: #FFFF00;
+  --danger: #FF0000;
+
+  --font-display: "Söhne Breit", "Helvetica Now Display", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Söhne", "Helvetica", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", "Courier Prime", ui-monospace, monospace;
+
+  --color-surface-default: var(--bg);
+  --color-surface-raised: var(--surface);
+  --color-surface-sunken: #F0F0F0;
+  --color-ink-primary: var(--fg);
+  --color-ink-secondary: var(--muted);
+  --color-ink-muted: var(--muted);
+  --color-ink-inverse: var(--bg);
+  --color-outline-default: var(--border);
+  --color-outline-subtle: var(--border);
+  --color-outline-strong: var(--border);
+  --color-brand-primary: var(--accent);
+  --color-brand-secondary: #FFFF00;        /* pure yellow */
+
+  --space-3xs: 0; --space-2xs: 0.125rem;
+  --space-xs: 0.5rem; --space-sm: 0.75rem; --space-md: 1rem;
+  --space-lg: 2rem; --space-xl: 3rem; --space-2xl: 4rem;
+  --space-3xl: 6rem; --space-4xl: 8rem;
+
+  /* All radii zero — brutalism signature */
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+  --radius-full: 0;          /* even buttons rectangular */
+
+  --text-xs: 0.75rem; --text-sm: 0.875rem; --text-base: 1rem;
+  --text-lg: 1.25rem; --text-xl: 1.5rem; --text-2xl: 2rem;
+  --text-3xl: 3rem; --text-4xl: 4rem; --text-5xl: 5rem;
+  --text-6xl: 8rem;            /* statement size */
+
+  --border-width: 2px;
+  --border-width-thick: 4px;
+
+  --container-sm: 48rem;
+  --container-md: 84rem;       /* very wide for asymmetric layouts */
+  --container-lg: 96rem;
+}

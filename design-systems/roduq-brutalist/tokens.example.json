@@ -1,0 +1,59 @@
+{
+  "$schema": "https://roduq.dev/schemas/v1/tokens.schema.json",
+  "version": "1.0.0",
+  "_meta": {
+    "preset": "roduq-brutalist",
+    "category": "statement-avant-garde",
+    "tagline": "Statement piece. Dla brands chcących stand out.",
+    "description": "B/W + pure RGB accent. Helvetica Bold weight 900. Radius 0 everywhere. 2-4px solid black borders."
+  },
+  "tokens": {
+    "color": {
+      "surface": {
+        "default": "#FFFFFF",
+        "raised": "#FFFFFF",
+        "sunken": "#F0F0F0"
+      },
+      "ink": {
+        "primary": "#000000",
+        "secondary": "#1A1A1A",
+        "inverse": "#FFFFFF"
+      },
+      "outline": {
+        "default": "#000000",
+        "strong": "#000000"
+      },
+      "brand": {
+        "primary": "#FF0000",
+        "secondary": "#FFFF00"
+      },
+      "status": {
+        "success": "#00CC00",
+        "warning": "#FFFF00",
+        "danger": "#FF0000"
+      }
+    },
+    "font": {
+      "display": "Söhne Breit, Helvetica Now Display, Helvetica Neue, Arial, sans-serif",
+      "body": "Söhne, Helvetica, Arial, sans-serif",
+      "mono": "IBM Plex Mono, Courier Prime, ui-monospace, monospace"
+    },
+    "spacing": {
+      "3xs": "0", "2xs": "0.125rem", "xs": "0.5rem",
+      "sm": "0.75rem", "md": "1rem", "lg": "2rem",
+      "xl": "3rem", "2xl": "4rem", "3xl": "6rem", "4xl": "8rem"
+    },
+    "radii": {
+      "sm": "0", "md": "0", "lg": "0", "xl": "0", "full": "0"
+    },
+    "fontSize": {
+      "xs": "0.75rem", "sm": "0.875rem", "base": "1rem",
+      "lg": "1.25rem", "xl": "1.5rem", "2xl": "2rem",
+      "3xl": "3rem", "4xl": "4rem", "5xl": "5rem", "6xl": "8rem"
+    },
+    "borderWidth": {
+      "default": "2px",
+      "thick": "4px"
+    }
+  }
+}

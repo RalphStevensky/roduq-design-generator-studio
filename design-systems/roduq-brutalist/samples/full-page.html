@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roduq Brutalist — Sample</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFFFFF; --fg: #000000; --muted: #1A1A1A;
+    --accent: #FF0000; --yellow: #FFFF00;
+    --font-display: "Inter", "Helvetica Now Display", "Helvetica Neue", Arial, sans-serif;
+    --font-body: "Inter", "Helvetica", Arial, sans-serif;
+    --font-mono: "IBM Plex Mono", "Courier Prime", monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { font-family: var(--font-body); color: var(--fg); background: var(--bg); }
+  body { margin: 0; line-height: 1.4; -webkit-font-smoothing: antialiased; font-weight: 400; }
+  section { padding: 4rem 2rem; }
+  .container { max-width: 84rem; margin: 0 auto; }
+  h1, h2, h3 { font-family: var(--font-display); margin: 0; font-weight: 900; line-height: 0.95; letter-spacing: -0.03em; }
+  a { color: inherit; }
+
+  .nav { padding: 1rem 2rem; border-bottom: 4px solid var(--fg); display: flex; justify-content: space-between; align-items: center; }
+  .nav__brand { font-family: var(--font-display); font-weight: 900; font-size: 1.5rem; letter-spacing: -0.04em; text-transform: uppercase; }
+  .nav__links { display: flex; gap: 2rem; }
+  .nav__links a { color: var(--fg); text-decoration: none; font-size: 0.9375rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+  .nav__links a:hover { background: var(--fg); color: var(--bg); padding: 0.25rem 0.5rem; margin: -0.25rem -0.5rem; }
+
+  /* Statement hero */
+  .hero { padding: 6rem 2rem; border-bottom: 4px solid var(--fg); }
+  .hero__grid { display: grid; grid-template-columns: 2fr 1fr; gap: 4rem; max-width: 84rem; margin: 0 auto; align-items: end; }
+  @media (max-width: 768px) { .hero__grid { grid-template-columns: 1fr; } }
+  .hero__title { font-size: clamp(4rem, 11vw, 8rem); line-height: 0.85; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: -0.04em; }
+  .hero__title span { color: var(--accent); }
+  .hero__meta { font-family: var(--font-mono); font-size: 0.875rem; }
+  .hero__meta div { padding: 1rem 0; border-bottom: 2px solid var(--fg); display: flex; justify-content: space-between; gap: 1rem; }
+  .hero__meta div:last-child { border-bottom: 0; }
+  .hero__meta strong { font-weight: 700; }
+
+  /* Color strip dla rytm */
+  .strip { background: var(--yellow); color: var(--fg); padding: 1.5rem 2rem; border-top: 4px solid var(--fg); border-bottom: 4px solid var(--fg); font-family: var(--font-mono); font-weight: 600; font-size: 0.9375rem; text-transform: uppercase; letter-spacing: 0.08em; overflow: hidden; white-space: nowrap; }
+  .strip__inner { display: flex; gap: 4rem; animation: scroll 30s linear infinite; }
+  .strip__inner span { flex-shrink: 0; }
+  @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .strip__inner { animation: none; } }
+
+  /* Work grid asymmetric */
+  .work { padding: 4rem 2rem; border-bottom: 4px solid var(--fg); }
+  .work__header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3rem; max-width: 84rem; margin-inline: auto; }
+  .work__eyebrow { font-family: var(--font-mono); font-size: 0.875rem; text-transform: uppercase; font-weight: 600; }
+  .work__title { font-size: clamp(2.5rem, 5vw, 4rem); text-transform: uppercase; }
+  .work__grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; grid-template-rows: repeat(2, 1fr); gap: 0; max-width: 84rem; margin: 0 auto; border: 4px solid var(--fg); }
+  @media (max-width: 768px) { .work__grid { grid-template-columns: 1fr 1fr; } }
+  .work-piece { padding: 2rem; border-right: 2px solid var(--fg); border-bottom: 2px solid var(--fg); position: relative; min-height: 16rem; display: flex; flex-direction: column; justify-content: space-between; }
+  .work-piece--feature { grid-row: span 2; background: var(--accent); color: var(--bg); }
+  .work-piece h3 { font-size: clamp(1.5rem, 3vw, 2.5rem); text-transform: uppercase; }
+  .work-piece__meta { font-family: var(--font-mono); font-size: 0.875rem; font-weight: 600; text-transform: uppercase; }
+  .work-piece:hover { background: var(--fg); color: var(--bg); cursor: pointer; }
+  .work-piece--feature:hover { background: var(--yellow); color: var(--fg); }
+
+  /* Manifesto / about section */
+  .manifesto { padding: 6rem 2rem; }
+  .manifesto__inner { max-width: 60rem; margin: 0 auto; }
+  .manifesto__eyebrow { font-family: var(--font-mono); font-size: 0.875rem; text-transform: uppercase; font-weight: 600; margin-bottom: 1rem; }
+  .manifesto__title { font-size: clamp(2.5rem, 6vw, 5rem); margin-bottom: 3rem; text-transform: uppercase; line-height: 0.9; }
+  .manifesto p { font-size: 1.25rem; line-height: 1.5; max-width: 50ch; margin: 0 0 1.5rem; font-weight: 500; }
+  .manifesto p mark { background: var(--yellow); padding: 0 0.25rem; }
+
+  /* CTA */
+  .cta { background: var(--accent); color: var(--bg); padding: 6rem 2rem; text-align: center; border-top: 4px solid var(--fg); }
+  .cta__title { font-size: clamp(3rem, 7vw, 6rem); text-transform: uppercase; line-height: 0.9; margin-bottom: 2rem; }
+  .cta__btn { display: inline-block; padding: 1.25rem 2.5rem; background: var(--bg); color: var(--fg); font-family: var(--font-display); font-weight: 900; font-size: 1.25rem; text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em; border: 4px solid var(--fg); }
+  .cta__btn:hover { background: var(--fg); color: var(--bg); }
+  .cta__btn:focus-visible { outline: 4px solid var(--yellow); outline-offset: 4px; }
+
+  .footer { padding: 2rem; border-top: 4px solid var(--fg); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-family: var(--font-mono); font-size: 0.8125rem; text-transform: uppercase; font-weight: 600; }
+  .footer a { text-decoration: none; }
+</style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav__brand">Studio Krzyk</div>
+    <div class="nav__links">
+      <a href="#work">Work</a>
+      <a href="#manifesto">Manifesto</a>
+      <a href="#cta">Hire us</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero__grid">
+      <h1 class="hero__title">Brandy które<br><span>nie szepczą.</span></h1>
+      <div class="hero__meta">
+        <div><span>Studio</span><strong>Krzyk</strong></div>
+        <div><span>Założone</span><strong>2018</strong></div>
+        <div><span>Lokalizacja</span><strong>Warszawa</strong></div>
+        <div><span>Zespół</span><strong>5 osób</strong></div>
+        <div><span>Klienci</span><strong>47</strong></div>
+        <div><span>Branża</span><strong>Branding · Identity</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="strip__inner">
+      <span>★ BRANDS THAT SHOUT ★</span>
+      <span>★ NO COMPROMISE ★</span>
+      <span>★ POLSKA WARSZAWA 2026 ★</span>
+      <span>★ ACCEPTING NEW PROJECTS Q3 ★</span>
+      <span>★ BRANDS THAT SHOUT ★</span>
+      <span>★ NO COMPROMISE ★</span>
+      <span>★ POLSKA WARSZAWA 2026 ★</span>
+      <span>★ ACCEPTING NEW PROJECTS Q3 ★</span>
+    </div>
+  </div>
+
+  <section class="work" id="work">
+    <header class="work__header">
+      <span class="work__eyebrow">// 001 — Selected Work</span>
+      <h2 class="work__title">Last 6 months.</h2>
+    </header>
+    <div class="work__grid">
+      <article class="work-piece work-piece--feature">
+        <span class="work-piece__meta">2026 / FMCG / Rebrand</span>
+        <h3>Sokoły Foods<br>Refresh</h3>
+      </article>
+      <article class="work-piece">
+        <span class="work-piece__meta">2025 / Retail</span>
+        <h3>Bazyl Brand</h3>
+      </article>
+      <article class="work-piece">
+        <span class="work-piece__meta">2025 / Music</span>
+        <h3>Vinyl Vibes</h3>
+      </article>
+      <article class="work-piece">
+        <span class="work-piece__meta">2025 / Tech</span>
+        <h3>Hashlink</h3>
+      </article>
+      <article class="work-piece">
+        <span class="work-piece__meta">2024 / Festival</span>
+        <h3>Open'er Refresh</h3>
+      </article>
+      <article class="work-piece">
+        <span class="work-piece__meta">2024 / Pub.</span>
+        <h3>Atlas Press</h3>
+      </article>
+      <article class="work-piece">
+        <span class="work-piece__meta">2024 / Cosmetics</span>
+        <h3>Sirena</h3>
+      </article>
+    </div>
+  </section>
+
+  <section class="manifesto" id="manifesto">
+    <div class="manifesto__inner">
+      <span class="manifesto__eyebrow">// 002 — Manifest</span>
+      <h2 class="manifesto__title">Nudne brandy<br>nie sprzedają.</h2>
+      <p>Robimy brandy, które <mark>krzyczą</mark>. Które ludzie zauważą w sklepie. Które wciągną na półkę przed konkurencją.</p>
+      <p>Większość polskich marek wybiera bezpieczeństwo. Beżową paletkę. Sans-serif. Trzy storytellingowe paragrafy o "pasji".</p>
+      <p>Statement brand to nie ozdoba. To biznes-decyzja. Marka wyrazista sprzedaje 3× więcej. Mamy <mark>liczby</mark>.</p>
+    </div>
+  </section>
+
+  <section class="cta" id="cta">
+    <div class="container">
+      <h2 class="cta__title">Twoja marka<br>też szepcze?</h2>
+      <a class="cta__btn" href="mailto:hello@krzyk.pl">Napisz do nas →</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div>© 2026 Studio Krzyk</div>
+    <div>Warszawa · ul. Bracka 18</div>
+    <div><a href="#">hello@krzyk.pl</a></div>
+  </footer>
+</body>
+</html>
