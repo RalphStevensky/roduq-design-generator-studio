@@ -147,6 +147,7 @@ Roduq Addition. 9 operational rules (~MDC format z YAML frontmatter, per-glob au
 | `007-llm-providers.mdc` | Multi-provider abstraction (Anthropic/OpenAI/Gemini/Mock) | 4, 6, 7 |
 | `008-mcp-server.mdc` | MCP stdio + 3 tools | 6 |
 | `009-docs-sync.mdc` | **META** — sync .docs/ + .cursor/rules/ razem | Always |
+| `010-model-strategy.mdc` | Dobór modeli LLM + protokół §Q + artefakt wykonania | Post-audyt 2026-06 |
 
 ## Narrative documentation (.docs/)
 
@@ -161,6 +162,9 @@ Roduq Addition. Long-form narrative complementing operational rules:
 | `PRODUCTION_POLISH.md` | Phase 7 — error patterns + rate limiting + dedup + telemetry + monitoring + recovery |
 | `E2E_DEMO.md` | Phase 7 — end-to-end demo runbook (brief → working website <5 min) |
 | `INVENTORY.md` | Phase 7 — this file (complete Roduq additions catalog) |
+| `AUDIT_2026-06.md` | Post-Phase-7 — pełny audyt ekspercki (Claude Fable 5): ustalenia F-01..F-24, werdykty Q1-Q34, wizja I-1..I-7, risk register |
+| `REMEDIATION_PLAN.md` | Post-Phase-7 — plan naprawczy R0-R4 z przypisaniem modeli per zadanie + protokół jakości §Q + log wykonania |
+| `MODEL_STRATEGY.md` | Post-Phase-7 — dobór modeli LLM (runtime tier fast/standard/premium + sesje agentowe) + matematyka kosztów + wzorce cachingu |
 | `decisions/0001-separate-repo.md` | ADR — dlaczego separate repo NIE monorepo |
 
 ## Coverage by LICENSE-ROduQ.txt

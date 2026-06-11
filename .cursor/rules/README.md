@@ -55,6 +55,7 @@ Pola frontmatter:
 | 007 | [`llm-providers.mdc`](007-llm-providers.mdc) | Provider abstraction (Anthropic/OpenAI/Gemini) | per glob: `src/llm/**` |
 | 008 | [`mcp-server.mdc`](008-mcp-server.mdc) | MCP stdio bridge convention | per glob: `src/mcp-server.ts,src/mcp/**` |
 | 009 | [`docs-sync.mdc`](009-docs-sync.mdc) | **META** — utrzymuj `.docs/` + `.cursor/rules/` razem | zawsze |
+| 010 | [`model-strategy.mdc`](010-model-strategy.mdc) | Dobór modeli LLM (runtime + sesje agentowe) + protokół jakości §Q + zasada artefaktu wykonania (post-audyt 2026-06) | zawsze |
 
 ## Dodawanie nowej reguły
 
