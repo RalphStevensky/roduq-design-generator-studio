@@ -31,7 +31,7 @@
 
 | Bramka | Warunek przejścia (z artefaktem) | Odblokowuje |
 |---|---|---|
-| **G0** Środowisko zielone | `pnpm install` bez błędów; `require('better-sqlite3')` OK; MCP build → `dist/`; testy odpalone; smoke-test handoff plik→siostrzane repo na Windows-native | Faza 1 |
+| **G0** Środowisko zielone | ✅ `pnpm install`; `better-sqlite3` OK; MCP build→`dist/`; testy zielone (10+185); ✅ **G0a** producent round-trip na Windows-native. ⛔ **G0b** (CLI konsumuje) zablokowane — sister `@roduq/cli` stub v0.4.0 | Faza 1 (z notą o blokerze konsumenta) |
 | **G1** Pętla udowodniona | brief → Mock → tokens/sections/content → atomowy zapis + `.complete` → `@roduq/cli` konsumuje w roduq-web-starter (zalogowane) | Faza 2 |
 | **G2** Generacja realna stabilna | 1 skill → realny output Anthropic przez ajv; 1 golden; test "Łódź żółw pięć słów"; runner stabilny (schemat/prompt nie zmienia się między biegami) | Faza 3 + rozszerzenia must-do gr. A |
 | **G3** v1.0 zdemonstrowane | multi-variant + pick + UI + deterministyczny sędzia QA; pierwszy klient E2E z **pomiarami** (czas, koszt z `usage`); demo 2× pod rząd bez awarii | Warstwa rygoru Fable 5 (must-do gr. B) |
@@ -57,13 +57,16 @@
 - [x] **F0.4** Batch poprawek kontraktowych: F-06 (additionalProperties:false z top-level usunięte), F-08 (Step 7b preview.html + Step 8 meta.json), F-09 (schema = single source of truth bloków), F-16/F-17 (4 nowe kody + usunięte puste `catch`/`as` — rule 005), F-19 (lengthValue), F-22/F-23 (atomowy flow + `variants/`). **F-07 wydzielone do decyzji (niżej).** *(R0.3)*
 - [x] **F0.5** Prawda w docs: odznaczone niezmierzone `[x]` w E2E_DEMO (F-04); "<30s"→"~2-3 min" w 5 plikach (F-12); F-11 koszty ujednolicone; reguła "✅ wymaga artefaktu" w rule 009. *(R0.4)*
 - [x] **F-07** ROZSTRZYGNIĘTE (Rafał, Option A): macierz wygrywa, presety doprecyzowane — dark-cinematic `⚠ restaurant tylko premium/fine-dining`, brutalist `✅ saas tylko jako Bold/statement`. Zero zmian w macierzy.
-- [ ] **F0.3** Smoke handoff cross-repo (gate **G0**) — ostatni krok Fazy 0.
+- [x] **F0.3a** (producent) Round-trip: fixture bundle → kanoniczna ścieżka Windows `~/.roduq/output/` + `.complete` → odczytany przez `OutputReader` jako `status: complete` (tokeny/sekcje/treść sparsowane). Granica ścieżek F-21 zażegnana (Windows-native). ✅
+- [ ] **F0.3b** (konsument) **ZABLOKOWANE**: `@roduq/cli` w roduq-web-starter to stub (`"CLI is stub. MVP v0.4.0"`, `build: echo TODO`). Pełny handoff cross-repo wymaga implementacji CLI w siostrzanym repo (v0.4.0). **Wpływa na walking skeleton (F1.2)** — patrz nota niżej.
 
 ### Faza 1 — Szkielet end-to-end (walking skeleton) `[bramka: G1]`
 *Szac. 2-3 dni · ~$5-10 · model: O (high)*
 
+> ⚠️ **Bloker cross-repo (odkryty w F0.3b):** `@roduq/cli` w roduq-web-starter to stub (v0.4.0 TODO). Konsumencka strona handoffu nie istnieje. **Decyzja dla F1.2:** albo (a) zbudować minimalny `@roduq/cli consume` w siostrzanym repo (osobny task tam), albo (b) przyjąć `OutputReader` round-trip (udowodniony w F0.3a) jako proof kontraktu producenta na teraz i przesunąć realną konsumpcję CLI do momentu gdy sister repo dojdzie do v0.4.0. **Do decyzji przy starcie Fazy 1.**
+
 - [ ] **F1.1** Ustal **nazwanego pierwszego klienta** + jego branżę (wyznacza skill Fazy 2).
-- [ ] **F1.2** Najcieńsza nitka z **MockProviderem**: brief.json → tokens/sections/content (zahardkodowane/mock) → atomowy zapis + `.complete` → konsumpcja przez `@roduq/cli`. Dotyka każdego ryzyka nośnego (ajv, atomic write, kontrakt cross-repo, ścieżki Windows) gdy zmiana jest tania.
+- [ ] **F1.2** Najcieńsza nitka z **MockProviderem**: brief.json → tokens/sections/content (zahardkodowane/mock) → atomowy zapis + `.complete` → konsumpcja (patrz bloker wyżej). Dotyka każdego ryzyka nośnego (ajv, atomic write, kontrakt, ścieżki Windows) gdy zmiana jest tania.
 
 ### Faza 2 — Prawdziwa generacja, 1 skill `[bramka: G2]`
 *Szac. 3-5 dni · ~$20-40 · model: O (xhigh) + 1 adversarial review interfejsu LLM*
@@ -159,5 +162,6 @@
 | 2026-06-13 | F0.4 schemy+kod (F-06/F-19/F-16/F-17) | commit `79915762`; roduq 185/185, MCP 10/10 | ✅ |
 | 2026-06-13 | F0.4 SKILL.md (F-08/F-09 saas, F-22/F-23 multi-variant) | testy zielone | ✅ |
 | 2026-06-13 | F0.5 prawda w docs (F-04 boxy, F-12 ×5 plików, F-11 koszty, rule 009 artefakt) | git grep "<30s" tylko w audycie/opisie | ✅ |
-| 2026-06-13 | F-07 rozstrzygnięte (Option A: niuans presetów) | dark-cinematic + brutalist DESIGN.md | ✅ |
-| — | F0.3 smoke handoff cross-repo (gate G0) | — | ⏳ ostatni krok Fazy 0 |
+| 2026-06-13 | F-07 rozstrzygnięte (Option A: niuans presetów) | dark-cinematic + brutalist DESIGN.md, commit `1f1d5e1d` | ✅ |
+| 2026-06-13 | F0.3a producent round-trip (gate G0a) | OutputReader: status=complete, brand=#5E5CE6, 7 bloków, ścieżka Windows OK | ✅ |
+| 2026-06-13 | F0.3b konsument (gate G0b) | `@roduq/cli` = stub (v0.4.0) — handoff zablokowany na sister repo | ⛔ bloker cross-repo |
