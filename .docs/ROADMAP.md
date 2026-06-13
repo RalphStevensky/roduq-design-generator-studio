@@ -13,6 +13,7 @@
 | Decyzja | Ustalenie | Źródło |
 |---|---|---|
 | Środowisko wykonania | **Windows-native + VS Build Tools 2022** (siostrzane repo + Claude Code już tu żyją; brak granicy ścieżek F-21) | wybór Rafała |
+| Aktywny model LLM | **Gemini `gemini-3-flash-preview`** (LLM_PROVIDER=gemini w .env.local); abstrakcja obsługuje też Anthropic/OpenAI | wybór Rafała (klucz dostarczony) |
 | Obietnica latencji | **"~2-3 min" (3 warianty równolegle)**, NIE "<30s" | F-12 potwierdzone matematycznie (output dominuje, `Promise.all` nie skraca pojedynczego strumienia) |
 | Multi-provider | Mock + Anthropic w v1; OpenAI/Gemini dopiero na żądanie klienta (interfejs zachowuje brak lock-inu) | audyt pt 5 / F-01 |
 | Strategia | thin/demo-first jako trasa; pełny Fable 5 jako cel zbramkowany | wybór Rafała |
@@ -171,5 +172,6 @@
 | 2026-06-13 | Fix: import @roduq/mcp-server startował serwer | guard isEntrypoint() w index.ts | ✅ |
 | 2026-06-13 | F2.1 warstwa LLM `packages/roduq-llm` (build+unit) | 15 testów (fake SDK); 4 providery + router + config env-driven | ✅ build/unit |
 | 2026-06-13 | §Q adversarial review warstwy LLM | 5 bugów (P0×2/P1×3) znaleziony+naprawiony przed kluczem | ✅ |
-| — | F2.1 integracja: 1 realny call per provider | — | ⏳ czeka na klucze API |
+| 2026-06-13 | F2.1 integracja Gemini (realny call) | gemini-3-flash-preview: structured JSON OK, PL diacritics OK, usage; P0 responseJsonSchema potwierdzony na żywo | ✅ |
+| — | F2.1 integracja Anthropic/OpenAI | — | ⏳ gdy będą klucze (adaptery unit+review-gotowe) |
 | — | F2.2/F2.3 skill runner (R1.3) | — | ⏳ następne |

@@ -33,7 +33,10 @@ export async function createRouterFromEnv(env: EnvLike = process.env): Promise<L
       };
       router.register(
         "anthropic",
-        new AnthropicProvider({ sdk: new mod.default({ apiKey: anthropicKey }) }),
+        new AnthropicProvider({
+          sdk: new mod.default({ apiKey: anthropicKey }),
+          ...modelOpt(env["ANTHROPIC_MODEL"]),
+        }),
       );
     } catch (err) {
       warn("anthropic", err);
@@ -46,7 +49,13 @@ export async function createRouterFromEnv(env: EnvLike = process.env): Promise<L
       const mod = (await import("openai")) as unknown as {
         default: new (opts: { apiKey: string }) => OpenAILike;
       };
-      router.register("openai", new OpenAIProvider({ sdk: new mod.default({ apiKey: openaiKey }) }));
+      router.register(
+        "openai",
+        new OpenAIProvider({
+          sdk: new mod.default({ apiKey: openaiKey }),
+          ...modelOpt(env["OPENAI_MODEL"]),
+        }),
+      );
     } catch (err) {
       warn("openai", err);
     }
@@ -58,7 +67,13 @@ export async function createRouterFromEnv(env: EnvLike = process.env): Promise<L
       const mod = (await import("@google/genai")) as unknown as {
         GoogleGenAI: new (opts: { apiKey: string }) => GeminiLike;
       };
-      router.register("gemini", new GeminiProvider({ sdk: new mod.GoogleGenAI({ apiKey: geminiKey }) }));
+      router.register(
+        "gemini",
+        new GeminiProvider({
+          sdk: new mod.GoogleGenAI({ apiKey: geminiKey }),
+          ...modelOpt(env["GEMINI_MODEL"]),
+        }),
+      );
     } catch (err) {
       warn("gemini", err);
     }
@@ -88,4 +103,9 @@ export async function createRouterFromEnv(env: EnvLike = process.env): Promise<L
 function warn(provider: string, err: unknown): void {
   const message = err instanceof Error ? err.message : String(err);
   process.stderr.write(`[@roduq/llm] provider '${provider}' unavailable: ${message}\n`);
+}
+
+/** Optional per-provider model override from env (e.g. GEMINI_MODEL=gemini-3-flash-preview). */
+function modelOpt(value: string | undefined): { defaultModel: string } | Record<string, never> {
+  return value !== undefined && value !== "" ? { defaultModel: value } : {};
 }
