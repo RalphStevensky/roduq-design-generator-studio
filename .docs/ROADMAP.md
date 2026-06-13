@@ -56,8 +56,8 @@
 - [ ] **F0.3** Smoke-test handoff: ręcznie zapisz `~/.roduq/output/<id>/` z `.complete` → potwierdź że `@roduq/cli` w siostrzanym repo to widzi (Windows-native, jedna ścieżka). *(gate F-21)*
 - [x] **F0.4** Batch poprawek kontraktowych: F-06 (additionalProperties:false z top-level usunięte), F-08 (Step 7b preview.html + Step 8 meta.json), F-09 (schema = single source of truth bloków), F-16/F-17 (4 nowe kody + usunięte puste `catch`/`as` — rule 005), F-19 (lengthValue), F-22/F-23 (atomowy flow + `variants/`). **F-07 wydzielone do decyzji (niżej).** *(R0.3)*
 - [x] **F0.5** Prawda w docs: odznaczone niezmierzone `[x]` w E2E_DEMO (F-04); "<30s"→"~2-3 min" w 5 plikach (F-12); F-11 koszty ujednolicone; reguła "✅ wymaga artefaktu" w rule 009. *(R0.4)*
-- [ ] **F0.3** Smoke handoff cross-repo (gate **G0**) — następny krok wykonawczy.
-- [ ] **F-07** DECYZJA: macierz multi-variant vs DESIGN.md presets (czeka na Rafała).
+- [x] **F-07** ROZSTRZYGNIĘTE (Rafał, Option A): macierz wygrywa, presety doprecyzowane — dark-cinematic `⚠ restaurant tylko premium/fine-dining`, brutalist `✅ saas tylko jako Bold/statement`. Zero zmian w macierzy.
+- [ ] **F0.3** Smoke handoff cross-repo (gate **G0**) — ostatni krok Fazy 0.
 
 ### Faza 1 — Szkielet end-to-end (walking skeleton) `[bramka: G1]`
 *Szac. 2-3 dni · ~$5-10 · model: O (high)*
@@ -159,5 +159,5 @@
 | 2026-06-13 | F0.4 schemy+kod (F-06/F-19/F-16/F-17) | commit `79915762`; roduq 185/185, MCP 10/10 | ✅ |
 | 2026-06-13 | F0.4 SKILL.md (F-08/F-09 saas, F-22/F-23 multi-variant) | testy zielone | ✅ |
 | 2026-06-13 | F0.5 prawda w docs (F-04 boxy, F-12 ×5 plików, F-11 koszty, rule 009 artefakt) | git grep "<30s" tylko w audycie/opisie | ✅ |
-| — | **F-07 decyzja** (macierz vs DESIGN.md) | — | ⏳ czeka na Rafała |
-| — | F0.3 smoke handoff cross-repo (gate G0) | — | ⏳ następne |
+| 2026-06-13 | F-07 rozstrzygnięte (Option A: niuans presetów) | dark-cinematic + brutalist DESIGN.md | ✅ |
+| — | F0.3 smoke handoff cross-repo (gate G0) | — | ⏳ ostatni krok Fazy 0 |
