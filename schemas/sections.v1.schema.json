@@ -5,7 +5,6 @@
   "description": "Validates sections.json output produced by Roduq skills. Block types match marketing-starter blocks/types.ts in roduq-web-starter (canonical source). @roduq/cli reads this to seed Payload CMS blocks.",
   "type": "object",
   "required": ["$schema", "version", "homepage"],
-  "additionalProperties": false,
   "properties": {
     "$schema": {
       "type": "string",

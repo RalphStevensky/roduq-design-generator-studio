@@ -85,10 +85,12 @@ export async function handleGetDesignState(
     meta: state.meta,
     ...(state.type === "single"
       ? {
-          tokens: state.tokens,
-          sections: state.sections,
-          content: state.content,
-          designSystemMd: state.designSystemMd,
+          ...(state.tokens && {
+            tokens: state.tokens,
+            sections: state.sections,
+            content: state.content,
+            designSystemMd: state.designSystemMd,
+          }),
         }
       : {
           // multi-variant

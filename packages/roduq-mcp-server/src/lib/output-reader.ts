@@ -117,16 +117,13 @@ export class OutputReader {
     const status: DesignStateSingle["status"] = completeFlag ? "complete" : "in-progress";
 
     if (!completeFlag) {
-      // Partial state — meta only
+      // Partial state — meta only (artifacts not yet written). Optional fields
+      // omitted instead of faked with empty casts (rule 005).
       return {
         clientId,
         status,
         type: "single",
         meta,
-        tokens: {} as DesignTokens,
-        sections: {} as Sections,
-        content: {} as Content,
-        designSystemMd: "",
       };
     }
 
@@ -182,8 +179,12 @@ export class OutputReader {
         ]);
         Object.assign(state, { tokens, sections, content, designSystemMd });
       } catch (err) {
-        // Top-level files missing despite meta saying user picked — log + continue
-        // (could be partial promote — agent should re-run pick)
+        // Top-level files missing despite meta saying user picked — could be a
+        // partial promote; log to stderr (stdout is the MCP transport) and continue.
+        const message = err instanceof Error ? err.message : String(err);
+        console.error(
+          `[OutputReader] partial promote for "${clientId}": ${message}`,
+        );
       }
     }
 
@@ -231,6 +232,11 @@ export class OutputReader {
         designSystemMd,
       };
     } catch (err) {
+      // Variant artifact files unreadable/missing — return what we have; log to stderr.
+      const message = err instanceof Error ? err.message : String(err);
+      console.error(
+        `[OutputReader] variant ${entry.id} (${entry.label}) artifacts unreadable: ${message}`,
+      );
       return result;
     }
   }

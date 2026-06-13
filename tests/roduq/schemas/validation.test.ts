@@ -121,6 +121,47 @@ describe("Roduq Schemas v1 — rejection of invalid input", () => {
   });
 });
 
+describe("Roduq Schemas v1 — forward-compat & length strictness (F-06, F-19)", () => {
+  it("accepts unknown top-level field in tokens (forward-compat — F-06)", () => {
+    const validate = createValidator(tokensSchema);
+    const withFutureField = { ...tokensExample, brandProfile: { source: "logo" } };
+    if (!validate(withFutureField)) {
+      console.error("forward-compat tokens errors:", validate.errors);
+    }
+    expect(validate(withFutureField)).toBe(true);
+  });
+
+  it("accepts unknown top-level field in sections (forward-compat — F-06)", () => {
+    const validate = createValidator(sectionsSchema);
+    const withFutureField = { ...sectionsExample, experimentalLayout: true };
+    expect(validate(withFutureField)).toBe(true);
+  });
+
+  it("rejects malformed length value `1.2.3rem` in tokens spacing (F-19)", () => {
+    const validate = createValidator(tokensSchema);
+    const invalid = {
+      ...tokensExample,
+      tokens: {
+        ...tokensExample.tokens,
+        spacing: { ...tokensExample.tokens.spacing, md: "1.2.3rem" },
+      },
+    };
+    expect(validate(invalid)).toBe(false);
+  });
+
+  it("rejects unitless length value `16` in tokens spacing (F-19)", () => {
+    const validate = createValidator(tokensSchema);
+    const invalid = {
+      ...tokensExample,
+      tokens: {
+        ...tokensExample.tokens,
+        spacing: { ...tokensExample.tokens.spacing, md: "16" },
+      },
+    };
+    expect(validate(invalid)).toBe(false);
+  });
+});
+
 describe("Polish character preservation w content schema", () => {
   it("accepts Polish diacritics w bilingualString.pl", () => {
     const validate = createValidator(contentSchema);
