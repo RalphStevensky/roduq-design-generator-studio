@@ -2,6 +2,8 @@
 
 > Ten plik czyta każdy agent Claude Code (lub innych AI) startujący pracę w tym repo. Single source of truth dla orientacji.
 
+> ⚠️ **STAN AKTUALNY (post-audyt 2026-06): czytaj [.docs/HANDOFF.md](.docs/HANDOFF.md) + [.docs/ROADMAP.md](.docs/ROADMAP.md) NAJPIERW.** Sekcje „Phase 1-7 done" niżej opisują stan SPRZED audytu Fable 5. Realny stan: Faza 0-2 remediacji ukończone (silnik generacji działa: brief→LLM→bundle; gałąź `remediation/phase-0`, PR #1). Aktywny model: `gemini-3-flash-preview`.
+
 ## Co to za repo
 
 `roduq-design-generator-studio` = **AI-driven design generator** dla Roduq agency. Fork [nexu-io/open-design](https://github.com/nexu-io/open-design) (Apache-2.0) z Roduq customizations.
