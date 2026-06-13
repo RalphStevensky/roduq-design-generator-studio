@@ -10,6 +10,7 @@
     "test:watch": "vitest -c vitest.config.ts"
   },
   "devDependencies": {
+    "@roduq/mcp-server": "workspace:*",
     "@types/node": "20.19.39",
     "ajv": "8.17.1",
     "ajv-formats": "3.0.1",

@@ -32,7 +32,7 @@
 | Bramka | Warunek przejścia (z artefaktem) | Odblokowuje |
 |---|---|---|
 | **G0** Środowisko zielone | ✅ `pnpm install`; `better-sqlite3` OK; MCP build→`dist/`; testy zielone (10+185); ✅ **G0a** producent round-trip na Windows-native. ⛔ **G0b** (CLI konsumuje) zablokowane — sister `@roduq/cli` stub v0.4.0 | Faza 1 (z notą o blokerze konsumenta) |
-| **G1** Pętla udowodniona | brief → Mock → tokens/sections/content → atomowy zapis + `.complete` → `@roduq/cli` konsumuje w roduq-web-starter (zalogowane) | Faza 2 |
+| **G1** Pętla udowodniona | ✅ brief → Mock → tokens/sections/content → atomowy zapis + `.complete` → round-trip `OutputReader` (status=complete). Konsumpcja `@roduq/cli` odłożona do v0.4.0 (decyzja konsumenta) | Faza 2 ✅ odblokowana |
 | **G2** Generacja realna stabilna | 1 skill → realny output Anthropic przez ajv; 1 golden; test "Łódź żółw pięć słów"; runner stabilny (schemat/prompt nie zmienia się między biegami) | Faza 3 + rozszerzenia must-do gr. A |
 | **G3** v1.0 zdemonstrowane | multi-variant + pick + UI + deterministyczny sędzia QA; pierwszy klient E2E z **pomiarami** (czas, koszt z `usage`); demo 2× pod rząd bez awarii | Warstwa rygoru Fable 5 (must-do gr. B) |
 | **G4** Produkt dojrzały | 1-3 realnych klientów obsłużonych; zaobserwowane realne potrzeby (edycje, dryf treści) | Fosa I-1..I-7 + refaktory (must-do gr. C) |
@@ -66,7 +66,7 @@
 > ✅ **Decyzja konsumenta (Rafał, 2026-06-13):** Option A — `OutputReader` round-trip (udowodniony w F0.3a) jako proof kontraktu producenta NA TERAZ; realna konsumpcja `@roduq/cli` odłożona do v0.4.0 w roduq-web-starter. Walking skeleton zostaje w TYM repo — bez zależności od sister repo.
 
 - [x] **F1.1** Pilot = **Golf In One** (Roduq product; repo `golf-in-one` / `golf-in-one-web`). Branża = sports-tech / golf venue booking SaaS → skill `roduq-saas-landing`. Brand ugruntowany z `blueprint_6_design_system.md`: Figtree, primary #275445, secondary #33705C, tertiary #5CC18F, accent #B8EB6F, radius 20px. Brief: `tests/roduq/fixtures/briefs/golf-in-one.json`.
-- [ ] **F1.2** Najcieńsza nitka z **MockProviderem**: `golf-in-one.json` → tokens/sections/content (mock z brandem golfa) → atomowy zapis + `.complete` → round-trip `OutputReader` (proof konsumenta per decyzja wyżej). Dotyka każdego ryzyka nośnego (ajv, atomic write, kontrakt, ścieżki Windows). **Następny krok.**
+- [x] **F1.2** ✅ Walking skeleton: `golf-in-one.json` → `MockProvider` (brand golfa) → ajv → atomowy zapis (tmp→rename) + `.complete` → round-trip `OutputReader` (status=complete). Kod: `tests/roduq/skeleton/{provider,generate,demo}.ts` + test. **Brama G1 osiągnięta.** Naprawiony przy okazji bug: import `@roduq/mcp-server` startował serwer (guard entrypointu). Demo na realnej ścieżce: `~/.roduq/output/golf-in-one/` (7 plików, brand #275445, 7 bloków).
 
 ### Faza 2 — Prawdziwa generacja, 1 skill `[bramka: G2]`
 *Szac. 3-5 dni · ~$20-40 · model: O (xhigh) + 1 adversarial review interfejsu LLM*
@@ -167,4 +167,6 @@
 | 2026-06-13 | F0.3b konsument (gate G0b) | `@roduq/cli` = stub (v0.4.0) — handoff zablokowany na sister repo | ⛔ bloker cross-repo |
 | 2026-06-13 | F1.1 pilot ustalony | Golf In One → roduq-saas-landing; brief fixture golf-in-one.json; brand z blueprint | ✅ |
 | 2026-06-13 | Decyzja konsumenta | Option A — OutputReader round-trip jako proof, CLI odłożony do v0.4.0 | ✅ |
-| — | F1.2 walking skeleton (Mock → bundle → round-trip) | — | ⏳ następne |
+| 2026-06-13 | F1.2 walking skeleton (Mock → bundle → round-trip) | roduq 188/188; demo `~/.roduq/output/golf-in-one` status=complete | ✅ G1 |
+| 2026-06-13 | Fix: import @roduq/mcp-server startował serwer | guard isEntrypoint() w index.ts | ✅ |
+| — | Faza 2 — LLM layer (Mock+Anthropic) + skill runner (R1.2/R1.3) | — | ⏳ następne |
