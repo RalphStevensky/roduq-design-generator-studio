@@ -37,7 +37,12 @@ export type {
 } from "./providers/OpenAIProvider.js";
 
 export { GeminiProvider } from "./providers/GeminiProvider.js";
-export type { GeminiProviderConfig, GeminiLike, GeminiResponse } from "./providers/GeminiProvider.js";
+export type {
+  GeminiProviderConfig,
+  GeminiLike,
+  GeminiStreamChunk,
+  GeminiUsageMetadata,
+} from "./providers/GeminiProvider.js";
 
 export { createRouterFromEnv } from "./config.js";
 export type { EnvLike } from "./config.js";

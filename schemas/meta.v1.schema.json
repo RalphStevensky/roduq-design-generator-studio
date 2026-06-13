@@ -61,7 +61,7 @@
     },
     "model": {
       "type": "string",
-      "description": "Specific model identifier (e.g., 'claude-sonnet-4-6', 'gpt-5', 'gemini-2.5-pro', 'mock-1')."
+      "description": "Specific model identifier (e.g., 'claude-sonnet-4-6', 'gpt-5', 'gemini-3-flash-preview', 'mock-1')."
     },
     "executionTimeMs": {
       "type": "integer",

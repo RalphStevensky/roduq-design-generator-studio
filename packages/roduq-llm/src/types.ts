@@ -22,7 +22,7 @@ export interface ResponseSchema {
 }
 
 export interface CompleteOptions {
-  /** Provider-specific model id (e.g. "claude-sonnet-4-6", "gpt-5", "gemini-2.5-pro"). Defaults to provider.defaultModel. */
+  /** Provider-specific model id (e.g. "claude-sonnet-4-6", "gpt-5", "gemini-3-flash-preview"). Defaults to provider.defaultModel. */
   readonly model?: string;
   /** 0.0–1.0. Lower = deterministic. Provider default when omitted. */
   readonly temperature?: number;

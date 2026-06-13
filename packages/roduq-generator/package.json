@@ -1,0 +1,37 @@
+{
+  "name": "@roduq/generator",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Roduq design generation runner — brief + skill + preset → LLM (structured) → ajv → atomic bundle. Roduq Addition under LICENSE-ROduQ.txt.",
+  "license": "SEE LICENSE IN ../../LICENSE-ROduQ.txt",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "src", "README.md"],
+  "scripts": {
+    "build": "tsc -b",
+    "dev": "tsc -b --watch",
+    "typecheck": "tsc -b --noEmit",
+    "test": "vitest run -c vitest.config.ts",
+    "test:watch": "vitest -c vitest.config.ts"
+  },
+  "dependencies": {
+    "@roduq/llm": "workspace:*",
+    "ajv": "8.17.1",
+    "ajv-formats": "3.0.1"
+  },
+  "devDependencies": {
+    "@roduq/mcp-server": "workspace:*",
+    "@types/node": "20.19.39",
+    "typescript": "5.9.3",
+    "vitest": "4.1.6"
+  },
+  "engines": {
+    "node": "~24"
+  }
+}

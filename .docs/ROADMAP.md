@@ -34,7 +34,7 @@
 |---|---|---|
 | **G0** Środowisko zielone | ✅ `pnpm install`; `better-sqlite3` OK; MCP build→`dist/`; testy zielone (10+185); ✅ **G0a** producent round-trip na Windows-native. ⛔ **G0b** (CLI konsumuje) zablokowane — sister `@roduq/cli` stub v0.4.0 | Faza 1 (z notą o blokerze konsumenta) |
 | **G1** Pętla udowodniona | ✅ brief → Mock → tokens/sections/content → atomowy zapis + `.complete` → round-trip `OutputReader` (status=complete). Konsumpcja `@roduq/cli` odłożona do v0.4.0 (decyzja konsumenta) | Faza 2 ✅ odblokowana |
-| **G2** Generacja realna stabilna | 1 skill → realny output Anthropic przez ajv; 1 golden; test "Łódź żółw pięć słów"; runner stabilny (schemat/prompt nie zmienia się między biegami) | Faza 3 + rozszerzenia must-do gr. A |
+| **G2** Generacja realna stabilna | ✅ 1 skill → realny output **przez gemini-3-flash-preview** przez ajv (42 klucze PL copy, brand #275445, 8 bloków, 22.6s, status=complete); runner stabilny. ⏳ golden (F2.4) jako następne | Faza 3 + rozszerzenia must-do gr. A |
 | **G3** v1.0 zdemonstrowane | multi-variant + pick + UI + deterministyczny sędzia QA; pierwszy klient E2E z **pomiarami** (czas, koszt z `usage`); demo 2× pod rząd bez awarii | Warstwa rygoru Fable 5 (must-do gr. B) |
 | **G4** Produkt dojrzały | 1-3 realnych klientów obsłużonych; zaobserwowane realne potrzeby (edycje, dryf treści) | Fosa I-1..I-7 + refaktory (must-do gr. C) |
 | **G5** Skala | wolumen 10-50× lub ≥10 projektów w bazie | Optymalizacje skali (must-do gr. D) |
@@ -73,9 +73,9 @@
 *Szac. 3-5 dni · ~$20-40 · model: O (xhigh) + 1 adversarial review interfejsu LLM*
 
 - [~] **F2.1** ✅ (build+unit) Warstwa LLM jako pakiet `packages/roduq-llm` (provider-agnostyczny per rule 007; decyzja Rafała: **wszystkie 3 — Anthropic+OpenAI+Gemini + Mock**): `LLMProvider` + `LLMRouter` + `createRouterFromEnv` (wybór modelu przez env), structured outputs (ajv=siatka), cache breakpoint, token usage. **15 testów (fake SDK, zero kluczy)**. §Q adversarial review znalazł i naprawił **5 realnych bugów** (Gemini responseJsonSchema, Anthropic refusal-throw, OpenAI strict:false, abortSignal threading, config fail-loud). ⏳ **pozostaje: 1 realny call per provider** (test integracyjny — czeka na klucze API). *(R1.2)*
-- [ ] **F2.2** Skill runner + manifest egzekucji we frontmatter — dla **jednego** skilla (branża pilota). Budujemy w daemonie (gdzie najłatwiej debugować), **bez** wydzielania pakietu. *(R1.3, część)*
-- [ ] **F2.3** `od roduq-generate` → realny polski output przez ajv; test "Łódź żółw pięć słów". *(R1.3)*
-- [ ] **F2.4** **Jeden** ręcznie dopracowany golden (branża pilota) z pierwszego realnego outputu Anthropic — kotwica regresji + few-shot. *(R1.4, część)*
+- [x] **F2.2/F2.3** ✅ **Skill runner `packages/roduq-generator`** (`generate()`): ładuje skill+preset+schematy → prompt (few-shot + brand) → `provider.complete()` structured per artefakt → ajv (+retry) → atomowy zapis + `.complete` → round-trip. **REALNY output Golf In One przez gemini-3-flash-preview** (42 klucze PL copy, brand #275445, 8 bloków, 22.6s). 2 testy Mock (bez kluczy). **Brama G2 osiągnięta.** *(R1.3)*
+  - **Wyboje Gemini structured-output rozwiązane** (trwałe learningi): pełny ajv-schemat → 400, więc **sanitizer** (inline $ref, drop pattern/format/min*, collapse anyOf, **keep additionalProperties**); thinking-model zżerał budżet → **thinkingBudget:0** dla structured; non-streaming → headers timeout → **streaming**; runaway → **lekki sections** (struktura, treść w content); pusty draftCopy → **jawne klucze jako properties**. Patrz [[llm-config]].
+- [ ] **F2.4** **Jeden** ręcznie dopracowany golden (branża pilota) — z pierwszego realnego outputu golfa (`~/.roduq/output/golf-in-one`) → review + commit do `tests/roduq/fixtures/golden/`. *(R1.4, część — następne)*
 - [ ] **F2.5** Token single-source: runner emituje tokens.json + trywialny inline JSON→CSS (10-20 linii, NIE "codegen subsystem"). Zabija dryf tri-słownika teraz. *(uproszczone R3.5)*
 
 ### Faza 3 — Multi-variant + wybór + UI = v1.0 `[bramka: G3]`
@@ -174,4 +174,7 @@
 | 2026-06-13 | §Q adversarial review warstwy LLM | 5 bugów (P0×2/P1×3) znaleziony+naprawiony przed kluczem | ✅ |
 | 2026-06-13 | F2.1 integracja Gemini (realny call) | gemini-3-flash-preview: structured JSON OK, PL diacritics OK, usage; P0 responseJsonSchema potwierdzony na żywo | ✅ |
 | — | F2.1 integracja Anthropic/OpenAI | — | ⏳ gdy będą klucze (adaptery unit+review-gotowe) |
-| — | F2.2/F2.3 skill runner (R1.3) | — | ⏳ następne |
+| 2026-06-13 | F2.2/F2.3 skill runner `@roduq/generator` | 216 testów zielonych (llm16+gen2+mcp10+roduq188); realny golf bundle | ✅ **G2** |
+| 2026-06-13 | Realny output Golf In One (gemini-3-flash-preview) | `~/.roduq/output/golf-in-one`: 42 klucze PL, brand #275445, 8 bloków, 22.6s | ✅ |
+| — | F2.4 golden golfa (review + commit fixtures) | — | ⏳ następne |
+| — | Faza 3 — multi-variant + pick + UI = v1.0 | — | ⏳ |
