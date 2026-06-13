@@ -71,7 +71,7 @@
 ### Faza 2 — Prawdziwa generacja, 1 skill `[bramka: G2]`
 *Szac. 3-5 dni · ~$20-40 · model: O (xhigh) + 1 adversarial review interfejsu LLM*
 
-- [ ] **F2.1** Warstwa LLM w daemonie: Mock + Anthropic; **structured outputs** (ajv = siatka bezpieczeństwa), **streaming**, breakpoint cache'u w strukturze promptu (bez staggered-start). Token usage → meta.json. *(R1.2)*
+- [~] **F2.1** ✅ (build+unit) Warstwa LLM jako pakiet `packages/roduq-llm` (provider-agnostyczny per rule 007; decyzja Rafała: **wszystkie 3 — Anthropic+OpenAI+Gemini + Mock**): `LLMProvider` + `LLMRouter` + `createRouterFromEnv` (wybór modelu przez env), structured outputs (ajv=siatka), cache breakpoint, token usage. **15 testów (fake SDK, zero kluczy)**. §Q adversarial review znalazł i naprawił **5 realnych bugów** (Gemini responseJsonSchema, Anthropic refusal-throw, OpenAI strict:false, abortSignal threading, config fail-loud). ⏳ **pozostaje: 1 realny call per provider** (test integracyjny — czeka na klucze API). *(R1.2)*
 - [ ] **F2.2** Skill runner + manifest egzekucji we frontmatter — dla **jednego** skilla (branża pilota). Budujemy w daemonie (gdzie najłatwiej debugować), **bez** wydzielania pakietu. *(R1.3, część)*
 - [ ] **F2.3** `od roduq-generate` → realny polski output przez ajv; test "Łódź żółw pięć słów". *(R1.3)*
 - [ ] **F2.4** **Jeden** ręcznie dopracowany golden (branża pilota) z pierwszego realnego outputu Anthropic — kotwica regresji + few-shot. *(R1.4, część)*
@@ -169,4 +169,7 @@
 | 2026-06-13 | Decyzja konsumenta | Option A — OutputReader round-trip jako proof, CLI odłożony do v0.4.0 | ✅ |
 | 2026-06-13 | F1.2 walking skeleton (Mock → bundle → round-trip) | roduq 188/188; demo `~/.roduq/output/golf-in-one` status=complete | ✅ G1 |
 | 2026-06-13 | Fix: import @roduq/mcp-server startował serwer | guard isEntrypoint() w index.ts | ✅ |
-| — | Faza 2 — LLM layer (Mock+Anthropic) + skill runner (R1.2/R1.3) | — | ⏳ następne |
+| 2026-06-13 | F2.1 warstwa LLM `packages/roduq-llm` (build+unit) | 15 testów (fake SDK); 4 providery + router + config env-driven | ✅ build/unit |
+| 2026-06-13 | §Q adversarial review warstwy LLM | 5 bugów (P0×2/P1×3) znaleziony+naprawiony przed kluczem | ✅ |
+| — | F2.1 integracja: 1 realny call per provider | — | ⏳ czeka na klucze API |
+| — | F2.2/F2.3 skill runner (R1.3) | — | ⏳ następne |
