@@ -1,11 +1,10 @@
 {
-  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://roduq.dev/schemas/v1/tokens.schema.json",
   "title": "Roduq Design Tokens v1",
   "description": "Validates tokens.json output produced by Roduq skills. Defines color/font/spacing/radii structure consumed by @roduq/cli in roduq-web-starter (injected as CSS variables in src/styles/client-theme.css).",
   "type": "object",
   "required": ["$schema", "version", "generatedAt", "tokens"],
-  "additionalProperties": false,
   "properties": {
     "$schema": {
       "type": "string",
@@ -216,10 +215,9 @@
     "lengthValue": {
       "type": "string",
       "minLength": 1,
-      "description": "CSS length value — rem, em, px, %, ch, vh, vw, or unitless (line-height).",
+      "description": "CSS length value — number + unit (rem, em, px, %, ch, vh, vw, vmin, vmax) or one of 0/auto/100%. Unitless line-height uses tokens.lineHeight, not this.",
       "anyOf": [
-        { "pattern": "^[0-9.]+(rem|em|px|%|ch|vh|vw|vmin|vmax)?$" },
-        { "pattern": "^9999px$" },
+        { "pattern": "^[0-9]+(\\.[0-9]+)?(rem|em|px|%|ch|vh|vw|vmin|vmax)$" },
         { "enum": ["0", "auto", "100%"] }
       ]
     }

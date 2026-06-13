@@ -66,6 +66,6 @@ Best dla: high-end SaaS, developer tools, AI / ML platforms, finance / fintech, 
 - ✅ `roduq-product-launch` (premium hardware / AI / ML launch)
 - ✅ `roduq-portfolio` (developer / engineer / AI researcher portfolio)
 - ⚠ `roduq-agency` (tech-focused premium agencies)
-- ❌ `roduq-restaurant` (use `roduq-monolith-meadow`)
+- ⚠ `roduq-restaurant` (tylko premium / fine-dining / wine-bar jako wariant **Bold** — nie casual/rodzinne; per macierz multi-variant, patrz audyt F-07)
 - ❌ `roduq-clinic` (use `roduq-soft-pastel`)
 - ❌ `roduq-real-estate` (works dla luxury — sparingly)

@@ -138,7 +138,7 @@ export async function handleRegenerateSection(
       `Page "${page}" not found w sections.json — available pages: ${
         ["homepage", ...Object.keys(sectionsObj.pages ?? {})].join(", ")
       }`,
-      "VARIANT_NOT_FOUND",
+      "PAGE_NOT_FOUND",
     );
   }
 
@@ -154,7 +154,7 @@ export async function handleRegenerateSection(
   if (targetIndex < 0 || targetIndex >= blocks.length) {
     throw new MCPServerError(
       `Section locator "${locator}" not found w page "${page}" (${blocks.length} blocks available)`,
-      "VARIANT_NOT_FOUND",
+      "SECTION_NOT_FOUND",
     );
   }
 

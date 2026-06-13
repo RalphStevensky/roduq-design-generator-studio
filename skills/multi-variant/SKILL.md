@@ -2,7 +2,7 @@
 name: multi-variant
 description: |
   Generate 3 design variants od jednego briefu — Conservative / Modern / Bold. User wybiera + exportuje wybrany variant.
-  KEY DIFFERENTIATOR Roduq Design Studio. Promise.all parallel execution <30s total target. Orchestrator pattern: calls 7 industry skills (roduq-*) z różnymi preset hints per variant.
+  KEY DIFFERENTIATOR Roduq Design Studio. Promise.all parallel — 3 warianty równolegle w ~2-3 min total (vs 2-5 dni ręcznie). Orchestrator pattern: calls 7 industry skills (roduq-*) z różnymi preset hints per variant.
 triggers:
   - "multi-variant"
   - "3 variants"
@@ -25,7 +25,7 @@ od:
     polish_first: true
     variant_count: 3
     parallel_execution: true
-    target_execution_time_ms: 30000
+    target_execution_time_ms: 180000
 ---
 
 # Multi-Variant Design Generator
@@ -34,13 +34,13 @@ od:
 
 ## What it does
 
-Pojedyncza skill która orchestruje 3 parallel invocations of industry-specific skills (roduq-saas-landing / roduq-agency / etc.) z różnymi preset hints — w rezultacie generuje **3 fundamentally different design variants** dla tego samego briefu w pod 30 sekund:
+Pojedyncza skill która orchestruje 3 parallel invocations of industry-specific skills (roduq-saas-landing / roduq-agency / etc.) z różnymi preset hints — w rezultacie generuje **3 fundamentally different design variants** dla tego samego briefu w ~2-3 minuty (3 warianty równolegle):
 
 - **Conservative variant** — proven layout, safe colors, minimal animations
 - **Modern variant** — current trends, scroll animations, gradient/mesh accents
 - **Bold variant** — statement piece, unconventional layout, strong visual identity
 
-User widzi 3 preview HTML files w side-by-side iframe → wybiera 1 → wybrany variant exportowany do top-level `~/.roduq/output/{client-id}/` (pozostałe 2 saved w `variants-archive/` dla referencji).
+User widzi 3 preview HTML files w side-by-side iframe → wybiera 1 → wybrany variant exportowany do top-level `~/.roduq/output/{client-id}/` (pozostałe 2 zostają w `variants/` dla referencji).
 
 ## When to use
 
@@ -152,9 +152,9 @@ const results = await Promise.all([
 ]);
 ```
 
-**Target execution time**: <30s total (per AGENT_PROMPT Phase 4 acceptance). Real-world: 15-25s z Anthropic Claude Sonnet 4.6+ depending na LLM latency. Each variant ~10-20s solo, parallel achieves overlap savings.
+**Realistyczny czas**: **~2-3 min total** (3 warianty równolegle z Anthropic Claude Sonnet 4.6). Każdy wariant produkuje ~8-15k tokenów outputu ≈ 2-3 min solo; `Promise.all` nakłada je na siebie, więc total ≈ czas najwolniejszego wariantu, NIE suma. Cel "<30s" z Phase 4 był matematycznie nierealny (output dominuje czas, streaming nie skraca pojedynczego wariantu) — patrz audyt F-12 + [MODEL_STRATEGY.md](../../.docs/MODEL_STRATEGY.md).
 
-**Per-variant timeout**: 45s hard limit. Gdy variant fails → return partial result (2/3 variants), mark failed variant z error message.
+**Per-variant timeout**: 240s (4 min) hard limit — wyższy niż realny czas wariantu (~2-3 min). Gdy variant fails → return partial result (2/3 variants), mark failed variant z error message.
 
 Patrz [`./references/parallel-execution.md`](./references/parallel-execution.md) dla detailed pattern + error handling + token budget management.
 
@@ -235,18 +235,14 @@ User actions:
 
 ### Step 6 — Promote selected variant to top-level
 
-When user picks variant N:
+When user picks variant N, promocja przez `OutputWriter.promoteVariant` (**NIE** ręczne `sed`/`cp`/`touch` — nieatomowe, ryzyko korupcji JSON przy przerwaniu; patrz audyt F-22):
 
-```bash
-# Promote variant N files to top-level
-cp ~/.roduq/output/{client-id}/variants/N-{label}/* ~/.roduq/output/{client-id}/
-# Update meta-multi-variant.json
-sed -i 's/"selectedVariant": null/"selectedVariant": N/' meta-multi-variant.json
-# Write .complete flag LAST (signals CLI consumer ready)
-touch ~/.roduq/output/{client-id}/.complete
-```
+1. Skopiuj 5 plików z `variants/N-{label}/` do tmp + zapisz zaktualizowany `meta-multi-variant.json` (`selectedVariant: N`, `userPick: N`, `userPickedAt`) do tmp — przez parse→mutate→serialize, **nie** `sed`.
+2. ajv-waliduj promowane pliki.
+3. Atomowo przenieś na top-level `~/.roduq/output/{client-id}/` (rename, nie częściowe `cp`).
+4. Zapisz `.complete` **LAST** (signals CLI consumer ready).
 
-Unselected variants stay w `variants/` subdirectory dla future reference (user may "change mind" later).
+Implementacja: `packages/roduq-mcp-server` → `OutputWriter.promoteVariant` (6-step atomic flow). Unselected variants zostają w `variants/` dla future reference (user may "change mind" later).
 
 ## Examples
 
@@ -325,15 +321,15 @@ Per `.cursor/rules/004-file-protocol.mdc` extended dla multi-variant:
 |------|-------------|-------|
 | Brief parse + industry detect | <500ms | Local — string matching |
 | Variant config generation | <100ms | Lookup matrix |
-| 3 parallel skill invocations | 15-25s | Promise.all, LLM-bound |
+| 3 parallel skill invocations | **~2-3 min** | Promise.all, LLM-bound — output ~8-15k tok/wariant dominuje |
 | Validate + write 3 variants | <2s | ajv + fs |
 | Render iframe preview | <500ms | Static HTML |
-| **Total target** | **<30s** | Phase 4 acceptance |
+| **Total realistic** | **~2-3 min** | output-bound; "<30s" było nierealne (F-12) |
 
-LLM token budget (Anthropic Claude Sonnet 4.6+):
-- Per variant: ~30k input + ~10k output ≈ $0.30
-- 3 variants: ~$0.90 per multi-variant run
-- 100 multi-variant runs/month: ~$90/month (Roduq agency budget)
+LLM token budget (Anthropic Claude Sonnet 4.6 — [MODEL_STRATEGY.md](../../.docs/MODEL_STRATEGY.md) § koszty = single source of truth):
+- Per wariant: ~15-17k input + ~10k output ≈ **$0.15-0.20** (output dominuje koszt)
+- 3 warianty: **~$0.45-0.60** per run (z prompt cachingiem bliżej dolnej granicy)
+- ~100 runów/mies.: **~$55-60/mies.** (budżet agencji Roduq z zapasem)
 
 ## Related
 

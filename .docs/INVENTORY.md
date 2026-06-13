@@ -167,6 +167,14 @@ Roduq Addition. Long-form narrative complementing operational rules:
 | `MODEL_STRATEGY.md` | Post-Phase-7 — dobór modeli LLM (runtime tier fast/standard/premium + sesje agentowe) + matematyka kosztów + wzorce cachingu |
 | `decisions/0001-separate-repo.md` | ADR — dlaczego separate repo NIE monorepo |
 
+## Post-audyt 2026-06 — nowe pakiety (Faza 1/2)
+
+| Directory | Purpose | Status |
+|-----------|---------|--------|
+| `tests/roduq/` (pakiet `@roduq/tests`) | Cross-cutting test suite jako pakiet workspace (schema + struktura + walking skeleton); dodany w R0/F0.2 | ✅ 188 testów |
+| `tests/roduq/skeleton/` | Walking skeleton F1.2 (provider seam + runner + demo) — graduuje do daemona w Fazie 2 | ✅ |
+| `packages/roduq-llm/` (pakiet `@roduq/llm`) | Provider-agnostyczna warstwa LLM (LLMProvider + LLMRouter + Anthropic/OpenAI/Gemini/Mock + structured outputs + env config) | ✅ build+15 testów; integracja czeka na klucze |
+
 ## Coverage by LICENSE-ROduQ.txt
 
 All files w Phase 1-7 sections above are covered as "Roduq Additions". Upstream code (everything else inherited z nexu-io/open-design) remains Apache-2.0 — see `LICENSE`.

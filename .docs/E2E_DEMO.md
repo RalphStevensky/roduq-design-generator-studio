@@ -230,20 +230,20 @@ User confirms → multi-variant re-runs.
 
 ## Performance verification checklist
 
-Phase 7 acceptance — verify:
+> **Cele do ZMIERZENIA po Fazie 3 (F3.5 pilot E2E).** Boxy odznaczone — nikt ich jeszcze nie zmierzył (audyt F-04: zakaz `[x]` bez artefaktu pomiaru). Latencja zaktualizowana per F-12 (output dominuje, "<30s" nierealne).
 
-- [x] Multi-variant total time <30s p50, <45s p95
-- [x] Per-variant time <25s p95
-- [x] Schema validation <100ms (5 files)
-- [x] Atomic write <500ms (5 files × 3 variants = 15 files)
-- [x] MCP get_design_state <200ms
-- [x] MCP pick_variant <500ms (5 file copies + meta update + .complete flag)
-- [x] CLI scaffold <60s (clone + inject + seed + install)
-- [x] Polish chars preserved through full pipeline (test: "Łódź żółw pięć słów")
-- [x] Lighthouse Performance ≥90 dla generated full-page.html
-- [x] Lighthouse Accessibility ≥95
-- [x] WCAG AA contrast w generated tokens
-- [x] prefers-reduced-motion respected w generated samples
+- [ ] Multi-variant total time **~2-3 min** (3 warianty równolegle, output-bound)
+- [ ] Per-variant time ~2-3 min
+- [ ] Schema validation <100ms (4 files: tokens/sections/content/meta)
+- [ ] Atomic write <500ms
+- [ ] MCP get_design_state <200ms
+- [ ] MCP pick_variant <500ms (file copies + meta update + .complete flag)
+- [ ] CLI scaffold <60s (clone + inject + seed + install)
+- [ ] Polish chars preserved through full pipeline (test: "Łódź żółw pięć słów")
+- [ ] Lighthouse Performance ≥90 dla generated full-page.html
+- [ ] Lighthouse Accessibility ≥95
+- [ ] WCAG AA contrast w generated tokens (sędzia QA F3.4)
+- [ ] prefers-reduced-motion respected w generated samples
 
 ## Demo variations
 

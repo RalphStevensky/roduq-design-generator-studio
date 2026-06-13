@@ -164,10 +164,11 @@ export interface DesignStateSingle {
   status: "complete" | "in-progress" | "error";
   type: "single";
   meta: SingleMeta;
-  tokens: DesignTokens;
-  sections: Sections;
-  content: Content;
-  designSystemMd: string;
+  // Artifacts present only when status === "complete"; in-progress projects have meta only.
+  tokens?: DesignTokens;
+  sections?: Sections;
+  content?: Content;
+  designSystemMd?: string;
 }
 
 export interface DesignStateMultiVariant {
@@ -208,8 +209,12 @@ export class MCPServerError extends Error {
       | "VALIDATION_FAILED"
       | "FS_ERROR"
       | "UNSUPPORTED_OPERATION"
+      | "PAGE_NOT_FOUND"
+      | "SECTION_NOT_FOUND"
+      | "NOT_IMPLEMENTED"
+      | "DAEMON_UNAVAILABLE"
       | "INTERNAL_ERROR",
-    readonly cause?: unknown,
+    override readonly cause?: unknown,
   ) {
     super(message);
     if (cause !== undefined) {

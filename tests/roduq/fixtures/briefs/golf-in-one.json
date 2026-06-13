@@ -1,0 +1,24 @@
+{
+  "_meta": {
+    "skill": "roduq-saas-landing",
+    "pilot": true,
+    "source": "Roduq product — golf-in-one / golf-in-one-web (Flutter + React, Supabase + Stripe). Brand z blueprint_6_design_system.md.",
+    "brandFont": "Figtree",
+    "note": "Pierwszy klient pilotażowy (Faza 1/2). Brand zielony override — żaden preset nie jest zielony, kolory marki nadpisują tokens.color.brand.* (sanityzacja kontrastu w R3). Preset daje strukturę/typografię.",
+    "expectedMatrix": {
+      "conservative": "roduq-tech-modern",
+      "modern": "roduq-dark-cinematic",
+      "bold": "roduq-brutalist"
+    }
+  },
+  "clientId": "golf-in-one",
+  "brief": "Landing page dla Golf In One — aplikacji do rezerwacji symulatorów golfowych, członkostw klubowych, wypożyczeń sprzętu i kredytów na maszyny do piłek. Jedna apka dla całego obiektu golfowego. White-label per obiekt. Tone: premium ale przystępny, sportowy, konkretny. USP: rezerwacja symulatora + członkostwo + wypożyczenia + płatności (Stripe) w jednym miejscu, bez telefonów i papierologii.",
+  "audience": "Golfiści i goście obiektów golfowych w Polsce (rezerwacja symulatorów, członkostwa klubowe) oraz operatorzy obiektów wdrażający white-label. Wiek 28-55, ceniący wygodę i premium doświadczenie.",
+  "toneAdjectives": ["premium", "przystępny", "sportowy", "konkretny"],
+  "brandColors": ["#275445", "#33705C", "#5CC18F", "#B8EB6F"],
+  "industryHints": {
+    "competitors": ["Golf simulator booking apps", "club membership portals", "Toptracer Range apps"],
+    "pricingModel": "membership + pay-per-use (Stripe)",
+    "uniqueValueProp": "Cały obiekt golfowy w jednej apce: rezerwacja symulatora, członkostwo, wypożyczenia, kredyty na piłki i płatności — bez telefonów i papierologii."
+  }
+}

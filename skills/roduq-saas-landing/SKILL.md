@@ -129,21 +129,10 @@ Build homepage block sequence per SaaS landing best practice:
 }
 ```
 
-Block types **MUST match** `apps/marketing-starter/src/blocks/types.ts` w roduq-web-starter (canonical). Reference allowlist:
+Block types **MUST** być valid per kanoniczny enum `blockType` w [`schemas/sections.v1.schema.json`](../../schemas/sections.v1.schema.json), który odzwierciedla `blocks/types.ts` w roduq-web-starter. **Schemat = single source of truth — NIE duplikuj pełnej listy tutaj** (dwie rozjeżdżające się listy = bug; patrz audyt F-09).
 
-```typescript
-const ALLOWED_BLOCKS = [
-  "hero",
-  "social-proof",
-  "features",
-  "stats",
-  "pricing",
-  "testimonials",
-  "faq",
-  "cta",
-  "logos-grid"
-];
-```
+Recommended subset dla SaaS landing (typowa sekwencja — pełny zbiór dozwolony w schemacie):
+`hero`, `social-proof`, `logos-grid`, `features`, `stats`, `pricing`, `testimonials`, `faq`, `cta`.
 
 ### Step 5 — Generate content.json
 
@@ -205,14 +194,26 @@ Human-readable summary dla developer handoff (in `roduq-web-starter` repo):
 `roduq-saas-landing` skill version {VERSION}, model {LLM}, w {date}.
 ```
 
-### Step 8 — Atomic write + validate
+### Step 7b — Compose preview.html
 
-Write all files atomically (per `.cursor/rules/004-file-protocol.mdc`):
+Static, dependency-free HTML snapshot wygenerowanej strony dla wizualnej weryfikacji (otwierany lokalnie + renderowany w side-by-side pickerze multi-variant). Złóż z:
+- `assets/template-*.html` (hero/features/pricing/cta) wypełnione draftem z `content.json` (`{{key}}` → wartości PL),
+- tokeny z `tokens.json` wstrzyknięte jako `:root { --… }` w inline `<style>`,
+- kolejność bloków = `sections.json` → `homepage.blocks`.
 
-1. Write do `~/.roduq/output/{client-id}.tmp/`
-2. Validate each file z `ajv` against JSON Schema v1
-3. Rename temp dir → final location
-4. Write `.complete` flag LAST (signals CLI consumer ready)
+Zero JS, zero external fetch — musi działać po podwójnym kliknięciu z `file://`.
+
+### Step 8 — Generate meta.json + atomic write + validate
+
+Per `.cursor/rules/004-file-protocol.mdc` — wytwórz pozostały artefakt i zapisz wszystkie atomowo:
+
+1. Zbuduj `meta.json` per [`schemas/meta.v1.schema.json`](../../schemas/meta.v1.schema.json): `{ $schema, version, type: "single", clientId, generatedAt, skill: "roduq-saas-landing", prompt, llmProvider, model, executionTimeMs, tokensUsed?, estimatedCostUsd? }`.
+2. Write wszystkie pliki do `~/.roduq/output/{client-id}.tmp/`: `meta.json`, `tokens.json`, `sections.json`, `content.json`, `design-system.md`, `preview.html`.
+3. Validate `tokens.json` / `sections.json` / `content.json` / `meta.json` z `ajv` against JSON Schema v1 (fail = abort, **nie zostawiaj częściowego outputu**).
+4. Rename temp dir → final location (atomic na POSIX, near-atomic na Windows).
+5. Write `.complete` flag **LAST** (signals CLI consumer ready).
+
+> Output contract niżej (7 plików) odpowiada teraz krokom: tokens (3), sections (4), content (5), design-system.md (7), preview.html (7b), meta.json + .complete (8).
 
 ## Examples
 

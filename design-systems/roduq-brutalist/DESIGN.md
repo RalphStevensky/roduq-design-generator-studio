@@ -61,7 +61,7 @@ Mix sizes aggressively — display 8rem next to body 1rem.
 - ✅ `roduq-agency` (avant-garde / statement studio)
 - ✅ `roduq-portfolio` (designer / artist statement portfolio)
 - ✅ `roduq-product-launch` (statement product launch)
-- ⚠ `roduq-saas-landing` (very rarely — gdy product positioning is statement-led)
+- ✅ `roduq-saas-landing` (tylko jako wariant **Bold/statement** — celowo ryzykowny slot macierzy multi-variant, nie default; per audyt F-07)
 - ❌ `roduq-restaurant` (use `roduq-monolith-meadow`)
 - ❌ `roduq-clinic` (use `roduq-soft-pastel`)
 - ❌ `roduq-real-estate` (use `roduq-default` lub `roduq-dark-cinematic`)

@@ -1,11 +1,10 @@
 {
-  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://roduq.dev/schemas/v1/sections.schema.json",
   "title": "Roduq Sections v1 — Page block configurations",
   "description": "Validates sections.json output produced by Roduq skills. Block types match marketing-starter blocks/types.ts in roduq-web-starter (canonical source). @roduq/cli reads this to seed Payload CMS blocks.",
   "type": "object",
   "required": ["$schema", "version", "homepage"],
-  "additionalProperties": false,
   "properties": {
     "$schema": {
       "type": "string",

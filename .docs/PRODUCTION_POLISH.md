@@ -285,7 +285,7 @@ interface TelemetryConfig {
 
 ### Performance regressions
 
-Phase 7 acceptance: multi-variant skill execution **<30s p95** across 5 sample briefs.
+Phase 7 acceptance: multi-variant skill execution **~2-3 min** across 5 sample briefs (output-bound; "<30s p95" nierealne — F-12; do zmierzenia w Fazie 3).
 
 Monitoring strategy:
 1. Track durationMs w telemetry per skill invocation

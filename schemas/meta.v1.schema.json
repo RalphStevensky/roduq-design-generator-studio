@@ -1,5 +1,5 @@
 {
-  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://roduq.dev/schemas/v1/meta.schema.json",
   "title": "Roduq Generation Meta v1",
   "description": "Validates meta.json — generation metadata for a single Roduq design output. For multi-variant outputs, see meta-multi-variant.schema.json.",
@@ -61,7 +61,7 @@
     },
     "model": {
       "type": "string",
-      "description": "Specific model identifier (e.g., 'claude-sonnet-4-6', 'gpt-5', 'gemini-2.5-pro', 'mock-1')."
+      "description": "Specific model identifier (e.g., 'claude-sonnet-4-6', 'gpt-5', 'gemini-3-flash-preview', 'mock-1')."
     },
     "executionTimeMs": {
       "type": "integer",

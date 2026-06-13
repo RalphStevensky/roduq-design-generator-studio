@@ -21,6 +21,14 @@ Ten projekt ma **dwie lokalizacje** dla agent context:
 
 ❌ **NIE dodawaj** rule tylko w jednym miejscu — Cursor user nie zobaczy `.docs/`, Claude Code user przeczyta CLAUDE.md ale może pominąć rule files.
 
+## Reguła dowodu wykonania (integralność statusu — audyt F-04 / R-1)
+
+✅ **Żaden status `✅` ani checkbox `[x]` nie istnieje bez ARTEFAKTU WYKONANIA.** Artefakt = log komendy / wynik testu / pomiar / screenshot. Deklaracja bez dowodu = zadanie OTWARTE (`⏳` / `[ ]`).
+
+- Pomiary (latencja, koszt, Lighthouse, kontrast) — tylko z faktycznego biegu, nie z oszacowania. Liczby szacowane oznaczaj jako "(target)" / "(do zmierzenia)".
+- Artefakt zapisuj w commit message LUB w sekcji "Wykonanie" `.docs/ROADMAP.md`.
+- Geneza: audyt Fable 5 wykrył 100% niezweryfikowanych `✅` (E2E_DEMO performance boxy, "Phase 7 done") — główne ryzyko projektu (R-1). Patrz `.docs/AUDIT_2026-06.md` § Risk register + `.docs/ROADMAP.md`.
+
 ## Kiedy update obu lokalizacji
 
 | Trigger | `.docs/` update | `.cursor/rules/` update |
