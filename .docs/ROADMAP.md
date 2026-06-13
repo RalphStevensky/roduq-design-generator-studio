@@ -63,10 +63,10 @@
 ### Faza 1 — Szkielet end-to-end (walking skeleton) `[bramka: G1]`
 *Szac. 2-3 dni · ~$5-10 · model: O (high)*
 
-> ⚠️ **Bloker cross-repo (odkryty w F0.3b):** `@roduq/cli` w roduq-web-starter to stub (v0.4.0 TODO). Konsumencka strona handoffu nie istnieje. **Decyzja dla F1.2:** albo (a) zbudować minimalny `@roduq/cli consume` w siostrzanym repo (osobny task tam), albo (b) przyjąć `OutputReader` round-trip (udowodniony w F0.3a) jako proof kontraktu producenta na teraz i przesunąć realną konsumpcję CLI do momentu gdy sister repo dojdzie do v0.4.0. **Do decyzji przy starcie Fazy 1.**
+> ✅ **Decyzja konsumenta (Rafał, 2026-06-13):** Option A — `OutputReader` round-trip (udowodniony w F0.3a) jako proof kontraktu producenta NA TERAZ; realna konsumpcja `@roduq/cli` odłożona do v0.4.0 w roduq-web-starter. Walking skeleton zostaje w TYM repo — bez zależności od sister repo.
 
-- [ ] **F1.1** Ustal **nazwanego pierwszego klienta** + jego branżę (wyznacza skill Fazy 2).
-- [ ] **F1.2** Najcieńsza nitka z **MockProviderem**: brief.json → tokens/sections/content (zahardkodowane/mock) → atomowy zapis + `.complete` → konsumpcja (patrz bloker wyżej). Dotyka każdego ryzyka nośnego (ajv, atomic write, kontrakt, ścieżki Windows) gdy zmiana jest tania.
+- [x] **F1.1** Pilot = **Golf In One** (Roduq product; repo `golf-in-one` / `golf-in-one-web`). Branża = sports-tech / golf venue booking SaaS → skill `roduq-saas-landing`. Brand ugruntowany z `blueprint_6_design_system.md`: Figtree, primary #275445, secondary #33705C, tertiary #5CC18F, accent #B8EB6F, radius 20px. Brief: `tests/roduq/fixtures/briefs/golf-in-one.json`.
+- [ ] **F1.2** Najcieńsza nitka z **MockProviderem**: `golf-in-one.json` → tokens/sections/content (mock z brandem golfa) → atomowy zapis + `.complete` → round-trip `OutputReader` (proof konsumenta per decyzja wyżej). Dotyka każdego ryzyka nośnego (ajv, atomic write, kontrakt, ścieżki Windows). **Następny krok.**
 
 ### Faza 2 — Prawdziwa generacja, 1 skill `[bramka: G2]`
 *Szac. 3-5 dni · ~$20-40 · model: O (xhigh) + 1 adversarial review interfejsu LLM*
@@ -165,3 +165,6 @@
 | 2026-06-13 | F-07 rozstrzygnięte (Option A: niuans presetów) | dark-cinematic + brutalist DESIGN.md, commit `1f1d5e1d` | ✅ |
 | 2026-06-13 | F0.3a producent round-trip (gate G0a) | OutputReader: status=complete, brand=#5E5CE6, 7 bloków, ścieżka Windows OK | ✅ |
 | 2026-06-13 | F0.3b konsument (gate G0b) | `@roduq/cli` = stub (v0.4.0) — handoff zablokowany na sister repo | ⛔ bloker cross-repo |
+| 2026-06-13 | F1.1 pilot ustalony | Golf In One → roduq-saas-landing; brief fixture golf-in-one.json; brand z blueprint | ✅ |
+| 2026-06-13 | Decyzja konsumenta | Option A — OutputReader round-trip jako proof, CLI odłożony do v0.4.0 | ✅ |
+| — | F1.2 walking skeleton (Mock → bundle → round-trip) | — | ⏳ następne |
