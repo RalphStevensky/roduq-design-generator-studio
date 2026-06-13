@@ -1,5 +1,5 @@
 {
-  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://roduq.dev/schemas/v1/tokens.schema.json",
   "title": "Roduq Design Tokens v1",
   "description": "Validates tokens.json output produced by Roduq skills. Defines color/font/spacing/radii structure consumed by @roduq/cli in roduq-web-starter (injected as CSS variables in src/styles/client-theme.css).",

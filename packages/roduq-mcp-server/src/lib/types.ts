@@ -209,7 +209,7 @@ export class MCPServerError extends Error {
       | "FS_ERROR"
       | "UNSUPPORTED_OPERATION"
       | "INTERNAL_ERROR",
-    readonly cause?: unknown,
+    override readonly cause?: unknown,
   ) {
     super(message);
     if (cause !== undefined) {

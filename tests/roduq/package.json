@@ -1,0 +1,22 @@
+{
+  "name": "@roduq/tests",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Roduq cross-cutting test suite (schema validation + skills/presets structure). Roduq Addition under LICENSE-ROduQ.txt.",
+  "license": "SEE LICENSE IN ../../LICENSE-ROduQ.txt",
+  "scripts": {
+    "test": "vitest run -c vitest.config.ts",
+    "test:watch": "vitest -c vitest.config.ts"
+  },
+  "devDependencies": {
+    "@types/node": "20.19.39",
+    "ajv": "8.17.1",
+    "ajv-formats": "3.0.1",
+    "typescript": "5.9.3",
+    "vitest": "4.1.6"
+  },
+  "engines": {
+    "node": "~24"
+  }
+}

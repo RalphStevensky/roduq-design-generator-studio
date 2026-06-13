@@ -1,5 +1,7 @@
 # Plan naprawczy i rozwojowy (post-audyt 2026-06)
 
+> ⚠️ **AKTYWNA KOLEJNOŚĆ PRAC: [ROADMAP.md](ROADMAP.md)** (zatwierdzona 2026-06-13: thin/demo-first jako trasa, pełny plan poniżej jako zbramkowany cel "must be done"). Ten plik = szczegółowy katalog zadań (zakresy + kryteria akceptacji); ROADMAP definiuje co i kiedy z niego ciągniemy.
+>
 > Operacjonalizacja [AUDIT_2026-06.md](AUDIT_2026-06.md). Każde zadanie ma: zakres, kryteria akceptacji, przypisany model (sesja Claude Code wykonująca pracę) i protokół jakości. Dobór modeli: [MODEL_STRATEGY.md](MODEL_STRATEGY.md) + rule `010-model-strategy.mdc`.
 >
 > **Zasada nadrzędna (z audytu, F-04):** żadne zadanie nie jest "✅ done" bez artefaktu wykonania (log komendy, wynik testu, screenshot). Deklaracja bez dowodu = zadanie otwarte.

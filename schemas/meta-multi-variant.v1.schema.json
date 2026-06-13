@@ -1,5 +1,5 @@
 {
-  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://roduq.dev/schemas/v1/meta-multi-variant.schema.json",
   "title": "Roduq Multi-Variant Meta v1",
   "description": "Validates meta-multi-variant.json — tracks 3 parallel variant generations + user selection state. Produced by skills/multi-variant orchestrator.",

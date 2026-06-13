@@ -1,5 +1,5 @@
 {
-  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://roduq.dev/schemas/v1/content.schema.json",
   "title": "Roduq Content v1 — Draft copy",
   "description": "Validates content.json output produced by Roduq skills. Polish primary (required) + English drafts (optional). @roduq/cli seeds Payload CMS with these values.",

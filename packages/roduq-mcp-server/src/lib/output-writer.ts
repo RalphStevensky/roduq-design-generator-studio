@@ -11,7 +11,6 @@ import {
   type ClientId,
   type MultiVariantMeta,
   type VariantId,
-  type VariantLabel,
   MCPServerError,
 } from "./types.js";
 
@@ -95,7 +94,7 @@ export class OutputWriter {
     const variantDir = join(
       clientDir,
       "variants",
-      `${variantId}-${variantEntry.label.toLowerCase() satisfies Lowercase<VariantLabel>}`,
+      `${variantId}-${variantEntry.label.toLowerCase()}`,
     );
     const filesToPromote = [
       "tokens.json",

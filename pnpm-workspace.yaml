@@ -2,6 +2,7 @@ packages:
   - packages/*
   - apps/*
   - tools/*
+  - tests/*
   - e2e
 
 overrides:
