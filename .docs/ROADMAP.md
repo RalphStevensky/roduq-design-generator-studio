@@ -54,8 +54,10 @@
 - [x] **F0.1** Środowisko: VS Build Tools 2022 obecne; `pnpm install` zielony (27s, 22 projekty); `better-sqlite3` natywny binarny zbudowany przez prebuild (Python niepotrzebny), roundtrip=42. *(R0.1)* — **artefakt: log b4w4xxocn**
 - [x] **F0.2** Build MCP (`dist/`, exit 0 po naprawie 2 błędów TS) + **pierwsze w historii** testy: MCP 10/10, roduq 181/181. Naprawione przy okazji: (a) 2 błędy TS w MCP (`output-writer` zbędne `satisfies`, `types` brak `override`), (b) `tests/roduq` nie był pakietem workspace → dodany jako `@roduq/tests` + `tests/*` do workspace, (c) **nowy defekt: 5 schematów miało `$schema: https://...draft-07` zamiast kanonicznego `http://` → ajv nie walidował** (uderzyłby w R1). *(R0.2, naprawia F-02/F-03)*
 - [ ] **F0.3** Smoke-test handoff: ręcznie zapisz `~/.roduq/output/<id>/` z `.complete` → potwierdź że `@roduq/cli` w siostrzanym repo to widzi (Windows-native, jedna ścieżka). *(gate F-21)*
-- [ ] **F0.4** Batch poprawek kontraktowych (tanie, przed budową na kontrakcie): F-06 (usuń `additionalProperties:false` z top-level), F-08 (Step 6b/8b: preview.html+meta.json), F-09 (jedno źródło bloków: link do schematu + subset per skill), F-16/F-17 (kody błędów + usuń puste `catch`/`as` — rule 005), F-19 (lengthValue), F-22/F-23 (atomowy flow + `variants/`). *(R0.3)*
-- [ ] **F0.5** Prawda w docs: odhacz niezmierzone `[x]` (F-04); "<30s"→"~2-3 min" wszędzie (F-12); F-05/F-15 jako drobne doprecyzowania; dopisz regułę "✅ wymaga artefaktu" do rule 009/010. *(R0.4)*
+- [x] **F0.4** Batch poprawek kontraktowych: F-06 (additionalProperties:false z top-level usunięte), F-08 (Step 7b preview.html + Step 8 meta.json), F-09 (schema = single source of truth bloków), F-16/F-17 (4 nowe kody + usunięte puste `catch`/`as` — rule 005), F-19 (lengthValue), F-22/F-23 (atomowy flow + `variants/`). **F-07 wydzielone do decyzji (niżej).** *(R0.3)*
+- [x] **F0.5** Prawda w docs: odznaczone niezmierzone `[x]` w E2E_DEMO (F-04); "<30s"→"~2-3 min" w 5 plikach (F-12); F-11 koszty ujednolicone; reguła "✅ wymaga artefaktu" w rule 009. *(R0.4)*
+- [ ] **F0.3** Smoke handoff cross-repo (gate **G0**) — następny krok wykonawczy.
+- [ ] **F-07** DECYZJA: macierz multi-variant vs DESIGN.md presets (czeka na Rafała).
 
 ### Faza 1 — Szkielet end-to-end (walking skeleton) `[bramka: G1]`
 *Szac. 2-3 dni · ~$5-10 · model: O (high)*
@@ -154,6 +156,8 @@
 | 2026-06-13 | Fix: 2 błędy TS (output-writer/types) | `tsc -b --force` exit 0 | ✅ |
 | 2026-06-13 | Fix: `tests/roduq` → pakiet workspace `@roduq/tests` | testy uruchamialne | ✅ |
 | 2026-06-13 | Fix: 5 schematów `$schema` https→http draft-07 (ajv) | 11 faili → 0 | ✅ |
+| 2026-06-13 | F0.4 schemy+kod (F-06/F-19/F-16/F-17) | commit `79915762`; roduq 185/185, MCP 10/10 | ✅ |
+| 2026-06-13 | F0.4 SKILL.md (F-08/F-09 saas, F-22/F-23 multi-variant) | testy zielone | ✅ |
+| 2026-06-13 | F0.5 prawda w docs (F-04 boxy, F-12 ×5 plików, F-11 koszty, rule 009 artefakt) | git grep "<30s" tylko w audycie/opisie | ✅ |
+| — | **F-07 decyzja** (macierz vs DESIGN.md) | — | ⏳ czeka na Rafała |
 | — | F0.3 smoke handoff cross-repo (gate G0) | — | ⏳ następne |
-| — | F0.4 batch poprawek kontraktowych (F-06/F-08/F-09/F-16/F-17/F-19/F-22/F-23) | — | ⏳ |
-| — | F0.5 prawda w docs (F-04/F-12/rule 009) | — | ⏳ |

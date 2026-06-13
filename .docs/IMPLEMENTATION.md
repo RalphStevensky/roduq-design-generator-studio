@@ -723,10 +723,10 @@ License + final docs:
    - Phase retrospective summary
 
 7. **Implementation gap z runtime verification**:
-   - **Cannot run tests** locally due to Windows native better-sqlite3 compile failure (Phase 1 lesson)
-   - **Cannot run multi-variant** without LLM API key + daemon running
+   - ~~**Cannot run tests** locally due to Windows native better-sqlite3 compile failure~~ → **ROZWIĄZANE 2026-06-13**: VS Build Tools 2022 → `better-sqlite3` buduje się z prebuildu; testy zielone (MCP 10/10, roduq 185/185)
+   - **Cannot run multi-variant** without LLM API key + daemon running (Faza 2-3)
    - **Cannot run @roduq/cli** w roduq-web-starter without that repo cloned + built
-   - **Cannot verify <30s performance** without actual LLM invocations
+   - **Cannot verify performance** without actual LLM invocations — realny cel ~2-3 min, NIE "<30s" (F-12)
    - **Workarounds documented**: WSL2 / macOS / Linux dla full runtime; structure tests work zero-dep w current shell
 
 8. **Architecture + definitions complete; runtime wiring deferred**:
@@ -945,9 +945,9 @@ Phase complete gdy:
 - ✅ End-to-end test: `pnpm run e2e:full-cycle` (uruchamia Open Design + creates client + CLI consumes + builds + screenshots)
 - ✅ 7 skills working (każda generuje valid output)
 - ✅ 7 DESIGN.md systems documented z example outputs
-- ✅ multi-variant tested z 5+ briefów across industries
-- ✅ MCP server tested z Claude Code w sample client repo
-- ✅ Performance: skill execution <30s (target <15s)
+- ⏳ multi-variant tested z 5+ briefów across industries — do weryfikacji (Faza 3)
+- ⏳ MCP server tested z Claude Code w sample client repo — do weryfikacji (Faza 3); build + unit testy ✅
+- ⏳ Performance: skill execution ~2-3 min (output-bound; F-12) — do zmierzenia (Faza 3)
 - ✅ Documentation: README + CONTRIBUTING + each skill ma own README
 
 ## 9. Out of scope (v2.0 stretch)

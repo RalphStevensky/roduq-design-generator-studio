@@ -158,7 +158,7 @@ Variant strategy:
 
 Test z 5+ different briefs across industries (SaaS / restaurant / agency / clinic / portfolio).
 
-**Acceptance**: 3 variants generowane <30s total (parallel execution), each renderable, user can pick + export. Commit: `feat(skills): multi-variant generator`.
+**Acceptance**: 3 variants generowane ~2-3 min total (parallel execution; output-bound — patrz F-12), each renderable, user can pick + export. Commit: `feat(skills): multi-variant generator`.
 
 ### Phase 5 — File export protocol (~3h)
 
@@ -232,7 +232,7 @@ Test: w sample client repo (`C:/Users/stefa/clients/test-client/`) Claude Code r
 - Output deduplication (same prompt + variant = cached)
 - Telemetry opt-in (skills popularity, gen time)
 
-**Performance target**: skill execution <30s (target <15s).
+**Performance target**: skill execution ~2-3 min (output-bound; "<30s" nierealne — patrz F-12).
 
 **Acceptance**: All tests pass. End-to-end demo: brief → multi-variant → export → CLI consume → working website w <5 min. Commit: `chore: tests + production polish (v1.0)`.
 
@@ -273,7 +273,7 @@ Pełna walidacja success (run wszystko po Phase 7):
 - ✅ 7 phases shipped (każda z own commits)
 - ✅ 7 skills working (test z 5+ briefów across industries)
 - ✅ 7 DESIGN.md presets documented z renderable samples
-- ✅ multi-variant working end-to-end (<30s execution)
+- ⏳ multi-variant working end-to-end (~2-3 min execution) — do weryfikacji w Fazie 3
 - ✅ JSON Schema validation strict
 - ✅ MCP server callable z Claude Code
 - ✅ Visual regression baseline ustawiony
